@@ -45,7 +45,7 @@ create table RegisteredUser
 	Email nvarchar(256) not null,
 	LoginCredentialsID int not null,
 	Rating decimal(3,2) not null,
-	RegistrationDate date not null,
+	RegistrationDate date not null default GETDATE(),
 
 	CONSTRAINT FK_User_LoginCredentials FOREIGN KEY (LoginCredentialsID)
 		REFERENCES LoginCredentials(IDLoginCredentials)
