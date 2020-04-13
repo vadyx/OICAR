@@ -1,6 +1,6 @@
-.vs
+.vs/*
 
-Applications/OICAR-App-1.0/.vscode
+Applications/OICAR-App-1.0/.vscode/*
 Applications/OICAR-App-1.0/node_modules/**/*
 Applications/OICAR-App-1.0/.expo/*
 Applications/OICAR-App-1.0/npm-debug.*
