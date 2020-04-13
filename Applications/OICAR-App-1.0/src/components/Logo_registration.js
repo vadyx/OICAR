@@ -5,9 +5,6 @@ const Logo = () => (
   <Image source={require('../assets/logo_oicar.png')} style={styles.image} />
 );
 
-
-
-
 const styles = StyleSheet.create({
   image: {
     width: 60,

@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { emailValidator } from '../core/utils';
+import { emailValidator } from '../core/validation';
 import Background from '../components/Background';
 import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
@@ -59,18 +59,22 @@ const ForgotPasswordScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  
   back: {
     width: '100%',
     marginTop: 12,
   },
+
   button: {
     marginTop: 12,
     width:'100%'
   },
+
   label: {
     color: theme.colors.secondary,
     width: '100%',
-  },
+  }
+
 });
 
 export default memo(ForgotPasswordScreen);

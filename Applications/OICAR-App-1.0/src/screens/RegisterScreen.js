@@ -13,7 +13,7 @@ import {
   nameValidator,
   usernameValidator,
   repasswordValidator,
-} from '../core/utils';
+} from '../core/validation';
 
 const RegisterScreen = ({ navigation }) => {
   const [username,setUsername] = useState({value:'', error:''});

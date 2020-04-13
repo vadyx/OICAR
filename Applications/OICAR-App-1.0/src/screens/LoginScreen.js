@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
+import { emailValidator, passwordValidator } from '../core/validation';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -85,17 +85,21 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 24,
   },
+
   row: {
     flexDirection: 'row',
     marginTop: 4,
   },
+
   label: {
     color: theme.colors.secondary,
   },
+
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
-  },
+  }
+  
 });
 
 export default memo(LoginScreen);
