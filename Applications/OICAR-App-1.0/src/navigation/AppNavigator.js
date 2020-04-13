@@ -4,21 +4,20 @@ import { createStackNavigator } from 'react-navigation-stack';
 import {
   HomeScreen,
   LoginScreen,
-  RegisterScreen,
+  RegistrationScreen,
   ForgotPasswordScreen,
   DashboardScreen,
 } from '../screens';
 
 const Router = createStackNavigator(
   {
-    HomeScreen,
-    LoginScreen,
-    RegisterScreen,
-    ForgotPasswordScreen,
-    DashboardScreen,
+    Home: HomeScreen,
+    Login: LoginScreen,
+    Registration: RegistrationScreen,
+    ForgotPassword: ForgotPasswordScreen,
+    Dashboard: DashboardScreen,
   },
   {
-    initialRouteName: 'HomeScreen',
     headerMode: 'none',
   }
 );
