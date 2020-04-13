@@ -1,19 +1,20 @@
 import React, { memo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
 import Background from '../components/Background';
 import Logo from '../components/Logo_registration';
 import Header from '../components/Header2';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
+import { theme } from '../utils/theme';
 import {
   emailValidator,
   passwordValidator,
   nameValidator,
   usernameValidator,
   repasswordValidator,
-} from '../core/validation';
+} from '../utils/validation';
 
 const RegisterScreen = ({ navigation }) => {
   const [username,setUsername] = useState({value:'', error:''});
@@ -45,7 +46,7 @@ const RegisterScreen = ({ navigation }) => {
     <Background>
       <BackButton goBack={() => navigation.navigate('Home')} />
 
-      <Logo/>
+      <Logo style={styles.logo} />
 
       <Header>Create Account</Header>
 
@@ -118,17 +119,26 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
   },
+
+  logo: {
+    width: 60,
+    height: 60
+  },
+
   button: {
     marginTop: 24,
   },
+
   row: {
     flexDirection: 'row',
     marginTop: 4,
   },
+
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
+
   input:{
     height:32
   }

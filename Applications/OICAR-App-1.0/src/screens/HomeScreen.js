@@ -4,17 +4,17 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-const HomeScreen = ({ navigation }) => (
+const HomeScreen = props => (
   <Background>
     <Logo />
     <Header>OICAR</Header>
 
-    <Button mode="contained" onPress={() => navigation.navigate('Login')}>
+    <Button mode="contained" onPress={() => props.navigation.navigate('Login')}>
       Login
     </Button>
     <Button
       mode="outlined"
-      onPress={() => navigation.navigate('Registration')}
+      onPress={() => props.navigation.navigate('Registration')}
     >
       Sign Up
     </Button>

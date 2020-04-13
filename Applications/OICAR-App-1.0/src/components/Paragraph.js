@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { theme } from '../core/theme';
+import { theme } from '../utils/theme';
 
-const Paragraph = ({ children }) => <Text style={styles.text}>{children}</Text>;
+const Paragraph = props => <Text style={styles.text}>{props.children}</Text>;
 
 const styles = StyleSheet.create({
   text: {

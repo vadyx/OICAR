@@ -7,8 +7,8 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/validation';
+import { theme } from '../utils/theme';
+import { emailValidator, passwordValidator } from '../utils/validation';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('DashboardScreen');
+    navigation.navigate('Dashboard');
   };
 
   return (
