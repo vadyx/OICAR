@@ -9,12 +9,12 @@ const HomeScreen = ({ navigation }) => (
     <Logo />
     <Header>OICAR</Header>
 
-    <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
+    <Button mode="contained" onPress={() => navigation.navigate('Login')}>
       Login
     </Button>
     <Button
       mode="outlined"
-      onPress={() => navigation.navigate('RegisterScreen')}
+      onPress={() => navigation.navigate('Registration')}
     >
       Sign Up
     </Button>
