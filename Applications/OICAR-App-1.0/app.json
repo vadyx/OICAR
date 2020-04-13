@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "ReactNativeApp",
+    "slug": "ReactNativeApp",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/splash.png"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "description": "Simple login template created with React Native.",
+    "githubUrl": "https://github.com/venits/react-native-login-template"
+  }
+}
