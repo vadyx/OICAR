@@ -1,9 +1,7 @@
 {
   "expo": {
-    "name": "ReactNativeApp",
-    "slug": "ReactNativeApp",
-    "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "name": "OICAR-App",
+    "slug": "OICAR-App",
     "platforms": [
       "ios",
       "android",
@@ -11,8 +9,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png"
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,8 +23,6 @@
     ],
     "ios": {
       "supportsTablet": true
-    },
-    "description": "Simple login template created with React Native.",
-    "githubUrl": "https://github.com/venits/react-native-login-template"
+    }
   }
 }

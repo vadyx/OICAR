@@ -1,19 +1,16 @@
-import React, { memo, useState, useReducer, useCallback } from 'react';
+import React, { memo, useReducer, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Background from '../components/Background';
-import Logo from '../components/Logo_registration';
+
 import Header from '../components/Header2';
 import Button from '../components/Button';
-import TextInput from '../components/TextInput';
+import Input from '../components/Input';
 import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
 import {
   emailValidator,
-  passwordValidator,
-  nameValidator,
-  usernameValidator,
-  repasswordValidator,
+  isEmptyValidator
 } from '../utils/validation';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -30,12 +27,22 @@ const formReducer = (state, action) => {
       [action.input]: action.isValid
     };
 
+    let passwordMatchingError = action.input === 'repassword' ? action.error : '';
+    let updatedPasswordsAreMatching = false;
+    if (updatedValidities["password"] && updatedValidities["repassword"]) {
+      updatedPasswordsAreMatching = updatedValues["password"] === updatedValues["repassword"];
+
+      if (!updatedPasswordsAreMatching) {
+        passwordMatchingError = 'Passwords are not matching';
+      }
+    }
+
     const updatedErrors = {
       ...state.inputErrors,
-      [action.input]: action.error
+      [action.input]: action.input === 'repassword' ? passwordMatchingError : action.error
     };
 
-    let updatedFormIsValid = true;
+    let updatedFormIsValid = updatedPasswordsAreMatching;
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
@@ -44,6 +51,7 @@ const formReducer = (state, action) => {
       inputValues: updatedValues,
       inputValidities: updatedValidities,
       inputErrors: updatedErrors,
+      passwordsAreMatching: updatedPasswordsAreMatching,
       formIsValid: updatedFormIsValid
     };
   }
@@ -52,11 +60,6 @@ const formReducer = (state, action) => {
 };
 
 const RegisterScreen = props => {
-  // const [username,setUsername] = useState({value:'', error:''});
-  // const [name, setName] = useState({ value: '', error: '' });
-  // const [email, setEmail] = useState({ value: '', error: '' });
-  // const [password, setPassword] = useState({ value: '', error: '' });
-  // const [repassword, setRepassword] = useState({ value: '', error: '' });
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -83,6 +86,7 @@ const RegisterScreen = props => {
       repassword: ''
     },
 
+    passwordsAreMatching: false,
     formIsValid: false
   });
 
@@ -97,81 +101,70 @@ const RegisterScreen = props => {
   }, [dispatchFormState]);
 
   const _onSignUpPressed = () => {
-    const usernameError = usernameValidator(username.value);
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
-    const repasswordError = repasswordValidator(repassword.value);
 
-    if (emailError || passwordError || nameError || usernameError) {
-      setName({ ...name, error: nameError });
-      setUsername({...username, error: usernameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      setRepassword({ ...repassword, error: repasswordError });
-      return;
+    console.log(formState)
+    if (formState.formIsValid) {
+      props.navigation.navigate('Dashboard');
     }
 
-    props.navigation.navigate('Dashboard');
   };
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Home')} />
-
-      <Logo style={styles.logo} />
+      <BackButton goBack={() => props.navigation.goBack()} />
 
       <Header>Create Account</Header>
 
-      <TextInput style={styles.input}
+      <Input style={styles.input}
+        id="username"
         label="Username"
         returnKeyType="next"
-        value={username.value}
-        onChangeText={text => setUsername({ value: text, error: '' })}
-        error={!!username.error}
-        errorText={username.error}
+        onInputChange={_onInputChange}
+        errorText={formState.inputErrors.username}
+        required
       />
 
-      <TextInput style={styles.input}
+      <Input style={styles.input}
+        id="fullName"
         label="Name"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        onInputChange={_onInputChange}
+        errorText={formState.inputErrors.fullName}
+        required
       />
 
-      <TextInput style={styles.input}
+      <Input style={styles.input}
+        id="email"
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        onInputChange={_onInputChange}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
+        errorText={formState.inputErrors.email}
+        required
+        email
       />
 
-      <TextInput style={styles.input}
+      <Input style={styles.input}
+        id="password"
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        onInputChange={_onInputChange}
+        errorText={formState.inputErrors.password}
         secureTextEntry
+        required
       />
 
-      <TextInput style={styles.input}
-        label="Repassword"
+      <Input style={styles.input}
+        id="repassword"
+        label="Confirm Password"
         returnKeyType="done"
-        value={repassword.value}
-        onChangeText={text => setRepassword({ value: text, error: '' })}
-        error={!!repassword.error}
-        errorText={repassword.error}
+        onInputChange={_onInputChange}
+        errorText={formState.inputErrors.repassword}
         secureTextEntry
+        required
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
@@ -180,7 +173,7 @@ const RegisterScreen = props => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>

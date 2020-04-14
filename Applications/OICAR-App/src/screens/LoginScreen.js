@@ -5,10 +5,10 @@ import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import TextInput from '../components/TextInput';
+import Input from '../components/Input';
 import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
-import { emailValidator, passwordValidator } from '../utils/validation';
+import { emailValidator, isEmptyValidator } from '../utils/validation';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
 
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    const passwordError = isEmptyValidator(password.value);
 
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
@@ -35,12 +35,11 @@ const LoginScreen = ({ navigation }) => {
 
       <Header>Welcome back.</Header>
 
-      <TextInput
+      <Input
         label="Email"
         returnKeyType="next"
         value={email.value}
         onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
         autoCompleteType="email"
@@ -48,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
         keyboardType="email-address"
       />
 
-      <TextInput
+      <Input
         label="Password"
         returnKeyType="done"
         value={password.value}
