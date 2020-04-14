@@ -34,7 +34,7 @@ create table LoginCredentials
 (
 	IDLoginCredentials int primary key identity,
 	Username nvarchar(64) not null UNIQUE,
-	Pwd nvarchar(64) not null
+	Pwd nvarchar(max) not null
 )
 
 create table RegisteredUser

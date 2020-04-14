@@ -9,7 +9,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using WebServis.Models;
+using WebServis.Models.Registration;
+using WebServis.Utils;
 
 namespace WebServis.Controllers
 {
@@ -80,6 +81,7 @@ namespace WebServis.Controllers
                 return BadRequest(ModelState);
             }
 
+            registeredUser.LoginCredentials.Pwd = PasswordSecurity.PasswordStorage.CreateHash(registeredUser.LoginCredentials.Pwd);
             db.RegisteredUsers.Add(registeredUser);
             await db.SaveChangesAsync();
 
