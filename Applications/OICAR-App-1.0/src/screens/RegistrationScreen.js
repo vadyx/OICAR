@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useReducer, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Background from '../components/Background';
@@ -16,12 +16,85 @@ import {
   repasswordValidator,
 } from '../utils/validation';
 
-const RegisterScreen = ({ navigation }) => {
-  const [username,setUsername] = useState({value:'', error:''});
-  const [name, setName] = useState({ value: '', error: '' });
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
-  const [repassword, setRepassword] = useState({ value: '', error: '' });
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value
+    };
+
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid
+    };
+
+    const updatedErrors = {
+      ...state.inputErrors,
+      [action.input]: action.error
+    };
+
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+
+    return {
+      inputValues: updatedValues,
+      inputValidities: updatedValidities,
+      inputErrors: updatedErrors,
+      formIsValid: updatedFormIsValid
+    };
+  }
+
+  return state;
+};
+
+const RegisterScreen = props => {
+  // const [username,setUsername] = useState({value:'', error:''});
+  // const [name, setName] = useState({ value: '', error: '' });
+  // const [email, setEmail] = useState({ value: '', error: '' });
+  // const [password, setPassword] = useState({ value: '', error: '' });
+  // const [repassword, setRepassword] = useState({ value: '', error: '' });
+
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      username: '',
+      fullName: '',
+      email: '',
+      password: '',
+      repassword: ''
+    },
+
+    inputValidities: {
+      username: false,
+      fullName: false,
+      email: false,
+      password: false,
+      repassword: false
+    },
+
+    inputErrors: {
+      username: '',
+      fullName: '',
+      email: '',
+      password: '',
+      repassword: ''
+    },
+
+    formIsValid: false
+  });
+
+  const _onInputChange = useCallback((inputId, inputValue, inputValidity, inputError) => {
+    dispatchFormState({
+      type: FORM_INPUT_UPDATE,
+      input: inputId,
+      value: inputValue,
+      isValid: inputValidity,
+      error: inputError
+    });
+  }, [dispatchFormState]);
 
   const _onSignUpPressed = () => {
     const usernameError = usernameValidator(username.value);
@@ -39,7 +112,7 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    props.navigation.navigate('Dashboard');
   };
 
   return (
