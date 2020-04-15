@@ -21,12 +21,13 @@ const Button = ({ mode, style, children, ...props }) => (
 
 const styles = StyleSheet.create({
   button: {
+    borderRadius:15,
     width: '50%',
     marginVertical: 10,
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 26,
   },
 });

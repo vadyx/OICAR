@@ -100,12 +100,14 @@ const RegisterScreen = props => {
     });
   }, [dispatchFormState]);
 
+
   const _onSignUpPressed = () => {
 
     console.log(formState)
     if (formState.formIsValid) {
       props.navigation.navigate('Dashboard');
     }
+
 
   };
 
