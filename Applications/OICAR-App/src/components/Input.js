@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
@@ -6,22 +6,16 @@ import { isEmptyValidator, emailValidator } from '../utils/validation';
 import { theme } from '../utils/theme';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
-const INPUT_BLUR = 'INPUT_BLUR';
 
 const inputReducer = (state, action) => {
     switch (action.type) {
-        case INPUT_CHANGE:
-            return {
-                ...state,
-                value: action.value,
-                isValid: action.isValid,
-                error: action.error
-            };
-        case INPUT_BLUR:
-            return {
-                ...state,
-                touched: true
-            };
+      case INPUT_CHANGE:
+        return {
+          ...state,
+          value: action.value,
+          isValid: action.isValid,
+          error: action.error
+        };
     }
 
     return state;
@@ -29,20 +23,29 @@ const inputReducer = (state, action) => {
 
 const Input = props => {
 
+  const [updateError, setUpdateError] = useState(false);
+
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
-    isValid: props.initiallyValid,
-    error: props.errorText,
-    touched: false
+    isValid: props.initialValue ? true : false,
+    error: props.label + " must not be empty!"
   });
 
   const { onInputChange, id } = props;
 
-  useEffect(() => {
-    if (inputState.touched) {
-        props.onInputChange(id, inputState.value, inputState.isValid, inputState.error);
-    }
-  }, [inputState, onInputChange, id]);
+ useEffect(() => {
+
+  if (props.updateErrors) {
+    setUpdateError(true);
+  }
+ }, [props.updateErrors]);
+
+ useEffect(() => {
+  if (updateError) {
+    onInputChange(id, inputState.value, inputState.isValid, inputState.error);
+    setUpdateError(false);
+  }
+ }, [updateError]);
 
   const _onChangeText = text => {
     
@@ -64,15 +67,9 @@ const Input = props => {
       value: text,
       isValid: isValid,
       error: errorMsg
-    })
+    });
 
   };
-
-  const _onBlur = () => {
-    dispatch({
-        type: INPUT_BLUR
-    });
-  }
 
   return (
     <View style={styles.container}>
@@ -83,9 +80,8 @@ const Input = props => {
         underlineColor="transparent"
         mode="outlined"
         onChangeText={_onChangeText}
-        onBlur={_onBlur}
       />
-      {props.errorText ? <Text style={styles.error}>{props.errorText}</Text> : null}
+      {props.errorText && props.displayError ? <Text style={styles.error}>{props.errorText}</Text> : null}
     </View>
   );
 };
@@ -99,8 +95,7 @@ const styles = StyleSheet.create({
   
   input: {
     backgroundColor: theme.colors.surface,
-    height:45
-
+    height: 45
   },
 
   error: {

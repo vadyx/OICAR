@@ -1,19 +1,16 @@
-import React, { memo, useReducer, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import Background from '../components/Background';
-
 import Header from '../components/Header2';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
-import {
-  emailValidator,
-  isEmptyValidator
-} from '../utils/validation';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -61,6 +58,9 @@ const formReducer = (state, action) => {
 
 const RegisterScreen = props => {
 
+  const [showErrors, setShowErrors] = useState(false);
+  const [updateErrors, setUpdateErrors] = useState(false);
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       username: '',
@@ -90,7 +90,17 @@ const RegisterScreen = props => {
     formIsValid: false
   });
 
+  useEffect(() => {
+    setUpdateErrors(false);
+
+    if(formState.formIsValid) {
+      setShowErrors(false);
+      props.navigation.navigate('Dashboard');
+    }
+  }, [formState]);
+
   const _onInputChange = useCallback((inputId, inputValue, inputValidity, inputError) => {
+
     dispatchFormState({
       type: FORM_INPUT_UPDATE,
       input: inputId,
@@ -102,26 +112,31 @@ const RegisterScreen = props => {
 
 
   const _onSignUpPressed = () => {
-
-    console.log(formState)
-    if (formState.formIsValid) {
-      props.navigation.navigate('Dashboard');
+    setUpdateErrors(true);
+    
+    if (!formState.formIsValid) {
+      setShowErrors(true);
+      return;
     }
-
-
+    
   };
 
+ 
+
   return (
+    
     <Background>
       <BackButton goBack={() => props.navigation.goBack()} />
 
-      <Header>Create Account</Header>
+      <Header style={styles.header}>Create Account</Header>
 
       <Input style={styles.input}
         id="username"
         label="Username"
         returnKeyType="next"
         onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateErrors={!!updateErrors}
         errorText={formState.inputErrors.username}
         required
       />
@@ -131,6 +146,8 @@ const RegisterScreen = props => {
         label="Name"
         returnKeyType="next"
         onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateErrors={!!updateErrors}
         errorText={formState.inputErrors.fullName}
         required
       />
@@ -144,6 +161,8 @@ const RegisterScreen = props => {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
+        displayError={!!showErrors}
+        updateErrors={!!updateErrors}
         errorText={formState.inputErrors.email}
         required
         email
@@ -154,6 +173,8 @@ const RegisterScreen = props => {
         label="Password"
         returnKeyType="done"
         onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateErrors={!!updateErrors}
         errorText={formState.inputErrors.password}
         secureTextEntry
         required
@@ -164,6 +185,8 @@ const RegisterScreen = props => {
         label="Confirm Password"
         returnKeyType="done"
         onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateErrors={!!updateErrors}
         errorText={formState.inputErrors.repassword}
         secureTextEntry
         required
@@ -198,8 +221,7 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    flexDirection: 'row',
-    marginTop: 4,
+    flexDirection: 'row'
   },
 
   link: {
