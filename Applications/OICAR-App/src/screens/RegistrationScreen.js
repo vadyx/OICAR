@@ -2,7 +2,6 @@ import React, { memo, useReducer, useCallback, useEffect, useState } from 'react
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import Background from '../components/Background';
-
 import Header from '../components/Header2';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -10,6 +9,8 @@ import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -39,11 +40,9 @@ const formReducer = (state, action) => {
     };
 
     let updatedFormIsValid = updatedPasswordsAreMatching;
-    console.log("Before update: " + updatedFormIsValid);
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
-    console.log("After update: " + updatedFormIsValid);
 
     return {
       inputValues: updatedValues,
@@ -94,11 +93,11 @@ const RegisterScreen = props => {
   useEffect(() => {
     setUpdateErrors(false);
 
-    if (formState.formIsValid) {
+    if(formState.formIsValid) {
       setShowErrors(false);
       props.navigation.navigate('Dashboard');
-    } 
-  }, [formState.formIsValid]);
+    }
+  }, [formState]);
 
   const _onInputChange = useCallback((inputId, inputValue, inputValidity, inputError) => {
 
@@ -116,17 +115,20 @@ const RegisterScreen = props => {
     setUpdateErrors(true);
     
     if (!formState.formIsValid) {
-      setShowErrors(true);      
-      console.log("I somehow ended in the if");
+      setShowErrors(true);
       return;
     }
+    
   };
 
+ 
+
   return (
+    
     <Background>
       <BackButton goBack={() => props.navigation.goBack()} />
 
-      <Header>Create Account</Header>
+      <Header style={styles.header}>Create Account</Header>
 
       <Input style={styles.input}
         id="username"
@@ -219,8 +221,7 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    flexDirection: 'row',
-    marginTop: 4,
+    flexDirection: 'row'
   },
 
   link: {

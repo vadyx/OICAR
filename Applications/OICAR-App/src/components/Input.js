@@ -28,29 +28,24 @@ const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
     isValid: props.initialValue ? true : false,
-    error: props.label + ' must not be empty!'
+    error: props.label + " must not be empty!"
   });
 
   const { onInputChange, id } = props;
 
  useEffect(() => {
+
   if (props.updateErrors) {
     setUpdateError(true);
-    //console.log(`Update error in input ${id} set to true`);
   }
+ }, [props.updateErrors]);
 
+ useEffect(() => {
   if (updateError) {
-    props.onInputChange(id, inputState.value, inputState.isValid, inputState.error);
+    onInputChange(id, inputState.value, inputState.isValid, inputState.error);
     setUpdateError(false);
-    //console.log(`Update error in input ${id} set to false`);
   }
- }, [props.updateErrors, updateError]);
-
-  useEffect(() => {
-
-    
-
-  }, [updateError]);
+ }, [updateError]);
 
   const _onChangeText = text => {
     
