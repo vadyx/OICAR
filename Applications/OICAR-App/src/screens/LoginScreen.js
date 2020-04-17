@@ -32,6 +32,7 @@ const formReducer = (state, action) => {
     return {
       inputValues: updatedValues,
       inputValidities: updatedValidities,
+      errorMsg: action.error,
       formIsValid: updatedFormIsValid
     };
   }
@@ -56,6 +57,7 @@ const LoginScreen = props => {
       password: false
     },
 
+    errorMsg: '',
     formIsValid: false
   });
 
@@ -66,7 +68,7 @@ const LoginScreen = props => {
     if(formState.formIsValid) {
       setShowErrors(false);
       props.navigation.navigate('Dashboard');
-    }
+    } 
   }, [formState]);
 
   const _onInputChange = useCallback((inputId, inputValue, inputValidity) => {
@@ -75,14 +77,15 @@ const LoginScreen = props => {
       type: FORM_INPUT_UPDATE,
       input: inputId,
       value: inputValue,
-      isValid: inputValidity
+      isValid: inputValidity,
+      error: 'Wrong username or password!'
     });
 
   }, [dispatchFormState]);
 
   const _onLoginPressed = () => {
-    setShowErrors(true);
     setLoadVisible(true);
+    setShowErrors(true);
     setUpdateInputState(true);
   }
 
@@ -111,7 +114,7 @@ const LoginScreen = props => {
         onInputChange={_onInputChange}
         displayError={!!showErrors}
         updateState={!!updateInputState}
-        errorText={'Wrong username or password!'}
+        errorText={formState.errorMsg}
         secureTextEntry
         required
         login
