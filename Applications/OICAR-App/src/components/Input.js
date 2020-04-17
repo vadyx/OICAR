@@ -23,7 +23,7 @@ const inputReducer = (state, action) => {
 
 const Input = props => {
 
-  const [updateError, setUpdateError] = useState(false);
+  const [updateState, setUpdateState] = useState(false);
 
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
@@ -33,19 +33,26 @@ const Input = props => {
 
   const { onInputChange, id } = props;
 
- useEffect(() => {
+  useEffect(() => {
 
-  if (props.updateErrors) {
-    setUpdateError(true);
-  }
- }, [props.updateErrors]);
+    if (props.updateState) {
+      setUpdateState(true);
+    }
+  }, [props.updateState]);
 
- useEffect(() => {
-  if (updateError) {
-    onInputChange(id, inputState.value, inputState.isValid, inputState.error);
-    setUpdateError(false);
-  }
- }, [updateError]);
+  useEffect(() => {
+
+    if (updateState && props.registration) {
+      onInputChange(id, inputState.value, inputState.isValid, inputState.error);
+    }
+
+    if(updateState && props.login) {
+      
+      onInputChange(id, inputState.value, inputState.isValid);
+    }
+
+    setUpdateState(false);
+  }, [updateState]);
 
   const _onChangeText = text => {
     

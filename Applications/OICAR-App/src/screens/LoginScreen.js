@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useReducer, useEffect, useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 
 import Background from '../components/Background';
@@ -10,22 +10,78 @@ import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
 import { emailValidator, isEmptyValidator } from '../utils/validation';
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
-  const _onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = isEmptyValidator(password.value);
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value
+    };
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid
+    };
+
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
 
-    navigation.navigate('Dashboard');
-  };
+    return {
+      inputValues: updatedValues,
+      inputValidities: updatedValidities,
+      formIsValid: updatedFormIsValid
+    };
+  }
+
+  return state;
+};
+
+const LoginScreen = ({ navigation }) => {
+  
+  const [showErrors, setShowErrors] = useState(false);
+  const [updateInputState, setUpdateInputState] = useState(false);
+
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      username: '',
+      password: ''
+    },
+
+    inputValidities: {
+      username: false,
+      password: false
+    },
+
+    formIsValid: false
+  });
+
+  useEffect(() => {
+    setUpdateInputState(false);
+
+    if(formState.formIsValid) {
+      setShowErrors(false);
+      props.navigation.navigate('Dashboard');
+    }
+  }, [formState]);
+
+  const _onInputChange = useCallback((inputId, inputValue, inputValidity) => {
+
+    dispatchFormState({
+      type: FORM_INPUT_UPDATE,
+      input: inputId,
+      value: inputValue,
+      isValid: inputValidity
+    });
+
+  }, [dispatchFormState]);
+
+  const _onLoginPressed = () => {
+    setShowErrors(true);
+    setUpdateInputState(true);
+  }
 
   return (
     <Background>
@@ -35,26 +91,27 @@ const LoginScreen = ({ navigation }) => {
 
       <Header>Welcome back.</Header>
 
-      <Input
-        label="Email"
+      <Input style={styles.input}
+        id="username"
+        label="Username"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
+        onInputChange={_onInputChange}
+        updateState={!!updateInputState}
+        required
+        login
       />
 
-      <Input
+      <Input style={styles.input}
+        id="password"
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateState={!!updateInputState}
+        errorText={'Wrong username or password!'}
         secureTextEntry
+        required
+        login
       />
 
       <View style={styles.forgotPassword}>
