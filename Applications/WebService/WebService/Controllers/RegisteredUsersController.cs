@@ -17,7 +17,7 @@ namespace WebServis.Controllers
     {
         private RegisteredUserModel db = new RegisteredUserModel();
 
-        // GET: api/RegisteredUsers
+        // GET: api/RegisteredUsers/
         public IQueryable<RegisteredUser> GetRegisteredUsers()
         {
             return db.RegisteredUsers;
