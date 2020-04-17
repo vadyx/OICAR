@@ -1,14 +1,17 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import Background from '../components/Background';
 import Header from '../components/Header2';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
+import Loader from '../components/Loader';
 import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -38,9 +41,11 @@ const formReducer = (state, action) => {
     };
 
     let updatedFormIsValid = updatedPasswordsAreMatching;
+    console.log("Before update: " + updatedFormIsValid);
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
+    console.log("After update: " + updatedFormIsValid);
 
     return {
       inputValues: updatedValues,
@@ -57,6 +62,7 @@ const formReducer = (state, action) => {
 const RegisterScreen = props => {
 
   const [showErrors, setShowErrors] = useState(false);
+  const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -90,6 +96,7 @@ const RegisterScreen = props => {
 
   useEffect(() => {
     setUpdateInputState(false);
+    setLoadVisible(false);
 
     if(formState.formIsValid) {
       setShowErrors(false);
@@ -110,7 +117,9 @@ const RegisterScreen = props => {
 
 
   const _onSignUpPressed = () => {
+
     setUpdateInputState(true);
+    setLoadVisible(true);
     
     if (!formState.formIsValid) {
       setShowErrors(true);
@@ -118,6 +127,8 @@ const RegisterScreen = props => {
     }
     
   };
+
+ 
 
   return (
     
@@ -196,6 +207,11 @@ const RegisterScreen = props => {
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
       </Button>
+
+      <Loader
+          modalVisible={loadVisible}
+          animationType="fade"
+        />
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>

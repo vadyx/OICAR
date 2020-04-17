@@ -7,8 +7,8 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
+import Loader from '../components/Loader';
 import { theme } from '../utils/theme';
-import { emailValidator, isEmptyValidator } from '../utils/validation';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -39,9 +39,10 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = props => {
   
   const [showErrors, setShowErrors] = useState(false);
+  const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -60,6 +61,7 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     setUpdateInputState(false);
+    setLoadVisible(false);
 
     if(formState.formIsValid) {
       setShowErrors(false);
@@ -80,12 +82,13 @@ const LoginScreen = ({ navigation }) => {
 
   const _onLoginPressed = () => {
     setShowErrors(true);
+    setLoadVisible(true);
     setUpdateInputState(true);
   }
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Home')} />
+      <BackButton goBack={() => props.navigation.navigate('Home')} />
 
       <Logo />
 
@@ -125,6 +128,11 @@ const LoginScreen = ({ navigation }) => {
       <Button mode="contained" onPress={_onLoginPressed}>
         Login
       </Button>
+
+      <Loader
+          modalVisible={loadVisible}
+          animationType="fade"
+        />
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
