@@ -1,5 +1,5 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Background from '../components/Background';
 import Header from '../components/Header2';
@@ -9,8 +9,6 @@ import BackButton from '../components/BackButton';
 import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
-
-
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -59,7 +57,7 @@ const formReducer = (state, action) => {
 const RegisterScreen = props => {
 
   const [showErrors, setShowErrors] = useState(false);
-  const [updateErrors, setUpdateErrors] = useState(false);
+  const [updateInputState, setUpdateInputState] = useState(false);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -91,7 +89,7 @@ const RegisterScreen = props => {
   });
 
   useEffect(() => {
-    setUpdateErrors(false);
+    setUpdateInputState(false);
 
     if(formState.formIsValid) {
       setShowErrors(false);
@@ -112,7 +110,7 @@ const RegisterScreen = props => {
 
 
   const _onSignUpPressed = () => {
-    setUpdateErrors(true);
+    setUpdateInputState(true);
     
     if (!formState.formIsValid) {
       setShowErrors(true);
@@ -120,8 +118,6 @@ const RegisterScreen = props => {
     }
     
   };
-
- 
 
   return (
     
@@ -136,9 +132,10 @@ const RegisterScreen = props => {
         returnKeyType="next"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
-        updateErrors={!!updateErrors}
+        updateState={!!updateInputState}
         errorText={formState.inputErrors.username}
         required
+        registration
       />
 
       <Input style={styles.input}
@@ -147,9 +144,10 @@ const RegisterScreen = props => {
         returnKeyType="next"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
-        updateErrors={!!updateErrors}
+        updateState={!!updateInputState}
         errorText={formState.inputErrors.fullName}
         required
+        registration
       />
 
       <Input style={styles.input}
@@ -162,9 +160,10 @@ const RegisterScreen = props => {
         textContentType="emailAddress"
         keyboardType="email-address"
         displayError={!!showErrors}
-        updateErrors={!!updateErrors}
+        updateState={!!updateInputState}
         errorText={formState.inputErrors.email}
         required
+        registration
         email
       />
 
@@ -174,10 +173,11 @@ const RegisterScreen = props => {
         returnKeyType="done"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
-        updateErrors={!!updateErrors}
+        updateState={!!updateInputState}
         errorText={formState.inputErrors.password}
         secureTextEntry
         required
+        registration
       />
 
       <Input style={styles.input}
@@ -186,10 +186,11 @@ const RegisterScreen = props => {
         returnKeyType="done"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
-        updateErrors={!!updateErrors}
+        updateState={!!updateInputState}
         errorText={formState.inputErrors.repassword}
         secureTextEntry
         required
+        registration
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
