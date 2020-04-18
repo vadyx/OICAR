@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebServis.Models.Login;
+using WebServis.PasswordSecurity;
 
 namespace WebServis.Controllers
 {
@@ -74,17 +75,15 @@ namespace WebServis.Controllers
 
         // POST: api/LoginCredentials
         [ResponseType(typeof(LoginCredentials))]
-        public async Task<IHttpActionResult> PostLoginCredentials(LoginCredentials loginCredentials)
+        public bool PostLoginCredentials(LoginCredentials loginCredentials)
         {
-            if (!ModelState.IsValid)
+            foreach (var loginCred in db.LoginCredentials)
             {
-                return BadRequest(ModelState);
+                if (loginCred.Username.Equals(loginCredentials.Username) && PasswordStorage.VerifyPassword(loginCredentials.Pwd, loginCred.Pwd))
+                    return true;
             }
 
-            db.LoginCredentials.Add(loginCredentials);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = loginCredentials.IDLoginCredentials }, loginCredentials);
+            return false;
         }
 
         // DELETE: api/LoginCredentials/5
