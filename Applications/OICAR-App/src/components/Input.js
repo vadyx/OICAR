@@ -2,7 +2,14 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import { isEmptyValidator, emailValidator } from '../utils/validation';
+import { 
+  isEmptyValidator,
+  minLengthValidator,
+  maxLengthValidator, 
+  emailValidator,
+  usernameValidator,
+  passwordValidator
+} from '../utils/validation';
 import { theme } from '../utils/theme';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
@@ -46,8 +53,7 @@ const Input = props => {
       onInputChange(id, inputState.value, inputState.isValid, inputState.error);
     }
 
-    if(updateState && props.login) {
-      
+    if(updateState && props.login) { 
       onInputChange(id, inputState.value, inputState.isValid);
     }
 
@@ -59,14 +65,36 @@ const Input = props => {
     let isValid = true;
     let errorMsg = '';
 
-    if (props.email && !emailValidator(text)) {
-      isValid = false;
-      errorMsg = 'Ooops! We need a valid email address.'
-    }
-
-    if (props.required && !isEmptyValidator(text)) {
-      isValid = false;
-      errorMsg = props.label + ' must not be empty!';
+    if (props.registration) {
+      if (props.email && !emailValidator(text)) {
+        isValid = false;
+        errorMsg = 'Ooops! We need a valid email address.'
+      }
+  
+      if (props.username && !usernameValidator(text)) {
+        isValid = false;
+        errorMsg = 'Username is not in a valid format!';
+      }
+  
+      if (props.password && !passwordValidator(text)) {
+        isValid = false;
+        errorMsg = 'Password must contain at least one lowercase and uppercase letter and a number!';
+      }
+  
+      if (props.minLength && !minLengthValidator(text, props.minLength)) {
+        isValid = false;
+        errorMsg = `${props.label} must contain minimum ${props.minLength} characters!`;
+      }
+  
+      if (props.maxLength && !maxLengthValidator(text, props.maxLength)) {
+        isValid = false;
+        errorMsg = `${props.label} must contain maximum ${props.maxLength} characters!`;
+      }
+  
+      if (props.required && !isEmptyValidator(text)) {
+        isValid = false;
+        errorMsg = `${props.label}  must not be empty!`;
+      }
     }
 
     dispatch({

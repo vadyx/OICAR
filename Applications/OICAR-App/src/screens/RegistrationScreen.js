@@ -41,11 +41,9 @@ const formReducer = (state, action) => {
     };
 
     let updatedFormIsValid = updatedPasswordsAreMatching;
-    console.log("Before update: " + updatedFormIsValid);
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
-    console.log("After update: " + updatedFormIsValid);
 
     return {
       inputValues: updatedValues,
@@ -128,8 +126,6 @@ const RegisterScreen = props => {
     
   };
 
- 
-
   return (
     
     <Background>
@@ -146,6 +142,9 @@ const RegisterScreen = props => {
         updateState={!!updateInputState}
         errorText={formState.inputErrors.username}
         required
+        minLength={6}
+        maxLength={32}
+        username
         registration
       />
 
@@ -187,7 +186,10 @@ const RegisterScreen = props => {
         updateState={!!updateInputState}
         errorText={formState.inputErrors.password}
         secureTextEntry
+        minLength={8}
+        maxLength={64}
         required
+        password
         registration
       />
 
