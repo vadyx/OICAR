@@ -9,7 +9,7 @@ export const emailValidator = email => {
 };
 
 export const usernameValidator = username => {
-  const usernameRegex = /^(?![._-])(?!.*[_.]{2})[a-zA-Z0-9._-]+[^._]$/;
+  const usernameRegex = /^(?![._-])(?!.*[_.-]{2})[a-zA-Z0-9._-]+[^._-]$/;
 
   if (!usernameRegex.test(username)) {
     return false;

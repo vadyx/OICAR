@@ -4,7 +4,7 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-const HomeScreen = props => (
+const AuthScreen = props => (
   <Background>
     <Logo />
     <Header>OICAR</Header>
@@ -21,4 +21,4 @@ const HomeScreen = props => (
   </Background>
 );
 
-export default memo(HomeScreen);
+export default memo(AuthScreen);

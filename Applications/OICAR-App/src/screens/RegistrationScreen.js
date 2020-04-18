@@ -11,8 +11,6 @@ import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
-
-
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
@@ -98,7 +96,7 @@ const RegisterScreen = props => {
 
     if(formState.formIsValid) {
       setShowErrors(false);
-      props.navigation.navigate('Dashboard');
+      props.navigation.navigate('Auth');
     }
   }, [formState]);
 
@@ -142,7 +140,7 @@ const RegisterScreen = props => {
         updateState={!!updateInputState}
         errorText={formState.inputErrors.username}
         required
-        minLength={6}
+        minLength={4}
         maxLength={32}
         username
         registration
@@ -213,7 +211,7 @@ const RegisterScreen = props => {
       <Loader
           modalVisible={loadVisible}
           animationType="fade"
-        />
+      />
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
