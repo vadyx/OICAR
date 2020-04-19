@@ -149,7 +149,7 @@ const LoginScreen = props => {
 
 const styles = StyleSheet.create({
   forgotPassword: {
-    width: '100%',
+    width: '80%',
     alignItems: 'flex-end',
     marginBottom: 24,
   },

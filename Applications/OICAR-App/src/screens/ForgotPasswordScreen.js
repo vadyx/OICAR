@@ -1,14 +1,16 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { emailValidator } from '../utils/validation';
+
 import Background from '../components/Background';
 import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
-
 import Button from '../components/Button';
+
 import { theme } from '../utils/theme';
+
 
 const ForgotPasswordScreen = props => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -21,12 +23,12 @@ const ForgotPasswordScreen = props => {
       return;
     }
 
-    navigation.navigate('LoginScreen');
+    props.navigation.navigate('LoginScreen');
   };
 
   return (
     <Background>
-      <BackButton goBack={() => props.navigation.navigate('LoginScreen')} />
+      <BackButton goBack={() => props.navigation.goBack()} />
 
       <Logo />
 
@@ -63,18 +65,17 @@ const ForgotPasswordScreen = props => {
 const styles = StyleSheet.create({
   
   back: {
-    width: '100%',
+    width: '90%',
     marginTop: 12,
   },
 
   button: {
     marginTop: 12,
-    width:'100%'
+    width:'75%'
   },
 
   label: {
-    color: theme.colors.secondary,
-    width: '100%',
+    color: theme.colors.secondary
   }
 
 });

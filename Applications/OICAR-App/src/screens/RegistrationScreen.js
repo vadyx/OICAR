@@ -128,7 +128,6 @@ const RegisterScreen = props => {
     
     <Background>
       <BackButton goBack={() => props.navigation.goBack()} />
-
       <Header style={styles.header}>Create Account</Header>
 
       <Input style={styles.input}
@@ -208,17 +207,18 @@ const RegisterScreen = props => {
         Sign Up
       </Button>
 
-      <Loader
-          modalVisible={loadVisible}
-          animationType="fade"
-      />
-
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
         <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>
+
+      <Loader
+          modalVisible={loadVisible}
+          animationType="fade"
+      />
+
     </Background>
   );
 };
@@ -226,11 +226,6 @@ const RegisterScreen = props => {
 const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
-  },
-
-  logo: {
-    width: 60,
-    height: 60
   },
 
   button: {
@@ -244,10 +239,6 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
-  },
-
-  input:{
-    height:32
   }
 });
 

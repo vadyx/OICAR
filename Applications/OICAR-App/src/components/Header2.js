@@ -7,10 +7,10 @@ const Header = ({ children }) => <Text style={styles.header}>{children}</Text>;
 const styles = StyleSheet.create({
 
   header: {
-    fontSize: 28,
+    fontSize: 32,
     color: theme.colors.tertiary,
     fontWeight: 'bold',
-    paddingVertical: 0,
+    paddingBottom:11
   },
 });
 

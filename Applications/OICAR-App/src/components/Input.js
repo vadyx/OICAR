@@ -123,21 +123,19 @@ const Input = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    marginVertical: 8,
-    padding:0
+    width: '80%',
+    marginVertical: 5
   },
   
   input: {
     backgroundColor: theme.colors.surface,
-    height: 45
+    height: 42
   },
 
   error: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.error,
-    paddingHorizontal: 4,
-    paddingTop: 4,
+    paddingHorizontal: 4
   }
 });
 
