@@ -10,7 +10,7 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import { theme } from '../utils/theme';
 
-const ForgotPasswordScreen = ({ navigation }) => {
+const ForgotPasswordScreen = props => {
   const [email, setEmail] = useState({ value: '', error: '' });
 
   const _onSendPressed = () => {
@@ -26,7 +26,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('LoginScreen')} />
+      <BackButton goBack={() => props.navigation.navigate('LoginScreen')} />
 
       <Logo />
 
@@ -52,7 +52,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.back}
-        onPress={() => navigation.navigate('LoginScreen')}
+        onPress={() => props.navigation.navigate('LoginScreen')}
       >
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
