@@ -91,7 +91,7 @@ const LoginScreen = props => {
 
   return (
     <Background>
-      <BackButton goBack={() => props.navigation.navigate('Home')} />
+      <BackButton goBack={() => props.navigation.goBack()} />
 
       <Logo />
 
@@ -122,7 +122,7 @@ const LoginScreen = props => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPassword')}
+          onPress={() => props.navigation.navigate('ForgotPassword')}
         >
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
