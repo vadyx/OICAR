@@ -1,5 +1,6 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Background from '../components/Background';
 import Header from '../components/Header2';
@@ -7,6 +8,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
 import Loader from '../components/Loader';
+import * as authActions from '../store/actions/auth';
 import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -61,6 +63,8 @@ const RegisterScreen = props => {
   const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
 
+  const dispatch = useDispatch();
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       username: '',
@@ -90,15 +94,22 @@ const RegisterScreen = props => {
     formIsValid: false
   });
 
-  useEffect(() => {
-    setUpdateInputState(false);
-    setLoadVisible(false);
+  const _authHandler = async () => {
+    try {
 
-    if(formState.formIsValid) {
+      await dispatch(authActions.registration(
+        formState.inputValues.username,
+        formState.inputValues.fullName,
+        formState.inputValues.email,
+        formState.inputValues.password
+      ));
+    
       setShowErrors(false);
       props.navigation.navigate('Auth');
+    } catch (error) {
+      console.log(error);
     }
-  }, [formState]);
+  };
 
   const _onInputChange = useCallback((inputId, inputValue, inputValidity, inputError) => {
 
@@ -123,6 +134,16 @@ const RegisterScreen = props => {
     }
     
   };
+
+  useEffect(() => {
+    setUpdateInputState(false);
+    setLoadVisible(false);
+
+    if(formState.formIsValid) {
+      console.log('form is valid');
+      _authHandler();
+    }
+  }, [formState]);
 
   return (
     

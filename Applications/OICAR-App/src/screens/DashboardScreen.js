@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 import Background from '../components/Background';
 import Logo from '../components/Logo';
