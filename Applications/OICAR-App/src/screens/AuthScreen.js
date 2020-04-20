@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import {StyleSheet} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -21,13 +20,5 @@ const AuthScreen = props => (
     </Button>
   </Background>
 );
-
-/*const styles = StyleSheet.create({
-  background:{
-    paddingTop:200
-  }
-
-});
-*/
 
 export default memo(AuthScreen);

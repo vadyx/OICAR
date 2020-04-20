@@ -1,6 +1,6 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Background from '../components/Background';
 import Header from '../components/Header';
@@ -64,6 +64,7 @@ const RegisterScreen = props => {
   const [updateInputState, setUpdateInputState] = useState(false);
 
   const dispatch = useDispatch();
+  const registrationSuccessful = useSelector(state => state.auth.registrationSuccessful);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -105,8 +106,10 @@ const RegisterScreen = props => {
       ));
     
       setShowErrors(false);
+      setLoadVisible(false);
       props.navigation.navigate('Auth');
     } catch (error) {
+      setLoadVisible(false);
       console.log(error);
     }
   };
@@ -127,22 +130,17 @@ const RegisterScreen = props => {
 
     setUpdateInputState(true);
     setLoadVisible(true);
-    
-    if (!formState.formIsValid) {
-      setShowErrors(true);
-      return;
-    }
-    
+
   };
 
   useEffect(() => {
     setUpdateInputState(false);
-    setLoadVisible(false);
 
     if(formState.formIsValid) {
       console.log('form is valid');
       _authHandler();
     }
+
   }, [formState]);
 
   return (
@@ -155,6 +153,7 @@ const RegisterScreen = props => {
         id="username"
         label="Username"
         returnKeyType="next"
+        autoCapitalize="none"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
         updateState={!!updateInputState}

@@ -4,7 +4,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const registration = (username, fullName, email, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.5:55598/api/RegisteredUsers',
+        const response = await fetch('http://192.168.1.3:55598/api/RegisteredUsers',
             {
                 method: 'POST',
                 body: JSON.stringify({
@@ -34,7 +34,7 @@ export const registration = (username, fullName, email, password) => {
 
         dispatch({
             type: REGISTRATION,
-            isSuccessful: false
+            registrationSuccessful: true
         });
     }
 };
