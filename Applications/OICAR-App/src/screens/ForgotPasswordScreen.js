@@ -54,7 +54,7 @@ const ForgotPasswordScreen = props => {
 
       <TouchableOpacity
         style={styles.back}
-        onPress={() => props.navigation.navigate('LoginScreen')}
+        onPress={() => props.navigation.navigate('Login')}
       >
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>

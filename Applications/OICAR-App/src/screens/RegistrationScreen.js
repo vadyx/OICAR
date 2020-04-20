@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Background from '../components/Background';
-import Header from '../components/Header2';
+import Header from '../components/Header';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
@@ -245,6 +245,11 @@ const RegisterScreen = props => {
 };
 
 const styles = StyleSheet.create({
+
+  header:{
+    paddingBottom:11
+  },
+
   label: {
     color: theme.colors.secondary,
   },
