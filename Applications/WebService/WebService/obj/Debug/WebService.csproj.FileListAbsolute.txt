@@ -125,3 +125,6 @@ C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\
 C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\Microsoft.AspNetCore.Cryptography.Internal.xml
 C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\Microsoft.AspNetCore.Cryptography.KeyDerivation.xml
+C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\System.Web.Cors.dll
+C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\System.Web.Http.Cors.dll
+C:\Users\filip\Desktop\OICAR\Team6-OICAR\Applications\WebService\WebService\bin\System.Web.Http.Cors.xml
