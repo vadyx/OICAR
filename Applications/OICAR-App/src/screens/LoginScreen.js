@@ -85,16 +85,17 @@ const LoginScreen = props => {
           formState.inputValues.username,
           formState.inputValues.password
         ));
+
+        if (isLoggedIn) {
+          props.navigation.navigate('Home');
+        }
       }
     } catch (error) {
       setShowErrors(true);
     }
 
-    if (isLoggedIn) {
-      props.navigation.navigate('Home');
-    }
-
     setUpdateInputState(false);
+    setShowErrors(true);
     setLoadVisible(false);
   };
 

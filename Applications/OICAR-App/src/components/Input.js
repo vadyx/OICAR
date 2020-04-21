@@ -107,7 +107,6 @@ const Input = props => {
   };
 
   let container_style = {...styles.container};
-
   if(props.errorText){
     container_style = {...container_style,...styles.container_error}
   };
@@ -132,8 +131,8 @@ const styles = StyleSheet.create({
     width: '80%',
     marginVertical: 5
   },
-  container_error:{
 
+  container_error:{
     marginVertical:0
   },
   

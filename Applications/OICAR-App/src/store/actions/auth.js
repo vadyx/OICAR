@@ -2,17 +2,17 @@ export const REGISTRATION = 'REGISTRATION';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
-export const registration = (username, fullName, email, password) => {
+export const registration = (username, firstName, lastName, email, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.2:12335/api/RegisteredUsers',
+        const response = await fetch('http://192.168.1.3:12335/api/RegisteredUsers',
             {
                 method: 'POST',
                 headers: {
                     'Content-type' : 'application/json'
                 },
                 body: JSON.stringify({
-                    FirstName: fullName,
-                    LastName: fullName,
+                    FirstName: firstName,
+                    LastName: lastName,
                     Email: email,
                     Rating: 4.0,
                     RegistrationDate: new Date(),
@@ -25,14 +25,29 @@ export const registration = (username, fullName, email, password) => {
         );
 
         if (!response.ok) {
-            const errorResData = await response.text();
-            //response contains error, throw it as a {'column', 'errortext'} object
-            throw new Error('Registration was not ok');
+            const errorResData = await response.json();
+            let errorData;
+            switch (errorResData.Message) {
+                case 'UQ_USERNAME':
+                    errorData = {
+                        id: 'username',
+                        message: 'Username already in use!'
+                    };
+                    break;
+                case 'UQ_EMAIL':
+                    errorData = {
+                        id: 'email',
+                        message: 'Email already in use!'
+                    };
+                    break;
+                default:
+                    throw new Error('Registration failed!')
+            }
+
+            throw errorData;
         }
 
         const resData = await response.json();
-        console.log('Returned data: ');
-        console.log(resData);
 
         dispatch({
             type: REGISTRATION,
@@ -43,7 +58,7 @@ export const registration = (username, fullName, email, password) => {
 
 export const login = (username, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.2:12335/api/LoginCredentials',
+        const response = await fetch('http://192.168.1.3:12335/api/LoginCredentials',
             {
                 method: 'POST',
                 headers: {
@@ -57,16 +72,10 @@ export const login = (username, password) => {
         );
 
         if (!response.ok) {
-            const errorResData = await response.text();
-            console.log('Login went wrong');
-            console.log(errorResData);
-            //response contains error, throw it as a {'column', 'errortext'} object
-            throw new Error('Login was unsuccessful!');
+            throw new Error();
         }
 
         const resData = await response.json();
-        console.log('Returned data: ');
-        console.log(resData);
 
         if (!resData) {
             throw new Error();

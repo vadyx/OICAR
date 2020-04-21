@@ -69,7 +69,8 @@ const RegisterScreen = props => {
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       username: '',
-      fullName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       repassword: ''
@@ -77,7 +78,8 @@ const RegisterScreen = props => {
 
     inputValidities: {
       username: false,
-      fullName: false,
+      firstName: false,
+      lastName: false,
       email: false,
       password: false,
       repassword: false
@@ -85,7 +87,8 @@ const RegisterScreen = props => {
 
     inputErrors: {
       username: '',
-      fullName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       repassword: ''
@@ -98,10 +101,10 @@ const RegisterScreen = props => {
   const _regHandler = async () => {
     try {
       if (formState.formIsValid) {
-        console.log('entered valid form dispatch');
         await dispatch(authActions.registration(
           formState.inputValues.username,
-          formState.inputValues.fullName,
+          formState.inputValues.firstName,
+          formState.inputValues.lastName,
           formState.inputValues.email,
           formState.inputValues.password
         ));  
@@ -113,7 +116,7 @@ const RegisterScreen = props => {
 
     } catch (error) {
 
-      //update formState with new error for the required field
+      _onInputChange(error.id, formState.inputValues[error.id], false, error.message);
 
     }
 
@@ -175,7 +178,7 @@ const RegisterScreen = props => {
         onInputChange={_onInputChange}
         displayError={!!showErrors}
         updateState={!!updateInputState}
-        errorText={formState.inputErrors.fullName}
+        errorText={formState.inputErrors.firstName}
         required
         registration
       />
@@ -187,7 +190,7 @@ const RegisterScreen = props => {
         onInputChange={_onInputChange}
         displayError={!!showErrors}
         updateState={!!updateInputState}
-        errorText={formState.inputErrors.fullName}
+        errorText={formState.inputErrors.firstName}
         required
         registration
       />
