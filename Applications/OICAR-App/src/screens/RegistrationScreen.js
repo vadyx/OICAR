@@ -148,7 +148,7 @@ const RegisterScreen = props => {
 
   return (
     
-    <Background>
+    <Background style={styles.background}>
       <BackButton goBack={() => props.navigation.goBack()} />
       <Header style={styles.header}>Create Account</Header>
 
@@ -169,8 +169,20 @@ const RegisterScreen = props => {
       />
 
       <Input style={styles.input}
-        id="fullName"
-        label="Name"
+        id="firstName"
+        label="First name"
+        returnKeyType="next"
+        onInputChange={_onInputChange}
+        displayError={!!showErrors}
+        updateState={!!updateInputState}
+        errorText={formState.inputErrors.fullName}
+        required
+        registration
+      />
+
+      <Input style={styles.input}
+        id="lastName"
+        label="Last name"
         returnKeyType="next"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -247,6 +259,10 @@ const RegisterScreen = props => {
 };
 
 const styles = StyleSheet.create({
+
+  background:{
+    paddingTop: 80
+  },
 
   header:{
     paddingBottom:11
