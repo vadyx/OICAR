@@ -106,8 +106,14 @@ const Input = props => {
 
   };
 
+  let container_style = {...styles.container};
+
+  if(props.errorText){
+    container_style = {...container_style,...styles.container_error}
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={container_style}>
       <TextInput
         {...props}
         style={styles.input}
@@ -126,6 +132,10 @@ const styles = StyleSheet.create({
     width: '80%',
     marginVertical: 5
   },
+  container_error:{
+
+    marginVertical:0
+  },
   
   input: {
     backgroundColor: theme.colors.surface,
@@ -134,9 +144,10 @@ const styles = StyleSheet.create({
 
   error: {
     fontSize: 13,
-    color: theme.colors.error,
-    paddingHorizontal: 4
+    color: theme.colors.primary,
+    paddingHorizontal: 2
   }
+
 });
 
 export default Input;

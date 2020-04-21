@@ -5,15 +5,15 @@ import {
   StyleSheet
 } from 'react-native';
 
-const Background = ({ children }) => (
+const Background = props => (
   <ImageBackground
     source={require('../assets/backg_3.png')}
     style={styles.background}
   >
     <KeyboardAwareScrollView  resetScrollToCoords={{ x: 0, y:0 }}
-    contentContainerStyle={styles.container}
+    contentContainerStyle={{...styles.container, ...props.style}}
     scrollEnabled={true}>
-      {children}
+      {props.children}
     </KeyboardAwareScrollView>
   </ImageBackground>
 );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   container: {
-    paddingTop:120,
+    paddingTop:130,
     alignItems: 'center',
     justifyContent: 'center',
     
