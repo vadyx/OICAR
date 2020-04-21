@@ -10,6 +10,7 @@ import BackButton from '../components/BackButton';
 import Loader from '../components/Loader';
 import * as authActions from '../store/actions/auth';
 import { theme } from '../utils/theme';
+import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -97,21 +98,28 @@ const RegisterScreen = props => {
 
   const _authHandler = async () => {
     try {
-
-      await dispatch(authActions.registration(
-        formState.inputValues.username,
-        formState.inputValues.fullName,
-        formState.inputValues.email,
-        formState.inputValues.password
-      ));
-    
+      if (formState.formIsValid) {
+        await dispatch(authActions.registration(
+          formState.inputValues.username,
+          formState.inputValues.fullName,
+          formState.inputValues.email,
+          formState.inputValues.password
+        ));      
+      }
+      
       setShowErrors(false);
-      setLoadVisible(false);
       props.navigation.navigate('Auth');
+
     } catch (error) {
+
+      //update formState with new error for the required field
+
       setLoadVisible(false);
-      console.log(error);
     }
+
+    setUpdateInputState(false);
+    setLoadVisible(false);
+    setShowErrors(true);
   };
 
   const _onInputChange = useCallback((inputId, inputValue, inputValidity, inputError) => {
@@ -128,19 +136,16 @@ const RegisterScreen = props => {
 
   const _onSignUpPressed = () => {
 
-    setUpdateInputState(true);
     setLoadVisible(true);
+    setShowErrors(false);
+    setUpdateInputState(true);
+
+    setTimeout(() => {}, 2000);
 
   };
 
   useEffect(() => {
-    setUpdateInputState(false);
-
-    if(formState.formIsValid) {
-      console.log('form is valid');
-      _authHandler();
-    }
-
+    _authHandler();
   }, [formState]);
 
   return (
