@@ -42,7 +42,7 @@ create table RegisteredUser
 	IDRegisteredUser int primary key identity,
 	FirstName nvarchar(100) not null,
 	LastName nvarchar(100) not null,
-	Email nvarchar(256) not null,
+	Email nvarchar(256) not null UNIQUE,
 	LoginCredentialsID int not null,
 	Rating decimal(3,2) not null,
 	RegistrationDate date not null default GETDATE(),

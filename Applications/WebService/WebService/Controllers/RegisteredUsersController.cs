@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using WebServis.Models.Registration;
 
 namespace WebServis.Controllers
@@ -82,7 +86,32 @@ namespace WebServis.Controllers
 
             registeredUser.LoginCredentials.Pwd = PasswordSecurity.PasswordStorage.CreateHash(registeredUser.LoginCredentials.Pwd);
             db.RegisteredUsers.Add(registeredUser);
-            await db.SaveChangesAsync();
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            when (e.InnerException?.InnerException is SqlException sqlEx && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+            {
+                string value = "";
+                string data = sqlEx.Message.Split('(', ')')[1];
+                if (data == registeredUser.LoginCredentials.Username)
+                    value = "Username";
+                else if (data == registeredUser.Email)
+                    value = "Email";
+
+                var json = new
+                {
+                    Value = value,
+                    Data = data,
+                    Error = sqlEx.Message
+                };
+
+                string jsonResponse = JsonConvert.SerializeObject(json);
+
+                return BadRequest(jsonResponse);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = registeredUser.IDRegisteredUser }, registeredUser);
         }
