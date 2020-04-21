@@ -95,23 +95,15 @@ namespace WebServis.Controllers
             catch (DbUpdateException e)
             when (e.InnerException?.InnerException is SqlException sqlEx && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
             {
-                string value = "";
+                string message = "";
                 string data = sqlEx.Message.Split('(', ')')[1];
                 if (data == registeredUser.LoginCredentials.Username)
-                    value = "Username";
+                    message = "UQ_USERNAME";
                 else if (data == registeredUser.Email)
-                    value = "Email";
+                    message = "UQ_EMAIL";
 
-                var json = new
-                {
-                    Value = value,
-                    Data = data,
-                    Error = sqlEx.Message
-                };
 
-                string jsonResponse = JsonConvert.SerializeObject(json);
-
-                return Json(jsonResponse);
+                return BadRequest(message);
             }
 
             return CreatedAtRoute("DefaultApi", new { id = registeredUser.IDRegisteredUser }, registeredUser);
