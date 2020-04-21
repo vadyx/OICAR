@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -110,7 +111,7 @@ namespace WebServis.Controllers
 
                 string jsonResponse = JsonConvert.SerializeObject(json);
 
-                return BadRequest(jsonResponse);
+                return Json(jsonResponse);
             }
 
             return CreatedAtRoute("DefaultApi", new { id = registeredUser.IDRegisteredUser }, registeredUser);
