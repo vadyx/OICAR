@@ -38,7 +38,45 @@ export const registration = (username, fullName, email, password) => {
             type: REGISTRATION,
             registrationSuccessful: true
         });
-    }
+    };
+};
+
+export const login = (username, password) => {
+    return async dispatch => {
+        const response = await fetch('http://192.168.1.3:12335/api/LoginCredentials',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    Username: username,
+                    Pwd: password
+                })
+            }
+        );
+
+        if (!response.ok) {
+            const errorResData = await response.text();
+            console.log('Login went wrong');
+            console.log(errorResData);
+            //response contains error, throw it as a {'column', 'errortext'} object
+            throw new Error('Login was unsuccessful!');
+        }
+
+        const resData = await response.json();
+        console.log('Returned data: ');
+        console.log(resData);
+
+        if (!resData) {
+            throw new Error();
+        }
+
+        dispatch({
+            type: LOGIN,
+            isLoggedIn: true
+        });
+    };
 };
 
 export const logout = () => {

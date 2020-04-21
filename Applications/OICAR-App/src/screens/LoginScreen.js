@@ -1,5 +1,6 @@
 import React, { memo, useState, useReducer, useEffect, useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -8,6 +9,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import BackButton from '../components/BackButton';
 import Loader from '../components/Loader';
+import * as authActions from '../store/actions/auth';
 import { theme } from '../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -46,6 +48,9 @@ const LoginScreen = props => {
   const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
 
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       username: '',
@@ -61,16 +66,6 @@ const LoginScreen = props => {
     formIsValid: false
   });
 
-  useEffect(() => {
-    setUpdateInputState(false);
-    setLoadVisible(false);
-
-    if(formState.formIsValid) {
-      setShowErrors(false);
-      props.navigation.navigate('Dashboard');
-    } 
-  }, [formState]);
-
   const _onInputChange = useCallback((inputId, inputValue, inputValidity) => {
 
     dispatchFormState({
@@ -83,11 +78,37 @@ const LoginScreen = props => {
 
   }, [dispatchFormState]);
 
+  const _loginHandler = async () => {
+    try {
+      if (formState.formIsValid) {
+        await dispatch(authActions.login(
+          formState.inputValues.username,
+          formState.inputValues.password
+        ));
+      }
+    } catch (error) {
+      setShowErrors(true);
+    }
+
+    if (isLoggedIn) {
+      props.navigation.navigate('Home');
+    }
+
+    setUpdateInputState(false);
+    setLoadVisible(false);
+  };
+
   const _onLoginPressed = () => {
+
+    setShowErrors(false);
     setLoadVisible(true);
-    setShowErrors(true);
     setUpdateInputState(true);
+
   }
+
+  useEffect(() => {
+    _loginHandler(); 
+  }, [formState, isLoggedIn]);
 
   return (
     <Background>

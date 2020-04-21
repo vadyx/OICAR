@@ -10,7 +10,6 @@ import BackButton from '../components/BackButton';
 import Loader from '../components/Loader';
 import * as authActions from '../store/actions/auth';
 import { theme } from '../utils/theme';
-import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -96,25 +95,26 @@ const RegisterScreen = props => {
     formIsValid: false
   });
 
-  const _authHandler = async () => {
+  const _regHandler = async () => {
     try {
       if (formState.formIsValid) {
+        console.log('entered valid form dispatch');
         await dispatch(authActions.registration(
           formState.inputValues.username,
           formState.inputValues.fullName,
           formState.inputValues.email,
           formState.inputValues.password
-        ));      
+        ));  
+        
+        props.navigation.navigate('Auth');
       }
-      
-      setShowErrors(false);
-      props.navigation.navigate('Auth');
+
+      //show Registration Successful modal
 
     } catch (error) {
 
       //update formState with new error for the required field
 
-      setLoadVisible(false);
     }
 
     setUpdateInputState(false);
@@ -136,16 +136,14 @@ const RegisterScreen = props => {
 
   const _onSignUpPressed = () => {
 
-    setLoadVisible(true);
     setShowErrors(false);
+    setLoadVisible(true);
     setUpdateInputState(true);
-
-    setTimeout(() => {}, 2000);
 
   };
 
   useEffect(() => {
-    _authHandler();
+    _regHandler();
   }, [formState]);
 
   return (

@@ -12,6 +12,11 @@ export default (state = initialState, action) => {
                 ...state,
                 registrationSuccessful: action.registrationSuccessful
             };
+        case LOGIN:
+            return {
+                ...state,
+                isLoggedIn: action.isLoggedIn
+            };
         case LOGOUT:
             return initialState;
         default:

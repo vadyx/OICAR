@@ -15,7 +15,7 @@ const Router = createStackNavigator(
     Login: LoginScreen,
     Registration: RegistrationScreen,
     ForgotPassword: ForgotPasswordScreen,
-    Dashboard: DashboardScreen,
+    Home: DashboardScreen,
   },
   {
     headerMode: 'none',
