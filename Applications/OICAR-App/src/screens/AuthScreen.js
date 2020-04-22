@@ -10,13 +10,13 @@ const AuthScreen = props => (
     <Header>OICAR</Header>
 
     <Button mode="contained" onPress={() => props.navigation.navigate('Login')}>
-      Login
+      Prijava
     </Button>
     <Button
       mode="outlined"
       onPress={() => props.navigation.navigate('Registration')}
     >
-      Sign Up
+      Registracija
     </Button>
   </Background>
 );

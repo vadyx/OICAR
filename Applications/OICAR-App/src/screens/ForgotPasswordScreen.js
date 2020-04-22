@@ -32,7 +32,7 @@ const ForgotPasswordScreen = props => {
 
       <Logo />
 
-      <Header>Restore Password</Header>
+      <Header>Oporavak računa</Header>
 
       {/* <Input
         id="email"
@@ -49,14 +49,14 @@ const ForgotPasswordScreen = props => {
       /> */}
 
       <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
-        Send Reset Instructions
+        Pošalji instrukcije oporavka
       </Button>
 
       <TouchableOpacity
         style={styles.back}
         onPress={() => props.navigation.navigate('Login')}
       >
-        <Text style={styles.label}>← Back to login</Text>
+        <Text style={styles.label}>← Povratak na prijavu</Text>
       </TouchableOpacity>
     </Background>
   );
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 12,
-    width:'75%'
+    width:'83%'
   },
 
   label: {

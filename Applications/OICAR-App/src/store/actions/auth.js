@@ -4,7 +4,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const registration = (username, firstName, lastName, email, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.3:12335/api/RegisteredUsers',
+        const response = await fetch('http://192.168.1.2:12335/api/RegisteredUsers',
             {
                 method: 'POST',
                 headers: {
@@ -31,13 +31,13 @@ export const registration = (username, firstName, lastName, email, password) => 
                 case 'UQ_USERNAME':
                     errorData = {
                         id: 'username',
-                        message: 'Username already in use!'
+                        message: 'Netko već koristi ovo korisničko ime!'
                     };
                     break;
                 case 'UQ_EMAIL':
                     errorData = {
                         id: 'email',
-                        message: 'Email already in use!'
+                        message: 'Ova adresa e-pošte se već koristi!'
                     };
                     break;
                 default:
@@ -58,7 +58,7 @@ export const registration = (username, firstName, lastName, email, password) => 
 
 export const login = (username, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.3:12335/api/LoginCredentials',
+        const response = await fetch('http://192.168.1.2:12335/api/LoginCredentials',
             {
                 method: 'POST',
                 headers: {

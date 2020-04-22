@@ -31,7 +31,7 @@ const formReducer = (state, action) => {
       updatedPasswordsAreMatching = updatedValues["password"] === updatedValues["repassword"];
 
       if (!updatedPasswordsAreMatching) {
-        passwordMatchingError = 'Passwords are not matching';
+        passwordMatchingError = 'Lozinke se ne podudaraju';
       }
     }
 
@@ -153,11 +153,11 @@ const RegisterScreen = props => {
     
     <Background style={styles.background}>
       <BackButton goBack={() => props.navigation.goBack()} />
-      <Header style={styles.header}>Create Account</Header>
+      <Header style={styles.header}>Registracija</Header>
 
       <Input style={styles.input}
         id="username"
-        label="Username"
+        label="Korisničko ime"
         returnKeyType="next"
         autoCapitalize="none"
         onInputChange={_onInputChange}
@@ -173,7 +173,7 @@ const RegisterScreen = props => {
 
       <Input style={styles.input}
         id="firstName"
-        label="First name"
+        label="Ime"
         returnKeyType="next"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -185,7 +185,7 @@ const RegisterScreen = props => {
 
       <Input style={styles.input}
         id="lastName"
-        label="Last name"
+        label="Prezime"
         returnKeyType="next"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -197,7 +197,7 @@ const RegisterScreen = props => {
 
       <Input style={styles.input}
         id="email"
-        label="Email"
+        label="Adresa e-pošte"
         returnKeyType="next"
         onInputChange={_onInputChange}
         autoCapitalize="none"
@@ -214,7 +214,7 @@ const RegisterScreen = props => {
 
       <Input style={styles.input}
         id="password"
-        label="Password"
+        label="Lozinka"
         returnKeyType="done"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -230,7 +230,7 @@ const RegisterScreen = props => {
 
       <Input style={styles.input}
         id="repassword"
-        label="Confirm Password"
+        label="Ponovljena lozinka"
         returnKeyType="done"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -242,13 +242,13 @@ const RegisterScreen = props => {
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
-        Sign Up
+        Registriraj se
       </Button>
 
       <View style={styles.row}>
-        <Text style={styles.label}>Already have an account? </Text>
+        <Text style={styles.label}>Već imate račun? </Text>
         <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
-          <Text style={styles.link}>Login</Text>
+          <Text style={styles.link}> Prijava</Text>
         </TouchableOpacity>
       </View>
 

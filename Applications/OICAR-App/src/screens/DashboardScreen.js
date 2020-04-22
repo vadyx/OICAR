@@ -21,13 +21,12 @@ const DashboardScreen = props => {
   return (
     <Background>
       <Logo />
-      <Header>Let’s start</Header>
+      <Header>Krenimo !</Header>
       <Paragraph>
-        Your amazing app starts here. Open you favourite code editor and start
-        editing this project.
+        Dobrodošli u OICAR aplikaciju
       </Paragraph>
       <Button mode="outlined" onPress={_logoutHandler}>
-        Logout
+        Odjavite se
       </Button>
     </Background>
   );

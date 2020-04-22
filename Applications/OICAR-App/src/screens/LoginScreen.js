@@ -73,7 +73,7 @@ const LoginScreen = props => {
       input: inputId,
       value: inputValue,
       isValid: inputValidity,
-      error: 'Wrong username or password!'
+      error: 'Pogrešno korisničko ime ili lozinka!'
     });
 
   }, [dispatchFormState]);
@@ -117,11 +117,11 @@ const LoginScreen = props => {
 
       <Logo />
 
-      <Header>Welcome back.</Header>
+      <Header>Dobrodošli natrag.</Header>
 
       <Input style={styles.input}
         id="username"
-        label="Username"
+        label="Korisničko ime"
         returnKeyType="next"
         onInputChange={_onInputChange}
         updateState={!!updateInputState}
@@ -131,7 +131,7 @@ const LoginScreen = props => {
 
       <Input style={styles.input}
         id="password"
-        label="Password"
+        label="Lozinka"
         returnKeyType="done"
         onInputChange={_onInputChange}
         displayError={!!showErrors}
@@ -146,12 +146,12 @@ const LoginScreen = props => {
         <TouchableOpacity
           onPress={() => props.navigation.navigate('ForgotPassword')}
         >
-          <Text style={styles.label}>Forgot your password?</Text>
+          <Text style={styles.label}>Zaboravili ste lozinku?</Text>
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={_onLoginPressed}>
-        Login
+      <Button mode="contained" onPress={_onLoginPressed} style={styles.button}>
+        Prijava
       </Button>
 
       <Loader
@@ -160,9 +160,9 @@ const LoginScreen = props => {
         />
 
       <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
+        <Text style={styles.label}>Još nemate račun? </Text>
         <TouchableOpacity onPress={() => props.navigation.navigate('Registration')}>
-          <Text style={styles.link}>Sign up</Text>
+          <Text style={styles.link}> Registriraj se!</Text>
         </TouchableOpacity>
       </View>
     </Background>
@@ -170,6 +170,10 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  button:{
+    width:"40%"
+  },
+
   forgotPassword: {
     width: '80%',
     alignItems: 'flex-end',

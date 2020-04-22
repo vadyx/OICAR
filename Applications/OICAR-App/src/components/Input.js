@@ -35,7 +35,7 @@ const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
     isValid: props.initialValue ? true : false,
-    error: props.label + " must not be empty!"
+    error: `Polje ne smije biti prazno!`
   });
 
   const { onInputChange, id } = props;
@@ -68,32 +68,32 @@ const Input = props => {
     if (props.registration) {
       if (props.email && !emailValidator(text)) {
         isValid = false;
-        errorMsg = 'Ooops! We need a valid email address.'
+        errorMsg = 'Ups! Potrebna je ispravna adresa e-pošte.'
       }
   
       if (props.username && !usernameValidator(text)) {
         isValid = false;
-        errorMsg = 'Username is not in a valid format!';
+        errorMsg = 'Korisničko ime nije u ispravnom obliku!';
       }
   
       if (props.password && !passwordValidator(text)) {
         isValid = false;
-        errorMsg = 'Password must contain at least one lowercase and uppercase letter and a number!';
+        errorMsg = 'Lozinka mora sadržavati barem jedno malo, jedno veliko slovo te jedan broj!';
       }
   
       if (props.minLength && !minLengthValidator(text, props.minLength)) {
         isValid = false;
-        errorMsg = `${props.label} must contain minimum ${props.minLength} characters!`;
+        errorMsg = `${props.label} mora sadržavati minimalno ${props.minLength} znaka!`;
       }
   
       if (props.maxLength && !maxLengthValidator(text, props.maxLength)) {
         isValid = false;
-        errorMsg = `${props.label} must contain maximum ${props.maxLength} characters!`;
+        errorMsg = `${props.label} može sadržavati maksimalno  ${props.maxLength} znakova!`;
       }
   
       if (props.required && !isEmptyValidator(text)) {
         isValid = false;
-        errorMsg = `${props.label}  must not be empty!`;
+        errorMsg = `${props.label}  ne smije biti prazno!`;
       }
     }
 
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   error: {
-    fontSize: 13,
+    fontSize: 14,
     color: theme.colors.primary,
     paddingHorizontal: 2
   }

@@ -21,7 +21,7 @@ const Button = ({ mode, style, children, ...props }) => (
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius:15,
+    borderRadius:30,
     width: '50%',
     marginVertical: 10,
   },
