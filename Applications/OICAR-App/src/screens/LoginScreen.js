@@ -88,14 +88,15 @@ const LoginScreen = props => {
 
         if (isLoggedIn) {
           props.navigation.navigate('Home');
-        }
+        } 
+      } else {
+        setShowErrors(true);
       }
     } catch (error) {
       setShowErrors(true);
     }
 
     setUpdateInputState(false);
-    setShowErrors(true);
     setLoadVisible(false);
   };
 
