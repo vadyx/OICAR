@@ -93,7 +93,7 @@ const Input = props => {
   
       if (props.required && !isEmptyValidator(text)) {
         isValid = false;
-        errorMsg = `${props.label}  ne smije biti prazno!`;
+        errorMsg = `${props.label} ne smije biti prazno!`;
       }
     }
 

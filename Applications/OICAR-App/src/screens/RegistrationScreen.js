@@ -190,7 +190,7 @@ const RegisterScreen = props => {
         onInputChange={_onInputChange}
         displayError={!!showErrors}
         updateState={!!updateInputState}
-        errorText={formState.inputErrors.firstName}
+        errorText={formState.inputErrors.lastName}
         required
         registration
       />
