@@ -1,15 +1,15 @@
 import React, { memo, useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { emailValidator } from '../utils/validation';
+import { emailValidator } from '../../utils/validation';
 
-import Background from '../components/Background';
-import BackButton from '../components/BackButton';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
+import Background from '../../components/Background';
+import BackButton from '../../components/BackButton';
+import Logo from '../../components/Logo';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
 
-import { theme } from '../utils/theme';
+import { theme } from '../../utils/theme';
 
 
 const ForgotPasswordScreen = props => {

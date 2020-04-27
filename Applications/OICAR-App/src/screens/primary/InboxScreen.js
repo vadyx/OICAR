@@ -5,16 +5,14 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class AddContainer extends Component {
-  render() {
-    return (
-      <View style={styles.wrapper}>
-        <Text>
-          Add Container
-        </Text>
-      </View>
-    );
-  }
+const InboxScreen = props => {
+  return (
+    <View style={styles.wrapper}>
+      <Text>
+        Inbox Container
+      </Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -25,3 +23,5 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+export default InboxScreen;

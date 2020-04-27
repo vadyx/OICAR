@@ -2,14 +2,14 @@ import React, { memo, useReducer, useCallback, useEffect, useState } from 'react
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Background from '../components/Background';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import BackButton from '../components/BackButton';
-import Loader from '../components/Loader';
-import * as authActions from '../store/actions/auth';
-import { theme } from '../utils/theme';
+import Background from '../../components/Background';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import BackButton from '../../components/BackButton';
+import Loader from '../../components/Loader';
+import * as authActions from '../../store/actions/auth';
+import { theme } from '../../utils/theme';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 

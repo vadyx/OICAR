@@ -11,14 +11,14 @@ import {
     Dimensions
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons'
-import Category from '../components/Category'
-import Home from '../components/Home'
-import Logo from "../components/Logo"
+import Category from '../../components/Category'
+import Home from '../../components/Home'
+import Logo from "../../components/Logo"
 import { Video } from 'expo-av';
 const { height, width } = Dimensions.get('window')
 
 
-const ExploreContainer = props => {
+const ExploreScreen = props => {
 
         let startHeaderHeight = 80;
         if (Platform.OS == 'android') {
@@ -58,22 +58,22 @@ const ExploreContainer = props => {
                                     horizontal={true}
                                     showsHorizontalScrollIndicator={false}
                                 >
-                                    <Category imageUri={require('../assets/carcategory.jpg')}
+                                    <Category imageUri={require('../../assets/carcategory.jpg')}
                                         name="Automobili"
                                     />
-                                    <Category imageUri={require('../assets/motorbikecategory.jpg')}
+                                    <Category imageUri={require('../../assets/motorbikecategory.jpg')}
                                         name="Motocikli"
                                     />
-                                    <Category imageUri={require('../assets/truckcategory.jpg')}
+                                    <Category imageUri={require('../../assets/truckcategory.jpg')}
                                         name="Kamioni"
                                     />
-                                     <Category imageUri={require('../assets/bikecategory.jpg')}
+                                     <Category imageUri={require('../../assets/bikecategory.jpg')}
                                         name="Bicikli"
                                     />
-                                     <Category imageUri={require('../assets/boatcategory.jpg')}
+                                     <Category imageUri={require('../../assets/boatcategory.jpg')}
                                         name="Brodovi"
                                     />
-                                     <Category imageUri={require('../assets/campercategory.jpg')}
+                                     <Category imageUri={require('../../assets/campercategory.jpg')}
                                         name="Ostalo"
                                     />
                                 </ScrollView>
@@ -88,7 +88,7 @@ const ExploreContainer = props => {
                                 <View style={styles.container6}>
                                   
                                     <Video
-                                        source={require("../assets/Boat.mp4")}
+                                        source={require("../../assets/Boat.mp4")}
                                         rate={1.0}
                                         isMuted={true}
                                         resizeMode="contain"
@@ -110,21 +110,21 @@ const ExploreContainer = props => {
                             </Text>
                             <View style={styles.container8}>
                                 <Home width={width}
-                                    imageUri={require('../assets/scooter.jpg')}
+                                    imageUri={require('../../assets/scooter.jpg')}
                                     name="Aprilia Scooter 1"
                                     type="Motocikl"
                                     price={20}
                                     rating={4}
                                 />
                                 <Home width={width}
-                                    imageUri={require('../assets/audia3.jpg')}
+                                    imageUri={require('../../assets/audia3.jpg')}
                                     name="Audi A3"
                                     type="Automobil"
                                     price={42}
                                     rating={3.5}
                                 />
                                 <Home width={width}
-                                    imageUri={require('../assets/car3.jpg')}
+                                    imageUri={require('../../assets/car3.jpg')}
                                     name="Fiat Punto"
                                     type="Automobil"
                                     price={30}
@@ -137,8 +137,6 @@ const ExploreContainer = props => {
             </SafeAreaView>
         );
     };
-
-export default ExploreContainer;
 
 const styles = StyleSheet.create({
     container: {
@@ -240,3 +238,6 @@ const styles = StyleSheet.create({
       height:"100%"
     }
 });
+
+
+export default ExploreScreen;

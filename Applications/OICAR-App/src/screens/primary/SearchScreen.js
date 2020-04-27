@@ -5,16 +5,14 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class InboxContainer extends Component {
-  render() {
-    return (
-      <View style={styles.wrapper}>
-        <Text>
-          Inbox Container
-        </Text>
-      </View>
-    );
-  }
+const SearchContainer = props => {
+  return (
+    <View style={styles.wrapper}>
+      <Text>
+          Profile Container
+      </Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -25,3 +23,5 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+export default SearchContainer;
