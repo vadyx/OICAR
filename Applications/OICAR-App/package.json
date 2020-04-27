@@ -8,9 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.0.6",
+    "@expo/vector-icons": "^10.1.0",
     "@react-native-community/masked-view": "0.1.6",
+    "@react-navigation/bottom-tabs": "^5.2.7",
     "expo": "~37.0.3",
+    "expo-av": "^8.1.0",
     "mem": "^6.1.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -21,6 +23,7 @@
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
+    "react-native-star-rating": "^1.1.0",
     "react-native-status-bar-height": "^2.5.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.7",

@@ -1,6 +1,6 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-
+import LoggedInTabNavigator from '../navigator/LoggedInTabNavigator'
 import {
   AuthScreen,
   LoginScreen,
@@ -15,7 +15,7 @@ const Router = createStackNavigator(
     Login: LoginScreen,
     Registration: RegistrationScreen,
     ForgotPassword: ForgotPasswordScreen,
-    Home: DashboardScreen,
+    Home: LoggedInTabNavigator,
   },
   {
     headerMode: 'none',

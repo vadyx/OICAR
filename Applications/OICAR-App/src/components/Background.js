@@ -7,7 +7,7 @@ import {
 
 const Background = props => (
   <ImageBackground
-    source={require('../assets/backg_3.png')}
+    source={require('../assets/splash_2.png')}
     style={styles.background}
   >
     <KeyboardAwareScrollView  resetScrollToCoords={{ x: 0, y:0 }}

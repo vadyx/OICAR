@@ -145,7 +145,7 @@ const LoginScreen = props => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('ForgotPassword')}
+          onPress={() => props.navigation.navigate('Home')}
         >
           <Text style={styles.label}>Zaboravili ste lozinku?</Text>
         </TouchableOpacity>
