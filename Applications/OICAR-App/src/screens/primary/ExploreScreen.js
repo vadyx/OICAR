@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
     View,
     Text,
@@ -10,131 +10,133 @@ import {
     ScrollView,
     Dimensions
 } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons'
-import Category from '../../components/Category'
-import Home from '../../components/Home'
-import Logo from "../../components/Logo"
+import Icon from 'react-native-vector-icons/Ionicons';
+import { withNavigationFocus } from 'react-navigation';
 import { Video } from 'expo-av';
-const { height, width } = Dimensions.get('window')
 
+import Category from '../../components/Category';
+import Home from '../../components/Home';
+import Logo from "../../components/Logo";
 
-const ExploreScreen = props => {
+const { height, width } = Dimensions.get('window');
 
-        let startHeaderHeight = 80;
-        if (Platform.OS == 'android') {
-            startHeaderHeight = 58 + StatusBar.currentHeight}
+const ExploreScreen = props => { 
 
-        return (
-            <SafeAreaView style={styles.safeareastyle}>
-                <View style={styles.container}>
-                    <View style={styles.container1}>
+  let startHeaderHeight = 80;
+  if (Platform.OS == 'android') {
+      startHeaderHeight = 58 + StatusBar.currentHeight}
 
-                            <Logo style={styles.logostyle}/>
+  return (
+      <SafeAreaView style={styles.safeareastyle}>
+          <View style={styles.container}>
+              <View style={styles.container1}>
 
-                        <View style={styles.container2}>
+                      <Logo style={styles.logostyle}/>
 
-                            <Icon name="ios-search" size={22} style={styles.iconstyle} />
-                            <TextInput
-                                underlineColorAndroid="transparent"
-                                placeholder="Pokušaj brodovi u Splitu ...."
-                                placeholderTextColor="grey"
-                                style={styles.textinputstyle}
-                            />
-                        </View>
-                    </View>
+                  <View style={styles.container2}>
 
-                    <ScrollView
-                        scrollEventThrottle={16}
-                        style={styles.scrollviewstyle}>
+                      <Icon name="ios-search" size={22} style={styles.iconstyle} />
+                      <TextInput
+                          underlineColorAndroid="transparent"
+                          placeholder="Pokušaj brodovi u Splitu ...."
+                          placeholderTextColor="grey"
+                          style={styles.textinputstyle}
+                      />
+                  </View>
+              </View>
 
-                      <View style={styles.container3}>
+              <ScrollView
+                  scrollEventThrottle={16}
+                  style={styles.scrollviewstyle}>
 
-                            <Text style={styles.textstyle}>
-                                Kategorije vozila
-                            </Text>
+                <View style={styles.container3}>
+
+                      <Text style={styles.textstyle}>
+                          Kategorije vozila
+                      </Text>
+                      
+                      <View style={styles.container4}>
+                          <ScrollView
+                              horizontal={true}
+                              showsHorizontalScrollIndicator={false}
+                          >
+                              <Category imageUri={require('../../assets/carcategory.jpg')}
+                                  name="Automobili"
+                              />
+                              <Category imageUri={require('../../assets/motorbikecategory.jpg')}
+                                  name="Motocikli"
+                              />
+                              <Category imageUri={require('../../assets/truckcategory.jpg')}
+                                  name="Kamioni"
+                              />
+                                <Category imageUri={require('../../assets/bikecategory.jpg')}
+                                  name="Bicikli"
+                              />
+                                <Category imageUri={require('../../assets/boatcategory.jpg')}
+                                  name="Brodovi"
+                              />
+                                <Category imageUri={require('../../assets/campercategory.jpg')}
+                                  name="Ostalo"
+                              />
+                          </ScrollView>
+                      </View>
+                      <View style={styles.container5}>
+                          <Text style={styles.textstyle1}>
+                              Turistička opcija
+                          </Text>
+                          <Text style={styles.textstyle2}>
+                              Odaberite brod i započnite svoje nezaboravno plovljenje Jadranom!
+                          </Text>
+                          <View style={styles.container6}>
                             
-                            <View style={styles.container4}>
-                                <ScrollView
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                >
-                                    <Category imageUri={require('../../assets/carcategory.jpg')}
-                                        name="Automobili"
-                                    />
-                                    <Category imageUri={require('../../assets/motorbikecategory.jpg')}
-                                        name="Motocikli"
-                                    />
-                                    <Category imageUri={require('../../assets/truckcategory.jpg')}
-                                        name="Kamioni"
-                                    />
-                                     <Category imageUri={require('../../assets/bikecategory.jpg')}
-                                        name="Bicikli"
-                                    />
-                                     <Category imageUri={require('../../assets/boatcategory.jpg')}
-                                        name="Brodovi"
-                                    />
-                                     <Category imageUri={require('../../assets/campercategory.jpg')}
-                                        name="Ostalo"
-                                    />
-                                </ScrollView>
-                            </View>
-                            <View style={styles.container5}>
-                                <Text style={styles.textstyle1}>
-                                    Turistička opcija
-                                </Text>
-                                <Text style={styles.textstyle2}>
-                                   Odaberite brod i započnite svoje nezaboravno plovljenje Jadranom!
-                                </Text>
-                                <View style={styles.container6}>
-                                  
-                                    <Video
-                                        source={require("../../assets/Boat.mp4")}
-                                        rate={1.0}
-                                        isMuted={true}
-                                        resizeMode="contain"
-                                        shouldPlay
-                                        isLooping
-                                        style={styles.video1}
-                                      />
-                                   {/*}<Image
-                                        style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
-                                        source={require('../assets/boatmain.jpg')}
-                                    />*/}
-                                    
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.container7}>
-                            <Text style={styles.textstyle}>
-                                Vozila širom Hrvatske
-                            </Text>
-                            <View style={styles.container8}>
-                                <Home width={width}
-                                    imageUri={require('../../assets/scooter.jpg')}
-                                    name="Aprilia Scooter 1"
-                                    type="Motocikl"
-                                    price={20}
-                                    rating={4}
+                              <Video
+                                  source={require("../../assets/Boat.mp4")}
+                                  rate={1.0}
+                                  isMuted={true}
+                                  resizeMode="contain"
+                                  shouldPlay={!!props.isFocused}
+                                  isLooping
+                                  style={styles.video1}
                                 />
-                                <Home width={width}
-                                    imageUri={require('../../assets/audia3.jpg')}
-                                    name="Audi A3"
-                                    type="Automobil"
-                                    price={42}
-                                    rating={3.5}
-                                />
-                                <Home width={width}
-                                    imageUri={require('../../assets/car3.jpg')}
-                                    name="Fiat Punto"
-                                    type="Automobil"
-                                    price={30}
-                                    rating={4.5}
-                                />
-                            </View>
-                        </View>
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
+                              {/*}<Image
+                                  style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
+                                  source={require('../assets/boatmain.jpg')}
+                              />*/}
+                              
+                          </View>
+                      </View>
+                  </View>
+                  <View style={styles.container7}>
+                      <Text style={styles.textstyle}>
+                          Vozila širom Hrvatske
+                      </Text>
+                      <View style={styles.container8}>
+                          <Home width={width}
+                              imageUri={require('../../assets/scooter.jpg')}
+                              name="Aprilia Scooter 1"
+                              type="Motocikl"
+                              price={20}
+                              rating={4}
+                          />
+                          <Home width={width}
+                              imageUri={require('../../assets/audia3.jpg')}
+                              name="Audi A3"
+                              type="Automobil"
+                              price={42}
+                              rating={3.5}
+                          />
+                          <Home width={width}
+                              imageUri={require('../../assets/car3.jpg')}
+                              name="Fiat Punto"
+                              type="Automobil"
+                              price={30}
+                              rating={4.5}
+                          />
+                      </View>
+                  </View>
+              </ScrollView>
+          </View>
+      </SafeAreaView>
         );
     };
 
@@ -240,4 +242,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ExploreScreen;
+export default withNavigationFocus(ExploreScreen);
