@@ -28,14 +28,14 @@ namespace WebServis.Controllers
             return db.RegisteredUsers;
         }
 
-        // GET: api/RegisteredUsers/5
+        // GET: api/RegisteredUsers/username
         [ResponseType(typeof(RegisteredUser))]
-        public async Task<IHttpActionResult> GetRegisteredUser(int id)
+        public async Task<IHttpActionResult> GetRegisteredUser(string username)
         {
-            RegisteredUser registeredUser = await db.RegisteredUsers.FindAsync(id);
+            RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.LoginCredentials.Username == username).SingleOrDefaultAsync();
             if (registeredUser == null)
             {
-                return NotFound();
+                return BadRequest("Not found");
             }
 
             return Ok(registeredUser);
@@ -106,7 +106,7 @@ namespace WebServis.Controllers
                 return BadRequest(message);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = registeredUser.IDRegisteredUser }, registeredUser);
+            return Ok(true);
         }
 
         // DELETE: api/RegisteredUsers/5

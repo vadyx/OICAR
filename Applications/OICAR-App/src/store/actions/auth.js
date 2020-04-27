@@ -58,7 +58,7 @@ export const registration = (username, firstName, lastName, email, password) => 
 
 export const login = (username, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.3:12335/api/LoginCredentials',
+        const response = await fetch('http://192.168.100.47:12335/api/LoginCredentials',
             {
                 method: 'POST',
                 headers: {

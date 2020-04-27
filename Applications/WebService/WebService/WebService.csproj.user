@@ -17,8 +17,8 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_IsAsyncSelected>True</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
-    <WebStackScaffolding_DbContextTypeFullName>WebServis.Models.LoginCredentialsModel</WebStackScaffolding_DbContextTypeFullName>
-    <LastActiveSolutionConfig>Release|Any CPU</LastActiveSolutionConfig>
+    <WebStackScaffolding_DbContextTypeFullName>WebServis.Models.Category.CategoryModel</WebStackScaffolding_DbContextTypeFullName>
+    <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>

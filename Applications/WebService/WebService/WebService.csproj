@@ -126,11 +126,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\LoginCredentialsController.cs" />
     <Compile Include="Controllers\RegisteredUsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Category\Category.cs" />
+    <Compile Include="Models\Category\CategoryModel.cs" />
     <Compile Include="Models\Login\LoginCredentials.cs" />
     <Compile Include="Models\Registration\LoginCredentials.cs" />
     <Compile Include="Models\Login\LoginCredentialsModel.cs" />
