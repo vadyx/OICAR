@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {Feather} from '@expo/vector-icons'
 
 const BackButton = props => (
   <TouchableOpacity style={styles.container}>
-    <Image style={styles.image} source={require('../assets/edit.png')} />
+    <Feather name="edit" size={30} color={"black"}/>
   </TouchableOpacity>
 );
 
@@ -12,12 +13,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 10 + getStatusBarHeight(),
-    left: 300,
-  },
-
-  image: {
-    width: 30,
-    height: 30,
+    alignSelf:"flex-end",
+    paddingRight:10
   }
 });
 

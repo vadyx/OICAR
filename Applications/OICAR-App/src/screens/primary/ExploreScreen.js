@@ -8,7 +8,8 @@ import {
     Platform,
     StatusBar,
     ScrollView,
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigationFocus } from 'react-navigation';
@@ -88,7 +89,7 @@ const ExploreScreen = props => {
                               Odaberite brod i započnite svoje nezaboravno plovljenje Jadranom!
                           </Text>
                           <View style={styles.container6}>
-                            
+                            <TouchableOpacity activeOpacity={0.8} style={styles.touchableopacity1}>
                               <Video
                                   source={require("../../assets/Boat.mp4")}
                                   rate={1.0}
@@ -102,7 +103,7 @@ const ExploreScreen = props => {
                                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
                                   source={require('../assets/boatmain.jpg')}
                               />*/}
-                              
+                              </TouchableOpacity>
                           </View>
                       </View>
                   </View>
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
       shadowOffset: { width: 0, height: 0 },
       shadowColor: 'black',
       shadowOpacity: 0.2,
-      elevation: 1,
+      elevation: 2,
       marginTop: Platform.OS == 'android' ? 30 : null
     },
     container3:{
@@ -238,7 +239,10 @@ const styles = StyleSheet.create({
     video1:{
       width:"100%",
       height:"100%"
-    }
+    },
+    touchableopacity1:{
+      flex:1
+  }
 });
 
 

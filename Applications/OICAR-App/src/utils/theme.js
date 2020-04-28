@@ -9,6 +9,7 @@ export const theme = {
     tertiary: '#6f122c',
     quaternary: '#cbcbcb',
     error: '#f13a55',
-    white:'#ffffff'
+    white:'#ffffff',
+    gold:'#d4af37'
   },
 };

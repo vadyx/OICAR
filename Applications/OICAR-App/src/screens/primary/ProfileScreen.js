@@ -1,39 +1,46 @@
 import React, { memo } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
-import BackButton from '../../components/BackButton';
 import { StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import StarRating from "react-native-star-rating"
-import EditProfileButton from '../../components/EditeProfileButton';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Button from '../../components/Button';
+import EditProfileButton from '../../components/EditeProfileButton';
+import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
 
     return (
       <View>
-        <BackButton goBack={() => props.navigation.goBack()} />
-        <EditProfileButton></EditProfileButton>       
+        
+       
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}
             contentContainerStyle={{ ...styles.container, ...props.style }}
             scrollEnabled={true}>
             {props.children}
+
+            <EditProfileButton></EditProfileButton>   
             <View style={styles.background}>
+            
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
                         <Image source={require("../../assets/default_user_image.jpg")} style={styles.image} resizeMode="cover"></Image>
                     </View>
                     <View style={styles.add}>
-                        <Ionicons name="ios-add" size={48} color="#ffffff" style={{ marginTop: 0, marginLeft: 0 }}></Ionicons>
+                        <TouchableOpacity>
+                        <Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={{ fontWeight: "200", fontSize: 36, color: "#414757", marginBottom: 17 }}>Milica Krmpotić</Text>
+                <Text style={styles.namestyle}>Milica Krmpotić</Text>
                 <StarRating
                     disabled={false}
                     maxStars={5}
                     rating={3.5}
-                    emptyStarColor={"#D6D6D6"}
-                    fullStarColor={"#9F1B41"} />
+                    starSize={20}
+                    emptyStarColor={theme.colors.quaternary}
+                    fullStarColor={theme.colors.gold}
+                    />
                 <View style={styles.infoContainer}>
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Korisničko ime:'.toUpperCase()}</Text>
@@ -47,24 +54,26 @@ const ProfileScreen = props => {
                         <Text style={styles.label}>{'Datum registracije:'.toUpperCase()} </Text>
                         <Text style={styles.infoText}>23.04.2020</Text>
                     </View>
-                      <View style={{ borderBottomColor: "#414757", borderBottomWidth: 2, marginTop: 20 }}>
+                      <View style={{ borderBottomColor: theme.colors.quaternary, borderBottomWidth: 2, marginTop: 20 }}>
                     </View>
                     <View style={styles.infoBox2}>
-                        <Text style={styles.label}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
-                        <TouchableOpacity>
-                            <Button style = {styles.button} mode="contained">
-                                Uvezi    
-                            </Button>
-                        </TouchableOpacity>
+                        <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
+                        <View style={styles.containerphoto}>
+                    <TouchableOpacity>
+                    <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                    <Text style={styles.label2}>Dodaj</Text>
+                    </TouchableOpacity>
+                    </View>
                     </View>
 
                     <View style={styles.infoBox2}>
-                        <Text style={styles.label}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
+                        <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
+                        <View style={styles.containerphoto}>
                         <TouchableOpacity>
-                        <Button style = {styles.button} mode="contained">
-                                Uvezi    
-                        </Button>
+                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                            <Text style={styles.label2}>Dodaj</Text>
                         </TouchableOpacity>
+                    </View>
                     </View>
                 </View>
             </View>
@@ -85,12 +94,12 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     add: {
-        backgroundColor: "#9F1B41",
+        backgroundColor: theme.colors.primary,
         position: "absolute",
         bottom: 0,
         right: 0,
-        width: 50,
-        height: 50,
+        width: 42,
+        height: 42,
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center"
@@ -99,7 +108,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: 10,
         fontSize: 46,
-        color: "#414757"
+        color: "#ffffff"
     },
     infoBox: {
         flexDirection: "column",
@@ -114,26 +123,66 @@ const styles = StyleSheet.create({
         fontSize: 46,
     },
     infoText: {
-        fontSize: 20,
-        fontWeight: "300",
-        color: "#414757",
+        fontSize: 17,
+        fontWeight: "100",
+        color: "gray",
     },
     label: {
-        fontSize: 13,
-        color: "#6F122C",
-        marginBottom: 5,
-        letterSpacing: 2
+        fontSize: 14,
+        paddingBottom:5,
+        fontWeight:"bold",
+        color: theme.colors.secondary,
+        marginBottom: 3,
+        letterSpacing: 1
+    },
+    label1: {
+        fontSize: 12,
+        paddingBottom:10,
+        fontWeight:"900",
+        color: theme.colors.secondary,
+        marginBottom: 3,
+        letterSpacing: 1
+    },
+    label2: {
+        fontSize:16,
+        alignSelf:"center",
+        color:"#ffffff"
     },
     background: {
         flex: 1,
         width: '100%',
         paddingTop: 35,
+        paddingBottom:45,
         alignItems: 'center',
         justifyContent: 'center',
+        top:10+getStatusBarHeight()
     },
-    button: {
-        width: 130,
-        height: 43
+    containerphoto:{
+        width:75,
+        height:75,
+        padding:0,
+        margin:0,
+        backgroundColor:theme.colors.primary,
+        borderRadius:10,
+        shadowColor: "#000",
+        //iPhone 
+        shadowOffset: {
+        width: 0,
+        height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        //Android
+        elevation: 5,
+    },
+    namestyle:{
+        fontSize: 28,
+        color:theme.colors.secondary,
+        paddingVertical:10
+    },
+    photoicon:{
+        alignSelf:"center",
+        paddingTop:8
     }
 });
 

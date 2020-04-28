@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native";
 
 class Category extends Component {
@@ -46,5 +47,5 @@ const styles = StyleSheet.create({
     },
     text_style:{
         fontWeight:"bold"
-    },
+    }
 });

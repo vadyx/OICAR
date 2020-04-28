@@ -73,6 +73,7 @@ const HomeTabNavigator = createBottomTabNavigator({
 
 {
   tabBarOptions: {
+    keyboardHidesTabBar:false,
     showLabel: false,
     activeTintColor: theme.colors.primary,
     inactiveTintColor: theme.colors.quaternary,
