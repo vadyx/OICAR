@@ -19,15 +19,15 @@ class Home extends Component {
                             paddingBottom:5,
                             marginBottom:8}}>
 
-                <View style={styles.container}>
+                <View style={styles.image_container}>
                     <Image
                         style={styles.imagestyle}
                         source={this.props.imageUri} />
                 </View>
-                <View style={styles.container2}>
-                    <Text style={styles.textstyle1}>{this.props.type}</Text>
-                    <Text style={styles.textstyle2}>{this.props.name}</Text>
-                    <Text style={styles.textstyle3}>{this.props.price}$</Text>
+                <View style={styles.description_container}>
+                    <Text style={styles.texttype}>{this.props.type}</Text>
+                    <Text style={styles.textname}>{this.props.name}</Text>
+                    <Text style={styles.textprice}>{this.props.price}$</Text>
                     <StarRating
                         disable={true}
                         maxStars={5}
@@ -44,13 +44,13 @@ export default Home;
 
 const styles = StyleSheet.create({
 
-    container:{
+    image_container:{
         flex: 2,
         borderWidth:0.5,
         borderRadius:10,
         overflow:"hidden" 
     },
-    container2:{
+    description_container:{
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
@@ -62,15 +62,15 @@ const styles = StyleSheet.create({
         height: null,
         resizeMode: 'cover'
     },
-    textstyle1:{
+    texttype:{
         fontSize: 10,
         color: theme.colors.primary
     },
-    textstyle2:{
+    textname:{
         fontSize: 12,
         fontWeight: 'bold'
     },
-    textstyle3:{
+    textprice:{
         fontSize: 10
     }
 });

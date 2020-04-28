@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 //import LoggedInTabNavigator from '../navigator/LoggedInTabNavigator';
 import { theme } from '../utils/theme';
-import { AntDesign,MaterialIcons,SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign,MaterialIcons,SimpleLineIcons,Feather } from '@expo/vector-icons';
 
 import {
   AuthScreen,
@@ -65,7 +65,7 @@ const HomeTabNavigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: 'PROFILE',
       tabBarIcon: ({ tintColor }) => (
-          <MaterialIcons name="person-outline" color={tintColor} size={36} />
+          <Feather name="user" color={tintColor} size={30} />
         )
       },
   },

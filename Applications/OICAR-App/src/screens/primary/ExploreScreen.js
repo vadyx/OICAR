@@ -30,11 +30,11 @@ const ExploreScreen = props => {
   return (
       <SafeAreaView style={styles.safeareastyle}>
           <View style={styles.container}>
-              <View style={styles.container1}>
+              <View style={styles.logo_search_container}>
 
                       <Logo style={styles.logostyle}/>
 
-                  <View style={styles.container2}>
+                  <View style={styles.search_container}>
 
                       <Icon name="ios-search" size={22} style={styles.iconstyle} />
                       <TextInput
@@ -50,13 +50,13 @@ const ExploreScreen = props => {
                   scrollEventThrottle={16}
                   style={styles.scrollviewstyle}>
 
-                <View style={styles.container3}>
+                <View style={styles.category_video_container}>
 
                       <Text style={styles.textstyle}>
                           Kategorije vozila
                       </Text>
                       
-                      <View style={styles.container4}>
+                      <View style={styles.category_container}>
                           <ScrollView
                               horizontal={true}
                               showsHorizontalScrollIndicator={false}
@@ -81,14 +81,14 @@ const ExploreScreen = props => {
                               />
                           </ScrollView>
                       </View>
-                      <View style={styles.container5}>
+                      <View style={styles.video_container}>
                           <Text style={styles.textstyle1}>
                               Turistička opcija
                           </Text>
                           <Text style={styles.textstyle2}>
                               Odaberite brod i započnite svoje nezaboravno plovljenje Jadranom!
                           </Text>
-                          <View style={styles.container6}>
+                          <View style={styles.video_view}>
                             <TouchableOpacity activeOpacity={0.8} style={styles.touchableopacity1}>
                               <Video
                                   source={require("../../assets/Boat.mp4")}
@@ -107,11 +107,11 @@ const ExploreScreen = props => {
                           </View>
                       </View>
                   </View>
-                  <View style={styles.container7}>
+                  <View style={styles.home_container}>
                       <Text style={styles.textstyle}>
                           Vozila širom Hrvatske
                       </Text>
-                      <View style={styles.container8}>
+                      <View style={styles.home_view}>
                           <Home width={width}
                               imageUri={require('../../assets/scooter.jpg')}
                               name="Aprilia Scooter 1"
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1
     },
-    container1:{
+    logo_search_container:{
       height:80,
       flexDirection:'row',
       backgroundColor: 'white',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
       elevation: 5
 
     },
-    container2:{
+    search_container:{
       flexDirection: 'row',
       padding: 5,
       width:"80%",
@@ -171,20 +171,20 @@ const styles = StyleSheet.create({
       elevation: 2,
       marginTop: Platform.OS == 'android' ? 30 : null
     },
-    container3:{
+    category_video_container:{
       flex: 1,
       backgroundColor: 'white',
       paddingTop: 20
     },
-    container4:{
+    category_container:{
       height: 130,
       marginTop: 20
     },
-    container5:{
+    video_container:{
       marginTop: 40,
       paddingHorizontal: 20
     },
-    container6:
+    video_view:
     {
       width: width - 40,
       height: 200,
@@ -192,10 +192,10 @@ const styles = StyleSheet.create({
       borderRadius:10,
       overflow:"hidden"
     },
-    container7:{
+    home_container:{
       marginTop: 40
     },
-    container8:{
+    home_view:{
       paddingHorizontal: 20,
       marginTop: 20,
       flexDirection: 'row',
