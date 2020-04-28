@@ -46,6 +46,7 @@ create table RegisteredUser
 	LoginCredentialsID int not null,
 	Rating decimal(3,2) not null,
 	RegistrationDate date not null default GETDATE(),
+	ProfileImage varbinary(max) null
 
 	CONSTRAINT FK_User_LoginCredentials FOREIGN KEY (LoginCredentialsID)
 		REFERENCES LoginCredentials(IDLoginCredentials)
