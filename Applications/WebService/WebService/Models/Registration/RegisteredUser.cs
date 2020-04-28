@@ -32,5 +32,7 @@ namespace WebServis.Models.Registration
         public DateTime RegistrationDate { get; set; }
 
         public virtual LoginCredentials LoginCredentials { get; set; }
+
+        public byte[] ProfileImage { get; set; }
     }
 }

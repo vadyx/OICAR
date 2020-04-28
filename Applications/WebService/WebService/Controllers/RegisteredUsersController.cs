@@ -30,6 +30,7 @@ namespace WebServis.Controllers
 
         // GET: api/RegisteredUsers/username
         [ResponseType(typeof(RegisteredUser))]
+        [Route("api/RegisteredUsers/{username}")]
         public async Task<IHttpActionResult> GetRegisteredUser(string username)
         {
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.LoginCredentials.Username == username).SingleOrDefaultAsync();
@@ -43,6 +44,7 @@ namespace WebServis.Controllers
 
         // PUT: api/RegisteredUsers/5
         [ResponseType(typeof(void))]
+        [Route("api/RegisteredUsers/{id}")]
         public async Task<IHttpActionResult> PutRegisteredUser(int id, RegisteredUser registeredUser)
         {
             if (!ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace WebServis.Controllers
 
             try
             {
+                db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
