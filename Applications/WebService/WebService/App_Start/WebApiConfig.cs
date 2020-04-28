@@ -19,12 +19,6 @@ namespace WebServis
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
-              name: "RegisteredUserByUsername",
-              routeTemplate: "api/{controller}/{username}",
-              defaults: new { username = RouteParameter.Optional }
-          );
-
-            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
