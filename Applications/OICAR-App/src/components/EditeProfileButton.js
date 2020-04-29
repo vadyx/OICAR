@@ -12,7 +12,7 @@ const BackButton = props => (
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 10 + getStatusBarHeight(),
+    top:5,
     alignSelf:"flex-end",
     paddingRight:10
   }

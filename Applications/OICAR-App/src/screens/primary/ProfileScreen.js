@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
-import { StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import StarRating from "react-native-star-rating"
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -11,15 +11,10 @@ import { theme } from '../../utils/theme';
 const ProfileScreen = props => {
 
     return (
-      <View>
-        
-       
-        <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={{ ...styles.container, ...props.style }}
-            scrollEnabled={true}>
-            {props.children}
+      <View style={styles.container}>   
+        <ScrollView>
+        <EditProfileButton></EditProfileButton>   
 
-            <EditProfileButton></EditProfileButton>   
             <View style={styles.background}>
             
                 <View style={{ alignSelf: "center" }}>
@@ -34,7 +29,7 @@ const ProfileScreen = props => {
                 </View>
                 <Text style={styles.namestyle}>Milica Krmpotić</Text>
                 <StarRating
-                    disabled={false}
+                    disabled={true}
                     maxStars={5}
                     rating={3.5}
                     starSize={20}
@@ -77,11 +72,17 @@ const ProfileScreen = props => {
                     </View>
                 </View>
             </View>
-        </KeyboardAwareScrollView>
+            </ScrollView>
     </View>
+   
     );
 };
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        marginTop:getStatusBarHeight()
+    },
+
     image: {
         flex: 1,
         height: undefined,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
         paddingBottom:45,
         alignItems: 'center',
         justifyContent: 'center',
-        top:10+getStatusBarHeight()
+
     },
     containerphoto:{
         width:75,

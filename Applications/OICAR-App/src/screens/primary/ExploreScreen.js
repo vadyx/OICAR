@@ -12,6 +12,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { withNavigationFocus } from 'react-navigation';
 import { Video } from 'expo-av';
 
@@ -96,11 +97,10 @@ const ExploreScreen = props => {
               </Text>
               
               <Text style={styles.textstyle2}>
-                Odaberite brod i započnite svoje nezaboravno plovljenje Jadranom!
+                Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
               </Text>
                         
               <View style={styles.video_view}>
-                <TouchableOpacity activeOpacity={0.8} style={styles.touchableopacity1}>
                   <Video
                       source={require("../../assets/Boat.mp4")}
                       rate={1.0}
@@ -110,7 +110,6 @@ const ExploreScreen = props => {
                       isLooping
                       style={styles.video1}
                     />
-                </TouchableOpacity>
               </View>
 
             </View>
@@ -162,7 +161,8 @@ const styles = StyleSheet.create({
       flex: 1
     },
     logo_search_container:{
-      height:80,
+      paddingTop:10,
+      height:90,
       flexDirection:'row',
       backgroundColor: 'white',
       borderBottomWidth:0, //samo radi na iOS
