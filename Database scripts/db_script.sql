@@ -150,18 +150,12 @@ create table Rental
 create table Category
 (
 	IDCategory int primary key identity,
-	CategoryName nvarchar(60) not null
+	CategoryName nvarchar(60) not null,
+	CategoryImage varbinary(max) not null
 )
 
-insert into Category values('Automobili')
-insert into Category values('Motocikli')
-insert into Category values('Kamioni')
-insert into Category values('Bicikli')
-insert into Category values('Brodovi')
-insert into Category values('Ostalo')
 
 /*
-
 use master
 go
 drop database OICAR_Project

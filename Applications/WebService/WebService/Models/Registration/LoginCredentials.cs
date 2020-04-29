@@ -1,10 +1,11 @@
-namespace WebServis.Models.Registration
+namespace WebServis.Models.loginCredentialsForRegistration
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using WebServis.Models.Registration;
 
     public partial class LoginCredentials
     {
