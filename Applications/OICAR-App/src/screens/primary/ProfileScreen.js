@@ -4,29 +4,33 @@ import { View } from 'react-native';
 import { StyleSheet, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import StarRating from "react-native-star-rating"
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import EditProfileButton from '../../components/EditeProfileButton';
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
 
     return (
-      <View style={styles.container}>   
+    <View style={styles.container}>   
         <ScrollView>
-        <EditProfileButton></EditProfileButton>   
+
+            <EditProfileButton></EditProfileButton>
 
             <View style={styles.background}>
-            
+
                 <View style={{ alignSelf: "center" }}>
+
                     <View style={styles.profileImage}>
                         <Image source={require("../../assets/default_user_image.jpg")} style={styles.image} resizeMode="cover"></Image>
                     </View>
+
                     <View style={styles.add}>
                         <TouchableOpacity>
                         <Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons>
                         </TouchableOpacity>
                     </View>
+
                 </View>
+
                 <Text style={styles.namestyle}>Milica Krmpotić</Text>
                 <StarRating
                     disabled={true}
@@ -36,43 +40,44 @@ const ProfileScreen = props => {
                     emptyStarColor={theme.colors.quaternary}
                     fullStarColor={theme.colors.gold}
                     />
+
                 <View style={styles.infoContainer}>
-                    <View style={styles.infoBox}>
-                        <Text style={styles.label}>{'Korisničko ime:'.toUpperCase()}</Text>
-                        <Text style={styles.infoText}>Snuggels17 </Text>
-                    </View>
+
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Email:'.toUpperCase()} </Text>
                         <Text style={styles.infoText}>snugglesthecat@mail.com</Text>
                     </View>
+
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Datum registracije:'.toUpperCase()} </Text>
                         <Text style={styles.infoText}>23.04.2020</Text>
                     </View>
+
                       <View style={{ borderBottomColor: theme.colors.quaternary, borderBottomWidth: 2, marginTop: 20 }}>
                     </View>
+
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
                         <View style={styles.containerphoto}>
-                    <TouchableOpacity>
-                    <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                    <Text style={styles.label2}>Dodaj</Text>
-                    </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity>
+                                <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                                <Text style={styles.label2}>Dodaj</Text>
+                             </TouchableOpacity>
+                         </View>
                     </View>
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
                         <View style={styles.containerphoto}>
-                        <TouchableOpacity>
-                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                            <Text style={styles.label2}>Dodaj</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity>
+                                <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                                <Text style={styles.label2}>Dodaj</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
-            </ScrollView>
+        </ScrollView>
     </View>
    
     );
