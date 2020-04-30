@@ -19,6 +19,7 @@ import { Video } from 'expo-av';
 import Category from '../../components/Category';
 import Home from '../../components/Home';
 import Logo from "../../components/Logo";
+import { theme } from "../../utils/theme";
 
 const { height, width } = Dimensions.get('window');
 
@@ -198,7 +199,10 @@ const styles = StyleSheet.create({
     },
     video_container:{
       marginTop: 40,
-      paddingHorizontal: 20
+      paddingVertical:30,
+      paddingHorizontal: 20,
+      height:350,
+      backgroundColor:theme.colors.black
     },
     video_view:
     {
@@ -246,11 +250,13 @@ const styles = StyleSheet.create({
     },
     textstyle1:{
       fontSize: 24,
-      fontWeight: '700'
+      fontWeight: '700',
+      color:theme.colors.white
     },
     textstyle2:{
       fontWeight: '100',
-      marginTop: 10
+      marginTop: 10,
+      color:theme.colors.white
     },
     video1:{
       width:"100%",

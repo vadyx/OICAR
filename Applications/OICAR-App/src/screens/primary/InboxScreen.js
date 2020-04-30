@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     alignSelf:"center",
     paddingVertical:2,
     margin:0,
-    marginTop:-30,
-    width:"70%"
+    marginTop:0,
+    width:"50%"
   },
   textstyle:{
     fontSize: 40,

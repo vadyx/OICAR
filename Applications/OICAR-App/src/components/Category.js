@@ -5,12 +5,14 @@ import {
     StyleSheet,
     Image
 } from "react-native";
+import { theme } from "../utils/theme";
 
 class Category extends Component {
     render() {
         return (
             <View style={styles.category_container}>
-                <View style={{ flex: 4}}>
+                <View style={styles.imagecontainer}>
+
                     <Image source={this.props.imageUri}
                         style={styles.imagestyle}
                     />
@@ -30,7 +32,20 @@ const styles = StyleSheet.create({
         height:130,
         width:130, 
         marginLeft:20,
-        marginHorizontal:5
+        marginHorizontal:5,
+    },
+    imagecontainer:{
+        flex: 4,
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 2,
+            },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        backgroundColor:theme.colors.white,
+        borderRadius:10
     },
     imagestyle:{
         flex: 1,

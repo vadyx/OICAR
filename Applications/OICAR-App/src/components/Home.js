@@ -7,17 +7,28 @@ import {
 } from "react-native";
 import StarRating from 'react-native-star-rating'
 import { theme } from "../utils/theme";
+
 class Home extends Component {
     render() {
         return (
-            <View style={{  width: this.props.width / 2 - 30, 
-                            height: this.props.width / 2 - 20, 
-                            borderWidth: 0.5,
-                            borderRadius:0,
+            <View style={{  width: this.props.width / 2 - 28, 
+                            height: this.props.width / 2 + 10, 
+                            borderWidth: 0.8,
+                            borderRadius:10,
+                            backgroundColor:theme.colors.white,
                             overflow:"hidden",
-                            borderColor: theme.colors.white, 
+                            borderColor: theme.colors.quaternary, 
                             paddingBottom:5,
-                            marginBottom:8}}>
+                            marginBottom:10,
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 5,
+                            },
+                            shadowOpacity: 0.34,
+                            shadowRadius: 6.27,
+                            elevation: 10,
+                            }}>
 
                 <View style={styles.image_container}>
                     <Image
@@ -33,7 +44,7 @@ class Home extends Component {
                         maxStars={5}
                         rating={this.props.rating}
                         starSize={10}
-
+                        fullStarColor={theme.colors.gold}
                     />
                 </View>
             </View>
@@ -45,16 +56,14 @@ export default Home;
 const styles = StyleSheet.create({
 
     image_container:{
-        flex: 2,
-        borderWidth:0.5,
-        borderRadius:10,
-        overflow:"hidden" 
+        width:"100%",
+        height:110
     },
     description_container:{
-        flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
-        paddingLeft: 10
+        paddingLeft: 10,
+        paddingTop:2
     },
     imagestyle:{
         flex: 1,
@@ -63,12 +72,15 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     texttype:{
-        fontSize: 10,
-        color: theme.colors.primary
+        fontSize: 11,
+        fontWeight:"bold",
+        color: theme.colors.primary,
+        paddingBottom:5,
     },
     textname:{
-        fontSize: 12,
-        fontWeight: 'bold'
+        fontSize: 14,
+        fontWeight: 'bold',
+        paddingBottom:2
     },
     textprice:{
         fontSize: 10

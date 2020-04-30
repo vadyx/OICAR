@@ -10,6 +10,7 @@ export const theme = {
     quaternary: '#cbcbcb',
     error: '#f13a55',
     white:'#ffffff',
-    gold:'#d4af37'
+    gold:'#d4af37',
+    black:'#000000'
   },
 };
