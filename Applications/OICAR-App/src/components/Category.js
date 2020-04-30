@@ -3,8 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
-    Image,
-    TouchableOpacity
+    Image
 } from "react-native";
 
 class Category extends Component {
