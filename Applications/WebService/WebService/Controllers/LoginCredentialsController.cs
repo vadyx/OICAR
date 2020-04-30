@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.UI.WebControls;
 using WebServis.Models.Login;
+using WebServis.Models.Registration;
 using WebServis.PasswordSecurity;
 
 namespace WebServis.Controllers
@@ -17,6 +20,7 @@ namespace WebServis.Controllers
     public class LoginCredentialsController : ApiController
     {
         private LoginCredentialsModel db = new LoginCredentialsModel();
+        private RegisteredUserModel dbRegistartion = new RegisteredUserModel();
 
         // GET: api/LoginCredentials
         public IQueryable<LoginCredentials> GetLoginCredentials()
@@ -75,12 +79,25 @@ namespace WebServis.Controllers
 
         // POST: api/LoginCredentials
         [ResponseType(typeof(LoginCredentials))]
-        public bool PostLoginCredentials(LoginCredentials loginCredentials)
+        public async Task<Object> PostLoginCredentials(LoginCredentials loginCredentials)
         {
             foreach (var loginCred in db.LoginCredentials)
             {
                 if (loginCred.Username.Equals(loginCredentials.Username) && PasswordStorage.VerifyPassword(loginCredentials.Pwd, loginCred.Pwd))
-                    return true;
+                {
+                    RegisteredUser registeredUser = await dbRegistartion.RegisteredUsers.Where(user => user.LoginCredentials.Username == loginCredentials.Username).SingleOrDefaultAsync();
+                    registeredUser.LoginCredentials = null;
+                    return Ok(new RegisteredUser 
+                    {
+                        IDRegisteredUser = registeredUser.IDRegisteredUser, 
+                        FirstName = registeredUser.FirstName,
+                        LastName = registeredUser.LastName,
+                        Email = registeredUser.Email,
+                        Rating = registeredUser.Rating,
+                        RegistrationDate = registeredUser.RegistrationDate,
+                        ProfileImage = registeredUser.ProfileImage
+                    });
+                }
             }
 
             return false;

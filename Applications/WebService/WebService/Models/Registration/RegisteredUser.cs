@@ -5,6 +5,7 @@ namespace WebServis.Models.Registration
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using WebServis.Models.loginCredentialsForRegistration;
 
     [Table("RegisteredUser")]
     public partial class RegisteredUser

@@ -44,36 +44,27 @@ namespace WebServis.Controllers
 
         // PUT: api/RegisteredUsers/5
         [ResponseType(typeof(void))]
-        [Route("api/RegisteredUsers/{id}")]
-        public async Task<IHttpActionResult> PutRegisteredUser(int id, RegisteredUser registeredUser)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != registeredUser.IDRegisteredUser)
+        [HttpPut]
+        [Route("api/RegisteredUsers/setProfileImage/{id}")]
+        public async Task<IHttpActionResult> PutProfileImageForRegisteredUser(int id, byte[] profileImage)
+        {     
+            if (!RegisteredUserExists(id) || profileImage == null)
             {
                 return BadRequest();
             }
 
+            RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
+            registeredUser.ProfileImage = profileImage;
+            db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
             db.Entry(registeredUser).State = EntityState.Modified;
 
             try
             {
-                db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RegisteredUserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
 
             return StatusCode(HttpStatusCode.NoContent);

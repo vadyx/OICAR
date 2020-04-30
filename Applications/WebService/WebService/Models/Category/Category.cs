@@ -15,5 +15,8 @@ namespace WebServis.Models.Category
         [Required]
         [StringLength(60)]
         public string CategoryName { get; set; }
+
+        [Required]
+        public byte[] CategoryImage { get; set; }
     }
 }
