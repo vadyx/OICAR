@@ -103,9 +103,12 @@ const AuthNavigator = createStackNavigator(
   }
 );
 
-const MainNavigator = createSwitchNavigator({
+const MainNavigator = createStackNavigator({
   Home: HomeTabNavigator,
   Auth: AuthNavigator
+}, 
+{
+  headerMode: 'none'
 });
 
 export default createAppContainer(MainNavigator);
