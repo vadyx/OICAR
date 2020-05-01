@@ -4,6 +4,7 @@ import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
@@ -15,7 +16,7 @@ const ProfileScreen = props => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const loggedUser = useSelector(state => state.auth.user);
 
-    if (!isLoggedIn) {
+  /*  if (!isLoggedIn) {
         return (
             <NotLoggedInView 
                 imageUri={require('../../assets/user_not_login.gif')} 
@@ -25,7 +26,7 @@ const ProfileScreen = props => {
             />
         );
     }
-
+*/
     return (
     <View style={styles.container}>   
         <ScrollView>
@@ -37,22 +38,19 @@ const ProfileScreen = props => {
                 <View style={{ alignSelf: "center" }}>
 
                     <View style={styles.profileImage}>
-                        <Image source={{ uri: loggedUser.imageUri }} style={styles.image} resizeMode="cover"></Image>
+                        <Image source={/*{ uri: loggedUser.imageUri }*/require("../../assets/default_user_image.jpg")} style={styles.image} resizeMode="cover"></Image>
                     </View>
 
-                    <View style={styles.addPicture}>
-                        <TouchableOpacity>
-                        <Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons>
-                        </TouchableOpacity>
-                    </View>
+                    <ImagePicker style={styles.addPicture}><Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons></ImagePicker>
+
 
                 </View>
 
-                <Text style={styles.namestyle}>{loggedUser.firstName} {loggedUser.lastName}</Text>
+                <Text style={styles.namestyle}>{/*{loggedUser.firstName} {loggedUser.lastName}*/}Milica Krmpotic</Text>
                 <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={loggedUser.rating}
+                    rating={/*loggedUser.rating*/4}
                     starSize={20}
                     emptyStarColor={theme.colors.quaternary}
                     fullStarColor={theme.colors.gold}
@@ -62,12 +60,12 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Email:'.toUpperCase()} </Text>
-                        <Text style={styles.infoText}>{loggedUser.email}</Text>
+                        <Text style={styles.infoText}>{/*{loggedUser.email}*/}mail@email.com</Text>
                     </View>
 
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Datum registracije:'.toUpperCase()} </Text>
-                        <Text style={styles.infoText}>{loggedUser.displayRegistrationDate}</Text>
+                        <Text style={styles.infoText}>{/*{loggedUser.displayRegistrationDate}*/}20.12.2019.</Text>
                     </View>
 
                       <View style={{ borderBottomColor: theme.colors.quaternary, borderBottomWidth: 2, marginTop: 20 }}>
@@ -75,12 +73,16 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
-                        <ImagePicker />
+                        <ImagePicker><MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                        <Text style={styles.label3}>Dodaj</Text></ImagePicker>
                     </View>
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
-                        <ImagePicker />
+                        <ImagePicker>
+                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                            <Text style={styles.label3}>Dodaj</Text>
+                        </ImagePicker>
                     </View>
                 </View>
             </View>
@@ -157,6 +159,11 @@ const styles = StyleSheet.create({
         letterSpacing: 1
     },
     label2: {
+        fontSize:16,
+        alignSelf:"center",
+        color:"#ffffff"
+    },
+    label3: {
         fontSize:16,
         alignSelf:"center",
         color:"#ffffff"

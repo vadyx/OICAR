@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 
 import { theme } from '../utils/theme';
 
-const ImgPicker = props => {
+const ImgPicker = ({children,...props}) => {
 
     const _verifyPermissions = async () => {
 
@@ -31,12 +31,11 @@ const ImgPicker = props => {
     };
 
     return (
-        <View style={styles.containerphoto}>
-            <TouchableOpacity onPress={_onTakeImagePress}>
-                <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                <Text style={styles.label}>Dodaj</Text>
-            </TouchableOpacity>
-        </View>
+        <View style={{...styles.containerphoto, ...props.style}}>
+        <TouchableOpacity onPress={_onTakeImagePress}>
+            {children}
+        </TouchableOpacity>
+    </View>
     );
 }
 
@@ -63,12 +62,6 @@ const styles = StyleSheet.create({
     photoicon:{
         alignSelf:"center",
         paddingTop:8
-    },
-
-    label: {
-        fontSize:16,
-        alignSelf:"center",
-        color:"#ffffff"
     }
 });
 
