@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -44,19 +45,19 @@ namespace WebServis.Controllers
             return Ok(registeredUser);
         }
 
-        // PUT: api/RegisteredUsers/5
         [ResponseType(typeof(void))]
         [HttpPut]
         [Route("api/RegisteredUsers/setProfileImage/{id}")]
-        public async Task<IHttpActionResult> PutProfileImageForRegisteredUser(int id, byte[] profileImage)
+        public async Task<IHttpActionResult> PutProfileImageForRegisteredUser(int id, [FromBody]string profileImageBase64)
         {     
-            if (!RegisteredUserExists(id) || profileImage == null)
+            if (!RegisteredUserExists(id) || profileImageBase64 == null)
             {
                 return BadRequest();
             }
 
+            byte[] profileImageBytes = Convert.FromBase64String(profileImageBase64);
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
-            registeredUser.ProfileImage = profileImage;
+            registeredUser.ProfileImage = profileImageBytes;
             db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
             db.Entry(registeredUser).State = EntityState.Modified;
 
