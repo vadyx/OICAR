@@ -29,7 +29,7 @@ const InboxScreen = props => {
         style={styles.image}
         />
         
-      <Button mode="contained" onPress={() => props.navigation.navigate('Login')} style={styles.buttonstyle}>
+      <Button mode="contained" onPress={() => props.navigation.navigate('Auth')} style={styles.buttonstyle}>
         Prijava
       </Button>
     

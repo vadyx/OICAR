@@ -86,9 +86,10 @@ const LoginScreen = props => {
           formState.inputValues.password
         ));
 
-        if (isLoggedIn) {
-          props.navigation.navigate('Home');
-        } 
+        return;
+        // if (isLoggedIn) {
+        //   props.navigation.navigate('Home');
+        // } 
       } else {
         setShowErrors(true);
       }
@@ -110,7 +111,13 @@ const LoginScreen = props => {
 
   useEffect(() => {
     _loginHandler(); 
-  }, [formState, isLoggedIn]);
+  }, [formState]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      props.navigation.navigate('Home');
+    }
+  }, [isLoggedIn]);
 
   return (
     <Background>
