@@ -34,6 +34,7 @@ namespace WebServis.Models.Registration
 
         public virtual LoginCredentials LoginCredentials { get; set; }
 
+        [Column(TypeName = "varbinary")]
         public byte[] ProfileImage { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -80,6 +82,8 @@ namespace WebServis.Controllers
             }
 
             registeredUser.LoginCredentials.Pwd = PasswordSecurity.PasswordStorage.CreateHash(registeredUser.LoginCredentials.Pwd);
+            Image defaultProfileImage = Image.FromFile(System.Web.Hosting.HostingEnvironment.MapPath("~") + @"\Images\user_default_image.png");
+            registeredUser.ProfileImage = ImageToBytesConverter(defaultProfileImage);
             db.RegisteredUsers.Add(registeredUser);
 
             try
@@ -131,6 +135,13 @@ namespace WebServis.Controllers
         private bool RegisteredUserExists(int id)
         {
             return db.RegisteredUsers.Count(e => e.IDRegisteredUser == id) > 0;
+        }
+
+        public static byte[] ImageToBytesConverter(Image image)
+        {
+            ImageConverter imageConverter = new ImageConverter();
+            byte[] imageByte = (byte[])imageConverter.ConvertTo(image, typeof(byte[]));
+            return imageByte;
         }
     }
 }

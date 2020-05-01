@@ -122,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Images\defaultUserImage_InBinary.txt" />
+    <Content Include="Images\user_default_image.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

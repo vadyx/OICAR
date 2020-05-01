@@ -20,6 +20,7 @@
     <WebStackScaffolding_DbContextTypeFullName>WebServis.Models.Category.CategoryModel</WebStackScaffolding_DbContextTypeFullName>
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

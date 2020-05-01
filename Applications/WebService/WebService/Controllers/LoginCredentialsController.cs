@@ -77,9 +77,10 @@ namespace WebServis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/LoginCredentials
+        // POST: api/login
         [ResponseType(typeof(LoginCredentials))]
-        public async Task<Object> PostLoginCredentials(LoginCredentials loginCredentials)
+        [Route("api/login")]
+        public async Task<Object> CheckUserLogin(LoginCredentials loginCredentials)
         {
             foreach (var loginCred in db.LoginCredentials)
             {
