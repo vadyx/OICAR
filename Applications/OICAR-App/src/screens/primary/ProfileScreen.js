@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector } from 'react-redux';
-import { Ionicons,MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
-import EditProfileButton from '../../components/EditeProfileButton';
+import EditProfileButton from '../../components/EditProfileButton';
 import ImagePicker from '../../components/ImagePicker';
 import { theme } from '../../utils/theme';
 
@@ -34,7 +34,7 @@ const ProfileScreen = props => {
                         <Image source={{ uri: loggedUser.imageUri }} style={styles.image} resizeMode="cover"></Image>
                     </View>
 
-                    <View style={styles.add}>
+                    <View style={styles.addPicture}>
                         <TouchableOpacity>
                         <Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons>
                         </TouchableOpacity>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         borderRadius: 1000,
         overflow: "hidden"
     },
-    add: {
+    addPicture: {
         backgroundColor: theme.colors.primary,
         position: "absolute",
         bottom: 0,
