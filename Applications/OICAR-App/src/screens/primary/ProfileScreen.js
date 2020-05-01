@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
 import EditProfileButton from '../../components/EditProfileButton';
+import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
 import { theme } from '../../utils/theme';
 
@@ -16,7 +17,12 @@ const ProfileScreen = props => {
 
     if (!isLoggedIn) {
         return (
-            <Text>Korisnik nije prijavljen!</Text>
+            <NotLoggedInView 
+                imageUri={require('../../assets/user_not_login.gif')} 
+                titleText='Ups!'
+                contentText='Prvo se morate prijaviti da biste vidjeli sadržaj'
+                navigation={props.navigation}
+            />
         );
     }
 
