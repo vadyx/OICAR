@@ -51,14 +51,14 @@ export const registration = (username, firstName, lastName, email, password) => 
 
         dispatch({
             type: REGISTRATION,
-            registrationSuccessful: true
+            registrationSuccessful: resData
         });
     };
 };
 
 export const login = (username, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.100.47:12335/api/LoginCredentials',
+        const response = await fetch('http://192.168.1.3:12335/api/login',
             {
                 method: 'POST',
                 headers: {
@@ -82,7 +82,16 @@ export const login = (username, password) => {
 
         dispatch({
             type: LOGIN,
-            isLoggedIn: true
+            isLoggedIn: true,
+            userData: {
+                id: resData.IDRegisteredUser,
+                firstName: resData.FirstName,
+                lastName: resData.LastName,
+                email: resData.Email,
+                rating: resData.Rating,
+                registrationDate: resData.RegistrationDate,
+                profileImage: resData.ProfileImage
+            }
         });
     };
 };
