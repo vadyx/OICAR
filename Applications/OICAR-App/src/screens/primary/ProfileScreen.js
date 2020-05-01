@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 
 import EditProfileButton from '../../components/EditeProfileButton';
+import ImagePicker from '../../components/ImagePicker';
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
@@ -68,22 +69,12 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
-                        <View style={styles.containerphoto}>
-                            <TouchableOpacity>
-                                <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                                <Text style={styles.label2}>Dodaj</Text>
-                             </TouchableOpacity>
-                         </View>
+                        <ImagePicker />
                     </View>
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
-                        <View style={styles.containerphoto}>
-                            <TouchableOpacity>
-                                <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                                <Text style={styles.label2}>Dodaj</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <ImagePicker />
                     </View>
                 </View>
             </View>
