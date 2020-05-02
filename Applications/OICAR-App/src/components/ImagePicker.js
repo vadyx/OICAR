@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
+import * as profileActions from '../store/actions/profile';
 import { theme } from '../utils/theme';
 
 const ImgPicker = ({children,...props}) => {
@@ -27,7 +27,14 @@ const ImgPicker = ({children,...props}) => {
             return;
         }
 
-        const image = await ImagePicker.launchCameraAsync();
+        const picture = await ImagePicker.launchCameraAsync({
+            base64: true,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.5
+        });
+
+        props.onPictureChange(picture.base64);
     };
 
     return (
@@ -57,11 +64,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         //Android
         elevation: 5,
-    },
-
-    photoicon:{
-        alignSelf:"center",
-        paddingTop:8
     }
 });
 

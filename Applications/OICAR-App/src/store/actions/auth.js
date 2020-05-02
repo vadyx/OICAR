@@ -90,7 +90,7 @@ export const login = (username, password) => {
                 email: resData.Email,
                 rating: resData.Rating,
                 registrationDate: resData.RegistrationDate,
-                profileImage: resData.ProfileImage
+                profilePicture: resData.ProfileImage
             }
         });
     };
