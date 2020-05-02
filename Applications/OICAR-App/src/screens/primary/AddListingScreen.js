@@ -6,13 +6,15 @@ import {
 } from 'react-native';
 
 import NotLoggedInView from '../../components/NotLoggedInView';
+import { theme } from '../../utils/theme';
 
 const AddListingScreen = props => {
   return (
     <NotLoggedInView 
-      imageUri={require('../../assets/user_not_login.gif')} 
+      style={styles.viewstyle}
+      imageUri={require('../../assets/notlogin_add.jpg')} 
       titleText='Ups!'
-      contentText='Prvo se morate prijaviti da biste vidjeli sadržaj'
+      contentText='Prvo se morate prijaviti kako biste iznajmili svoje vozilo'
       navigation={props.navigation}
     />
   );
@@ -25,6 +27,9 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     padding: 50,
   },
+  viewstyle:{
+   height:600 
+  }
 });
 
 export default AddListingScreen;

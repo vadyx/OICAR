@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NotLoggedInView = props => {
     return (
-        <View style={styles.wrapper}>
+        <View style={{...styles.wrapper,...props.style}}>
       
             <Text style={styles.textstyle}>
                 {props.titleText}
@@ -18,6 +18,7 @@ const NotLoggedInView = props => {
             <Image 
                 source={props.imageUri}  
                 style={styles.image}
+                
             />
             <View  style={styles.submit}>
                 <TouchableOpacity
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
 
     textstyle1:{
         fontSize: 14,
+        width:"60%",
         fontWeight: '100',
         marginLeft: 20,
     },
@@ -77,9 +79,10 @@ const styles = StyleSheet.create({
         fontWeight:"900"
     },
     image:{
-        width: 400,
+        width: 380,
         height: 350,
-        alignSelf: 'center'     
+        alignSelf: 'flex-end',
+        opacity:0.8  
     }
 });
 
