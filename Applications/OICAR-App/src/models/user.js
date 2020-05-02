@@ -2,14 +2,14 @@ import moment from 'moment';
 
 class User {
 
-    constructor(id, firstName, lastName, email, rating, registrationDate, profileImage) {
+    constructor(id, firstName, lastName, email, rating, registrationDate, profilePicture) {
         this.id = id,
         this.firstName = firstName,
         this.lastName = lastName,
         this.email = email,
         this.rating = rating,
         this.registrationDate = registrationDate,
-        this.profileImage = profileImage
+        this.profilePicture = profilePicture
     }
 
     get displayRegistrationDate() {
@@ -17,7 +17,7 @@ class User {
     }
 
     get imageUri() {
-        return `data:image/png;base64,${this.profileImage}`;
+        return `data:image/png;base64,${this.profilePicture}`;
     }
 }
 

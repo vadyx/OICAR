@@ -4,19 +4,30 @@ import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { Ionicons,MaterialIcons,FontAwesome5} from '@expo/vector-icons';
+import { useSelector, useDispatch } from 'react-redux';
 
 import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
-
+import * as profileActions from '../../store/actions/profile';
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
 
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-    const loggedUser = useSelector(state => state.auth.user);
+    const loggedUser = useSelector(state => state.profile.user);
 
-   if (!isLoggedIn) {
+    const dispatch = useDispatch();
+
+    const _onProfilePictureChanged = picture => {
+        try {
+            dispatch(profileActions.updateProfilePicture(loggedUser.id, picture));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    if (!isLoggedIn) {
         return (
             <NotLoggedInView 
                 titleText='Ups!'
@@ -44,7 +55,9 @@ const ProfileScreen = props => {
                         <Image source={{ uri: loggedUser.imageUri }} style={styles.image} resizeMode="cover"></Image>
                     </View>
 
-                    <ImagePicker style={styles.addPicture}><Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons></ImagePicker>
+                    <ImagePicker style={styles.addPicture} onPictureChange={_onProfilePictureChanged}>
+                        <Ionicons name="ios-add" size={40} color="#ffffff" />
+                    </ImagePicker>
 
                 </View>
 

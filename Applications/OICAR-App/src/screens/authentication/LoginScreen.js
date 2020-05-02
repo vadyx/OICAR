@@ -87,9 +87,6 @@ const LoginScreen = props => {
         ));
 
         return;
-        // if (isLoggedIn) {
-        //   props.navigation.navigate('Home');
-        // } 
       } else {
         setShowErrors(true);
       }
@@ -115,6 +112,7 @@ const LoginScreen = props => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      setLoadVisible(false);
       props.navigation.navigate('Home');
     }
   }, [isLoggedIn]);
