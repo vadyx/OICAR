@@ -31,7 +31,7 @@ const ImgPicker = ({children,...props}) => {
     };
 
     return (
-        <View style={{...styles.containerphoto, ...props.style}}>
+        <View  style={{...styles.containerphoto, ...props.style}}>
         <TouchableOpacity onPress={_onTakeImagePress}>
             {children}
         </TouchableOpacity>

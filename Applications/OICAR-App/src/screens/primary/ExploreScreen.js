@@ -198,11 +198,10 @@ const styles = StyleSheet.create({
       marginTop: 20
     },
     video_container:{
-      marginTop: 40,
-      paddingVertical:30,
+      marginTop: 0,
+      paddingVertical:20,
       paddingHorizontal: 20,
-      height:350,
-      backgroundColor:theme.colors.black
+      height:300
     },
     video_view:
     {
@@ -251,12 +250,12 @@ const styles = StyleSheet.create({
     textstyle1:{
       fontSize: 24,
       fontWeight: '700',
-      color:theme.colors.white
+      color:theme.colors.black
     },
     textstyle2:{
       fontWeight: '100',
       marginTop: 10,
-      color:theme.colors.white
+      color:theme.colors.black
     },
     video1:{
       width:"100%",

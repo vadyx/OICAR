@@ -94,7 +94,8 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        marginTop:getStatusBarHeight()
+        marginTop:getStatusBarHeight(),
+        backgroundColor:theme.colors.white
     },
 
     image: {

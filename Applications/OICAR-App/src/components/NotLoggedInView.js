@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
-
-import Button from '../components/Button';
+import { StyleSheet, View, Text, Image} from 'react-native';
+import { theme } from '../utils/theme';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NotLoggedInView = props => {
     return (
@@ -19,11 +19,16 @@ const NotLoggedInView = props => {
                 source={props.imageUri}  
                 style={styles.image}
             />
-                
-            <Button mode="contained" onPress={() => props.navigation.navigate('Auth')} style={styles.buttonstyle}>
-                Prijava
-            </Button>
-    
+            <View  style={styles.submit}>
+                <TouchableOpacity
+                    style={styles.touchablestyle}
+                    onPress={() => props.navigation.navigate('Auth')}
+                    >
+
+                    <Text style={styles.textstylebutton}>Prijava</Text>   
+                </TouchableOpacity>
+            </View>
+
         </View>
     );
 };
@@ -31,15 +36,24 @@ const NotLoggedInView = props => {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        paddingTop: 70
+        paddingTop: 70,
+        backgroundColor:theme.colors.white
     },
 
-    buttonstyle: {
-        alignSelf:"center",
-        paddingVertical:2,
-        margin:0,
-        marginTop:0,
-        width:"50%"
+    submit:{
+        width:"35%",
+        alignSelf:"flex-end",
+        marginHorizontal:20,
+        marginTop:-35,
+        height:50,
+      },
+
+    touchablestyle:{
+        color:"transparent",
+        borderRadius:10,
+        borderWidth: 2,
+        borderColor: theme.colors.primary
+
     },
 
     textstyle: {
@@ -55,6 +69,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
 
+    textstylebutton:{
+        fontSize:22,
+        color:theme.colors.primary,
+        alignSelf:"center",
+        paddingVertical:8,
+        fontWeight:"900"
+    },
     image:{
         width: 400,
         height: 350,
