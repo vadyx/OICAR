@@ -11,6 +11,7 @@ export const theme = {
     error: '#f13a55',
     white:'#ffffff',
     gold:'#d4af37',
-    black:'#000000'
+    black:'#000000',
+    lightgrey:'#bbbbbb'
   },
 };

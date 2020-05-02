@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from "react-native";
+import { useSelector } from 'react-redux';
 import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
+import { Ionicons,MaterialIcons,FontAwesome5} from '@expo/vector-icons';
 
 import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
+
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
@@ -16,17 +16,20 @@ const ProfileScreen = props => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const loggedUser = useSelector(state => state.auth.user);
 
-  /*  if (!isLoggedIn) {
+   if (!isLoggedIn) {
         return (
             <NotLoggedInView 
-                imageUri={require('../../assets/user_not_login.gif')} 
                 titleText='Ups!'
-                contentText='Prvo se morate prijaviti da biste vidjeli sadržaj'
+                contentText='Prvo se morate prijaviti kako bih ste vidjeli svoje podatke'
                 navigation={props.navigation}
-            />
+                style={styles.notloggedinstyle}>
+
+                <FontAwesome5 name="user-lock"  size={200} color={theme.colors.lightgrey} style={styles.iconstyle}/>
+
+            </NotLoggedInView>
         );
     }
-*/
+
     return (
     <View style={styles.container}>   
         <ScrollView>
@@ -38,19 +41,18 @@ const ProfileScreen = props => {
                 <View style={{ alignSelf: "center" }}>
 
                     <View style={styles.profileImage}>
-                        <Image source={/*{ uri: loggedUser.imageUri }*/require("../../assets/default_user_image.jpg")} style={styles.image} resizeMode="cover"></Image>
+                        <Image source={{ uri: loggedUser.imageUri }} style={styles.image} resizeMode="cover"></Image>
                     </View>
 
                     <ImagePicker style={styles.addPicture}><Ionicons name="ios-add" size={40} color="#ffffff"></Ionicons></ImagePicker>
 
-
                 </View>
 
-                <Text style={styles.namestyle}>{/*{loggedUser.firstName} {loggedUser.lastName}*/}Milica Krmpotic</Text>
+                <Text style={styles.namestyle}>{loggedUser.firstName} {loggedUser.lastName}</Text>
                 <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={/*loggedUser.rating*/4}
+                    rating={loggedUser.rating}
                     starSize={20}
                     emptyStarColor={theme.colors.quaternary}
                     fullStarColor={theme.colors.gold}
@@ -60,12 +62,12 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Email:'.toUpperCase()} </Text>
-                        <Text style={styles.infoText}>{/*{loggedUser.email}*/}mail@email.com</Text>
+                        <Text style={styles.infoText}>{loggedUser.email}</Text>
                     </View>
 
                     <View style={styles.infoBox}>
                         <Text style={styles.label}>{'Datum registracije:'.toUpperCase()} </Text>
-                        <Text style={styles.infoText}>{/*{loggedUser.displayRegistrationDate}*/}20.12.2019.</Text>
+                        <Text style={styles.infoText}>{loggedUser.displayRegistrationDate}</Text>
                     </View>
 
                       <View style={{ borderBottomColor: theme.colors.quaternary, borderBottomWidth: 2, marginTop: 20 }}>
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
         marginTop:getStatusBarHeight(),
         backgroundColor:theme.colors.white
     },
-
     image: {
         flex: 1,
         height: undefined,
@@ -204,7 +205,15 @@ const styles = StyleSheet.create({
     photoicon:{
         alignSelf:"center",
         paddingTop:8
+    },
+    iconstyle:{
+        alignSelf:"center",
+        marginTop:30
+    },
+    notloggedinstyle:{
+        marginTop:26
     }
+
 });
 
 export default ProfileScreen;

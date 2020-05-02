@@ -1,32 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text} from 'react-native';
 import { theme } from '../utils/theme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const NotLoggedInView = props => {
+const NotLoggedInView = ({children,...props}) => {
     return (
-        <View style={{...styles.wrapper,...props.style}}>
+        <View style={styles.wrapper}>
       
-            <Text style={styles.textstyle}>
+            <Text style={styles.headerstyle}>
                 {props.titleText}
             </Text>
                 
-            <Text style={styles.textstyle1}>
+            <Text style={styles.paragraphstyle}>
                 {props.contentText}
             </Text>
 
-            <Image 
-                source={props.imageUri}  
-                style={styles.image}
-                
-            />
-            <View  style={styles.submit}>
+            {children}
+            
+            <View  style={{...styles.submit,...props.style}}>
                 <TouchableOpacity
                     style={styles.touchablestyle}
-                    onPress={() => props.navigation.navigate('Auth')}
-                    >
+                    onPress={() => props.navigation.navigate('Auth')}>
 
-                    <Text style={styles.textstylebutton}>Prijava</Text>   
+                    <Text style={styles.textstylebutton}>Prijava</Text>
+
                 </TouchableOpacity>
             </View>
 
@@ -37,18 +34,16 @@ const NotLoggedInView = props => {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        paddingTop: 70,
+        paddingTop: 80,
         backgroundColor:theme.colors.white
     },
-
     submit:{
         width:"35%",
         alignSelf:"flex-end",
         marginHorizontal:20,
-        marginTop:-35,
+        marginTop:10,
         height:50,
       },
-
     touchablestyle:{
         color:"transparent",
         borderRadius:10,
@@ -56,33 +51,25 @@ const styles = StyleSheet.create({
         borderColor: theme.colors.primary
 
     },
-
-    textstyle: {
+    headerstyle: {
         fontSize: 40,
         fontWeight: '700',
         alignSelf: 'flex-start',
         marginLeft: 20,
+        marginBottom:5
     },
-
-    textstyle1:{
+    paragraphstyle:{
         fontSize: 14,
         width:"60%",
         fontWeight: '100',
         marginLeft: 20,
     },
-
     textstylebutton:{
         fontSize:22,
         color:theme.colors.primary,
         alignSelf:"center",
         paddingVertical:8,
         fontWeight:"900"
-    },
-    image:{
-        width: 380,
-        height: 350,
-        alignSelf: 'flex-end',
-        opacity:0.8  
     }
 });
 
