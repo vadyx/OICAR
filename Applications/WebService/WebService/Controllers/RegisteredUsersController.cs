@@ -26,14 +26,15 @@ namespace WebServis.Controllers
         private RegisteredUserModel db = new RegisteredUserModel();
 
         // GET: api/RegisteredUsers/
+        [Route("api/getUsers")]
         public IQueryable<RegisteredUser> GetRegisteredUsers()
         {
             return db.RegisteredUsers;
         }
 
-        // GET: api/RegisteredUsers/username
+        // GET: api/user/username
         [ResponseType(typeof(RegisteredUser))]
-        [Route("api/RegisteredUsers/{username}")]
+        [Route("api/getUser/{username}")]
         public async Task<IHttpActionResult> GetRegisteredUser(string username)
         {
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.LoginCredentials.Username == username).SingleOrDefaultAsync();
@@ -47,7 +48,7 @@ namespace WebServis.Controllers
 
         [ResponseType(typeof(void))]
         [HttpPut]
-        [Route("api/RegisteredUsers/setProfileImage/{id}")]
+        [Route("api/user/setProfileImage/{id}")]
         public async Task<IHttpActionResult> PutProfileImageForRegisteredUser(int id, [FromBody]string profileImageBase64)
         {     
             if (!RegisteredUserExists(id) || profileImageBase64 == null)
@@ -73,8 +74,67 @@ namespace WebServis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/RegisteredUsers
+        [ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("api/user/setDriverLicenseImage/{id}")]
+        public async Task<IHttpActionResult> PutDriverLicenseImageForRegisteredUser(int id, [FromBody]string driverLicenseImageBase64)
+        {
+            if (!RegisteredUserExists(id) || driverLicenseImageBase64 == null)
+            {
+                return BadRequest();
+            }
+
+            byte[] driverLicenseBytes = Convert.FromBase64String(driverLicenseImageBase64);
+            RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
+            registeredUser.Verification.DriverLicense = driverLicenseBytes;
+            registeredUser.Verification.DriverLicenseVerified = true;
+            db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
+            db.Entry(registeredUser).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("api/user/setPersonalIDImage/{id}")]
+        public async Task<IHttpActionResult> PutPersonalIDImageForRegisteredUser(int id, [FromBody]string personalIDImageBase64)
+        {
+            if (!RegisteredUserExists(id) || personalIDImageBase64 == null)
+            {
+                return BadRequest();
+            }
+
+            byte[] personalIDBytes = Convert.FromBase64String(personalIDImageBase64);
+            RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
+            registeredUser.Verification.PersonalIdentification = personalIDBytes;
+            registeredUser.Verification.PersonalIdentificationVerified = true;
+            db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
+            db.Entry(registeredUser).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/user
         [ResponseType(typeof(RegisteredUser))]
+        [Route("api/user")]
         public async Task<IHttpActionResult> PostRegisteredUser(RegisteredUser registeredUser)
         {
             if (!ModelState.IsValid)
@@ -85,6 +145,14 @@ namespace WebServis.Controllers
             registeredUser.LoginCredentials.Pwd = PasswordSecurity.PasswordStorage.CreateHash(registeredUser.LoginCredentials.Pwd);
             Image defaultProfileImage = Image.FromFile(System.Web.Hosting.HostingEnvironment.MapPath("~") + @"\Images\user_default_image.png");
             registeredUser.ProfileImage = ImageToBytesConverter(defaultProfileImage);
+            registeredUser.Verification = new Models.test.Verification
+            {
+                DriverLicense = null,
+                DriverLicenseVerified = false,
+                PersonalIdentificationVerified = false,
+                PersonalIdentification = null
+            };
+
             db.RegisteredUsers.Add(registeredUser);
 
             try
@@ -106,31 +174,6 @@ namespace WebServis.Controllers
             }
 
             return Ok(true);
-        }
-
-        // DELETE: api/RegisteredUsers/5
-        [ResponseType(typeof(RegisteredUser))]
-        public async Task<IHttpActionResult> DeleteRegisteredUser(int id)
-        {
-            RegisteredUser registeredUser = await db.RegisteredUsers.FindAsync(id);
-            if (registeredUser == null)
-            {
-                return NotFound();
-            }
-
-            db.RegisteredUsers.Remove(registeredUser);
-            await db.SaveChangesAsync();
-
-            return Ok(registeredUser);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private bool RegisteredUserExists(int id)

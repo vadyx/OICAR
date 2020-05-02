@@ -5,6 +5,7 @@ namespace WebServis.Models.Registration
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using WebServis.Models.loginCredentialsForRegistration;
+    using WebServis.Models.test;
 
     public partial class RegisteredUserModel : DbContext
     {
@@ -23,6 +24,11 @@ namespace WebServis.Models.Registration
                 .WithRequired(e => e.LoginCredentials)
                 .HasForeignKey(e => e.LoginCredentialsID)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Verification>()
+                .HasMany(e => e.RegisteredUser)
+                .WithOptional(e => e.Verification)
+                .HasForeignKey(e => e.VerificationID);
 
             modelBuilder.Entity<RegisteredUser>()
                 .Property(e => e.Rating)

@@ -22,12 +22,6 @@ namespace WebServis.Controllers
         private LoginCredentialsModel db = new LoginCredentialsModel();
         private RegisteredUserModel dbRegistartion = new RegisteredUserModel();
 
-        // GET: api/LoginCredentials
-        public IQueryable<LoginCredentials> GetLoginCredentials()
-        {
-            return db.LoginCredentials;
-        }
-
         // GET: api/LoginCredentials/5
         [ResponseType(typeof(LoginCredentials))]
         public async Task<IHttpActionResult> GetLoginCredentials(int id)
@@ -96,37 +90,14 @@ namespace WebServis.Controllers
                         Email = registeredUser.Email,
                         Rating = registeredUser.Rating,
                         RegistrationDate = registeredUser.RegistrationDate,
-                        ProfileImage = registeredUser.ProfileImage
+                        ProfileImage = registeredUser.ProfileImage,
+                        Verification = registeredUser.Verification,
+                        VerificationID = registeredUser.VerificationID
                     });
                 }
             }
 
             return false;
-        }
-
-        // DELETE: api/LoginCredentials/5
-        [ResponseType(typeof(LoginCredentials))]
-        public async Task<IHttpActionResult> DeleteLoginCredentials(int id)
-        {
-            LoginCredentials loginCredentials = await db.LoginCredentials.FindAsync(id);
-            if (loginCredentials == null)
-            {
-                return NotFound();
-            }
-
-            db.LoginCredentials.Remove(loginCredentials);
-            await db.SaveChangesAsync();
-
-            return Ok(loginCredentials);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private bool LoginCredentialsExists(int id)

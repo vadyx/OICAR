@@ -6,6 +6,7 @@ namespace WebServis.Models.Registration
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using WebServis.Models.loginCredentialsForRegistration;
+    using WebServis.Models.test;
 
     [Table("RegisteredUser")]
     public partial class RegisteredUser
@@ -36,5 +37,9 @@ namespace WebServis.Models.Registration
 
         [Column(TypeName = "varbinary")]
         public byte[] ProfileImage { get; set; }
+
+        public int? VerificationID { get; set; }
+
+        public virtual Verification Verification { get; set; }
     }
 }

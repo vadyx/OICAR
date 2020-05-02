@@ -1,4 +1,4 @@
-namespace WebServis.Models.loginCredentialsForRegistration
+namespace WebServis.Models.test
 {
     using Newtonsoft.Json;
     using System;
@@ -8,23 +8,25 @@ namespace WebServis.Models.loginCredentialsForRegistration
     using System.Data.Entity.Spatial;
     using WebServis.Models.Registration;
 
-    public partial class LoginCredentials
+    [Table("Verification")]
+    public partial class Verification
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LoginCredentials()
+        public Verification()
         {
             RegisteredUser = new HashSet<RegisteredUser>();
         }
 
         [Key]
-        public int IDLoginCredentials { get; set; }
+        public int IDVerification { get; set; }
 
-        [Required]
-        [StringLength(64)]
-        public string Username { get; set; }
+        public byte[] DriverLicense { get; set; }
 
-        [Required]
-        public string Pwd { get; set; }
+        public bool? DriverLicenseVerified { get; set; }
+
+        public byte[] PersonalIdentification { get; set; }
+
+        public bool? PersonalIdentificationVerified { get; set; }
 
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
