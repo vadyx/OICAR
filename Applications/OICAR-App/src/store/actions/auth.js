@@ -4,7 +4,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const registration = (username, firstName, lastName, email, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.3:12335/api/user',
+        const response = await fetch('http://192.168.1.3:12335/api/registration',
             {
                 method: 'POST',
                 headers: {
