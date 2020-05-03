@@ -1,12 +1,13 @@
 namespace WebServis.Models.Registration
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using WebServis.Models.loginCredentialsForRegistration;
-    using WebServis.Models.test;
+    using WebServis.Models.Login;
+    using WebServis.Models.Verification;
 
     [Table("RegisteredUser")]
     public partial class RegisteredUser

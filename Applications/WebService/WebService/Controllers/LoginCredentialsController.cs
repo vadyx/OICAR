@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 using System.Web.UI.WebControls;
 using WebServis.Models.Login;
 using WebServis.Models.Registration;
+using WebServis.Models.ViewModels;
 using WebServis.PasswordSecurity;
 
 namespace WebServis.Controllers
@@ -81,8 +82,7 @@ namespace WebServis.Controllers
                 if (loginCred.Username.Equals(loginCredentials.Username) && PasswordStorage.VerifyPassword(loginCredentials.Pwd, loginCred.Pwd))
                 {
                     RegisteredUser registeredUser = await dbRegistartion.RegisteredUsers.Where(user => user.LoginCredentials.Username == loginCredentials.Username).SingleOrDefaultAsync();
-                    registeredUser.LoginCredentials = null;
-                    return Ok(new RegisteredUser 
+                    return Ok(new RegisteredUserResponseModel 
                     {
                         IDRegisteredUser = registeredUser.IDRegisteredUser, 
                         FirstName = registeredUser.FirstName,
@@ -91,8 +91,11 @@ namespace WebServis.Controllers
                         Rating = registeredUser.Rating,
                         RegistrationDate = registeredUser.RegistrationDate,
                         ProfileImage = registeredUser.ProfileImage,
-                        Verification = registeredUser.Verification,
-                        VerificationID = registeredUser.VerificationID
+                        Verification = new VerificationResponseModel 
+                        {
+                            DriverLicenseVerified = registeredUser.Verification.DriverLicenseVerified,
+                            PersonalIdentificationVerified = registeredUser.Verification.PersonalIdentificationVerified
+                        }
                     });
                 }
             }
