@@ -16,7 +16,8 @@ export default (state = initialState, action) => {
                 action.userData.email,
                 action.userData.rating,
                 action.userData.registrationDate,
-                action.userData.profilePicture
+                action.userData.profilePicture,
+                action.userData.documentVerification
             );
 
             return {

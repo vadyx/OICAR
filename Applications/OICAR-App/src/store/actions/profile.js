@@ -2,7 +2,7 @@ export const UPDATE_PROFILE_IMAGE = "UPDATE_PROFILE_IMAGE";
 
 export const updateProfilePicture = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.1.3:12335/api/RegisteredUsers/setProfileImage/${id}`,
+        const response = await fetch(`http://192.168.1.3:12335/api/user/setProfileImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {

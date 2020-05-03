@@ -4,7 +4,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const registration = (username, firstName, lastName, email, password) => {
     return async dispatch => {
-        const response = await fetch('http://192.168.1.3:12335/api/RegisteredUsers',
+        const response = await fetch('http://192.168.1.3:12335/api/user',
             {
                 method: 'POST',
                 headers: {
@@ -25,9 +25,10 @@ export const registration = (username, firstName, lastName, email, password) => 
         );
 
         if (!response.ok) {
-            const errorResData = await response.json();
+            const responseError = await response.json();
+            console.log("Registration went wrong: " + responseError);
             let errorData;
-            switch (errorResData.Message) {
+            switch (responseError.Message) {
                 case 'UQ_USERNAME':
                     errorData = {
                         id: 'username',
@@ -76,6 +77,7 @@ export const login = (username, password) => {
         }
 
         const resData = await response.json();
+
         if (!resData) {
             throw new Error();
         }
@@ -90,7 +92,11 @@ export const login = (username, password) => {
                 email: resData.Email,
                 rating: resData.Rating,
                 registrationDate: resData.RegistrationDate,
-                profilePicture: resData.ProfileImage
+                profilePicture: resData.ProfileImage,
+                documentVerification: {
+                    isIDVerified: resData.Verification.PersonalIdentificationVerified,
+                    isDLVerified: resData.Verification.DriverLicenseVerified
+                }
             }
         });
     };
