@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     View,
     Text,
@@ -9,25 +9,47 @@ import {
     StatusBar,
     ScrollView,
     Dimensions,
-    TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { withNavigationFocus } from 'react-navigation';
+import { useSelector, useDispatch } from 'react-redux';
 import { Video } from 'expo-av';
 
 import Category from '../../components/Category';
 import Home from '../../components/Home';
 import Logo from "../../components/Logo";
+import * as categoriesActions from '../../store/actions/category';
 import { theme } from "../../utils/theme";
 
 const { height, width } = Dimensions.get('window');
 
+const _renderCategoryItem = (item) => {
+  return (
+    <Category
+      key={item.id} 
+      imageUri={item.imageUri}
+      name={item.name}
+    />
+  );
+}
+
 const ExploreScreen = props => { 
+
+  const categories = useSelector(state => state.categories.categories);
+  const dispatch = useDispatch();
+
+  if (categories.length === 0) {
+    try {
+      dispatch(categoriesActions.loadCategories());
+    } catch (error) {
+      
+    }
+  }
 
   let startHeaderHeight = 80;
   if (Platform.OS == 'android') {
-      startHeaderHeight = 58 + StatusBar.currentHeight}
+      startHeaderHeight = 58 + StatusBar.currentHeight
+  }
 
   return (
     <SafeAreaView style={styles.safeareastyle}>
@@ -64,7 +86,7 @@ const ExploreScreen = props => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
 
-                <Category imageUri={require('../../assets/carcategory.jpg')}
+                {/* <Category imageUri={require('../../assets/carcategory.jpg')}
                   name="Automobili"
                 />
 
@@ -86,7 +108,8 @@ const ExploreScreen = props => {
 
                 <Category imageUri={require('../../assets/campercategory.jpg')}
                   name="Ostalo"
-                />
+                /> */}
+                {categories.map(item => _renderCategoryItem(item))}
 
               </ScrollView>
             </View>

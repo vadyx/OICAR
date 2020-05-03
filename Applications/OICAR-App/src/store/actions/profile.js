@@ -13,9 +13,7 @@ export const updateProfilePicture = (id, picture) => {
         );
 
         if (!response.ok) {
-            console.log("response was not ok");
-            console.log(typeof picture);
-            throw new Error();
+            throw new Error("Error in setting the new picture");
         }
 
         dispatch({

@@ -1,30 +1,30 @@
-import React, { Component } from "react";
+import React, { memo } from "react";
 import {
     View,
     Text,
     StyleSheet,
     Image
 } from "react-native";
+
 import { theme } from "../utils/theme";
 
-class Category extends Component {
-    render() {
-        return (
-            <View style={styles.category_container}>
-                <View style={styles.imagecontainer}>
+const Category = props => {
 
-                    <Image source={this.props.imageUri}
-                        style={styles.imagestyle}
-                    />
-                </View>
-                <View style={styles.categoryname_container}>
-                    <Text style={styles.text_style}>{this.props.name}</Text>
-                </View>
+    return (
+        <View style={styles.category_container}>
+            <View style={styles.imagecontainer}>
+
+                <Image source={{ uri: props.imageUri }}
+                    style={styles.imagestyle}
+                />
             </View>
-        );
-    }
+            <View style={styles.categoryname_container}>
+                <Text style={styles.text_style}>{props.name}</Text>
+            </View>
+        </View>
+    );
+
 }
-export default Category;
 
 const styles = StyleSheet.create({
     
@@ -63,3 +63,5 @@ const styles = StyleSheet.create({
         fontWeight:"bold"
     }
 });
+
+export default memo(Category);
