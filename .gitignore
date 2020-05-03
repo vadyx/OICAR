@@ -16,3 +16,4 @@ Applications/OICAR-App/web-report/
 Applications/WebService/.vs/*
 Applications/WebService/WebService/bin/*
 Applications/WebService/WebService/obj/*
+Applications/WebService/WebService/Web.config

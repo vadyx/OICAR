@@ -1,14 +1,14 @@
-namespace WebServis.Models.test
+namespace WebServis.Models.Verification
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class Model1 : DbContext
+    public partial class VerificationModel : DbContext
     {
-        public Model1()
-            : base("name=Model1")
+        public VerificationModel()
+            : base("name=apiCS")
         {
         }
         public virtual DbSet<Verification> Verification { get; set; }

@@ -17,7 +17,7 @@ namespace WebServis.Controllers
     {
         private CategoryModel db = new CategoryModel();
 
-        // GET: api/Categories
+        [Route("api/categories")]
         public IQueryable<Category> GetCategory()
         {
             return db.Category;

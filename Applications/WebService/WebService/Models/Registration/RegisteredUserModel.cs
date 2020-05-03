@@ -4,8 +4,8 @@ namespace WebServis.Models.Registration
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using WebServis.Models.loginCredentialsForRegistration;
-    using WebServis.Models.test;
+    using WebServis.Models.Verification;
+    using WebServis.Models.Login;
 
     public partial class RegisteredUserModel : DbContext
     {

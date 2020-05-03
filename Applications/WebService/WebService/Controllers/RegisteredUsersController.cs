@@ -18,6 +18,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 using WebServis.Models.Registration;
+using WebServis.Models.Verification;
 
 namespace WebServis.Controllers
 {
@@ -26,7 +27,7 @@ namespace WebServis.Controllers
         private RegisteredUserModel db = new RegisteredUserModel();
 
         // GET: api/RegisteredUsers/
-        [Route("api/getUsers")]
+        [Route("api/users")]
         public IQueryable<RegisteredUser> GetRegisteredUsers()
         {
             return db.RegisteredUsers;
@@ -34,7 +35,7 @@ namespace WebServis.Controllers
 
         // GET: api/user/username
         [ResponseType(typeof(RegisteredUser))]
-        [Route("api/getUser/{username}")]
+        [Route("api/user/{username}")]
         public async Task<IHttpActionResult> GetRegisteredUser(string username)
         {
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.LoginCredentials.Username == username).SingleOrDefaultAsync();
@@ -50,10 +51,15 @@ namespace WebServis.Controllers
         [HttpPut]
         [Route("api/user/setProfileImage/{id}")]
         public async Task<IHttpActionResult> PutProfileImageForRegisteredUser(int id, [FromBody]string profileImageBase64)
-        {     
-            if (!RegisteredUserExists(id) || profileImageBase64 == null)
+        {
+            if (!RegisteredUserExists(id))
             {
-                return BadRequest();
+                return BadRequest("User with given ID does not exist.");
+            }
+
+            if (profileImageBase64 == null)
+            {
+                return BadRequest("Given value cannot be null.");
             }
 
             byte[] profileImageBytes = Convert.FromBase64String(profileImageBase64);
@@ -66,9 +72,9 @@ namespace WebServis.Controllers
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -79,9 +85,14 @@ namespace WebServis.Controllers
         [Route("api/user/setDriverLicenseImage/{id}")]
         public async Task<IHttpActionResult> PutDriverLicenseImageForRegisteredUser(int id, [FromBody]string driverLicenseImageBase64)
         {
-            if (!RegisteredUserExists(id) || driverLicenseImageBase64 == null)
+            if (!RegisteredUserExists(id))
             {
-                return BadRequest();
+                return BadRequest("User with given ID does not exist.");
+            }
+
+            if (driverLicenseImageBase64 == null)
+            {
+                return BadRequest("Given value cannot be null.");
             }
 
             byte[] driverLicenseBytes = Convert.FromBase64String(driverLicenseImageBase64);
@@ -95,9 +106,9 @@ namespace WebServis.Controllers
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -108,9 +119,14 @@ namespace WebServis.Controllers
         [Route("api/user/setPersonalIDImage/{id}")]
         public async Task<IHttpActionResult> PutPersonalIDImageForRegisteredUser(int id, [FromBody]string personalIDImageBase64)
         {
-            if (!RegisteredUserExists(id) || personalIDImageBase64 == null)
+            if (!RegisteredUserExists(id))
             {
-                return BadRequest();
+                return BadRequest("User with given ID does not exist.");
+            }
+
+            if (personalIDImageBase64 == null)
+            {
+                return BadRequest("Given value cannot be null.");
             }
 
             byte[] personalIDBytes = Convert.FromBase64String(personalIDImageBase64);
@@ -124,9 +140,9 @@ namespace WebServis.Controllers
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -134,7 +150,7 @@ namespace WebServis.Controllers
 
         // POST: api/user
         [ResponseType(typeof(RegisteredUser))]
-        [Route("api/user")]
+        [Route("api/registration")]
         public async Task<IHttpActionResult> PostRegisteredUser(RegisteredUser registeredUser)
         {
             if (!ModelState.IsValid)
@@ -145,7 +161,7 @@ namespace WebServis.Controllers
             registeredUser.LoginCredentials.Pwd = PasswordSecurity.PasswordStorage.CreateHash(registeredUser.LoginCredentials.Pwd);
             Image defaultProfileImage = Image.FromFile(System.Web.Hosting.HostingEnvironment.MapPath("~") + @"\Images\user_default_image.png");
             registeredUser.ProfileImage = ImageToBytesConverter(defaultProfileImage);
-            registeredUser.Verification = new Models.test.Verification
+            registeredUser.Verification = new Verification
             {
                 DriverLicense = null,
                 DriverLicenseVerified = false,

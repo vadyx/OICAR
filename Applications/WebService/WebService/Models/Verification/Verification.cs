@@ -1,4 +1,4 @@
-namespace WebServis.Models.test
+namespace WebServis.Models.Verification
 {
     using Newtonsoft.Json;
     using System;
