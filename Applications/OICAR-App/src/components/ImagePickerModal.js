@@ -1,33 +1,45 @@
-import React, {useState} from 'react';
-import { Text, StyleSheet, TouchableOpacity,Modal,View } from 'react-native';
+import React from 'react';
+import { Text, StyleSheet, TouchableOpacity, Modal, View } from 'react-native';
+
 import { theme } from '../utils/theme';
 
 const ImagePickerModal = props =>{
-
-    const [modalVisible, setModalVisible] = useState(false);
 
     return(
     <Modal
     animationType="fade"
     transparent={true}
-    visible={modalVisible}
-    onRequestClose={() => {
-    setModalVisible(!modalVisible);
-    }}>
+    visible={props.visible}
+    onRequestClose={props.onModalClose}
+    >
+
         <View style={styles.modal}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalBody}>
 
                     <View  style={styles.submit}>
                         <TouchableOpacity
-                        style={styles.touchablestyle}>
+                            style={styles.touchablestyle}
+                            onPress={() => {
+                                props.onSelectedOption('camera');
+                                props.onModalClose();
+                            }}>
+
                             <Text style={styles.textstylebutton}>Kamera</Text>
+
                         </TouchableOpacity>
                     </View>
+
                     <View  style={styles.submit}>
                         <TouchableOpacity
-                        style={styles.touchablestyle}>
+                            style={styles.touchablestyle}
+                            onPress={() => {
+                                props.onSelectedOption('gallery');
+                                props.onModalClose();
+                            }}>
+
                             <Text style={styles.textstylebutton}>Galerija</Text>
+
                         </TouchableOpacity>
                     </View>
 
@@ -37,10 +49,8 @@ const ImagePickerModal = props =>{
 
                     <View style={styles.divider}></View>
 
-                    <TouchableOpacity onPress={() => {
-                    setModalVisible(!modalVisible);
-                    }}>
-                        <Text style={styles.textstylebutton1} >Odustani</Text>
+                    <TouchableOpacity onPress={props.onModalClose}>
+                        <Text style={styles.textstylebutton1}>Odustani</Text>
                     </TouchableOpacity>
 
                 </View>    
@@ -114,4 +124,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default (ImagePickerModal);
+export default ImagePickerModal;

@@ -9,6 +9,8 @@ import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
 import * as profileActions from '../../store/actions/profile';
+
+import { profileImageOptions, documentImageOptions } from '../../utils/imageOptions';
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
@@ -16,14 +18,31 @@ const ProfileScreen = props => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const loggedUser = useSelector(state => state.profile.user);
 
+    if (loggedUser !== null) {
+    console.log("User: " + loggedUser.firstName + " " + loggedUser.lastName);
+    console.log("ID Verified: " + loggedUser.documentVerification.isIDVerified);
+    console.log("License Verified: " + loggedUser.documentVerification.isDLVerified);
+    }
+
     const dispatch = useDispatch();
 
-    const _onProfilePictureChanged = picture => {
+    const _onPictureSelected = (pickerId, picture) => {
         try {
-            dispatch(profileActions.updateProfilePicture(loggedUser.id, picture));
+            switch (pickerId) {
+                case 'profilePicture':
+                    dispatch(profileActions.updateProfilePicture(loggedUser.id, picture));
+                    break;
+                case 'IDCard':
+                    dispatch(profileActions.uploadID(loggedUser.id, picture));
+                    break;
+                case 'DriverLicense':
+                    dispatch(profileActions.uploadDriverLicense(loggedUser.id, picture));
+                    break;
+            }
         } catch (error) {
-            console.log(error);
+            // error logic
         }
+        
     };
 
     if (!isLoggedIn) {
@@ -54,8 +73,14 @@ const ProfileScreen = props => {
                         <Image source={{ uri: loggedUser.imageUri }} style={styles.image} resizeMode="cover"></Image>
                     </View>
 
-                    <ImagePicker style={styles.addPicture} onPictureChange={_onProfilePictureChanged}>
+                    <ImagePicker 
+                        id='profilePicture'
+                        style={styles.addPicture} 
+                        onPictureSelected={_onPictureSelected}
+                        imageOptions={profileImageOptions}>
+
                         <Ionicons name="ios-add" size={40} color="#ffffff" />
+
                     </ImagePicker>
 
                 </View>
@@ -87,15 +112,27 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
-                        <ImagePicker><MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                        <Text style={styles.label3}>Dodaj</Text></ImagePicker>
+                        <ImagePicker
+                            id='IDCard'
+                            imageOptions={documentImageOptions}
+                            onPictureSelected={_onPictureSelected}>
+
+                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                            <Text style={styles.label3}>Dodaj</Text>
+
+                        </ImagePicker>
                     </View>
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
-                        <ImagePicker>
+                        <ImagePicker
+                            id='DriverLicense'
+                            imageOptions={documentImageOptions}
+                            onPictureSelected={_onPictureSelected}>
+
                             <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
                             <Text style={styles.label3}>Dodaj</Text>
+
                         </ImagePicker>
                     </View>
                 </View>

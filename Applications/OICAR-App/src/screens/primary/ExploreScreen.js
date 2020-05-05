@@ -86,29 +86,6 @@ const ExploreScreen = props => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
 
-                {/* <Category imageUri={require('../../assets/carcategory.jpg')}
-                  name="Automobili"
-                />
-
-                <Category imageUri={require('../../assets/motorbikecategory.jpg')}
-                  name="Motocikli"
-                />
-
-                <Category imageUri={require('../../assets/truckcategory.jpg')}
-                  name="Kamioni"
-                />
-
-                <Category imageUri={require('../../assets/bikecategory.jpg')}
-                  name="Bicikli"
-                />
-
-                <Category imageUri={require('../../assets/boatcategory.jpg')}
-                  name="Brodovi"
-                />
-
-                <Category imageUri={require('../../assets/campercategory.jpg')}
-                  name="Ostalo"
-                /> */}
                 {categories.map(item => _renderCategoryItem(item))}
 
               </ScrollView>

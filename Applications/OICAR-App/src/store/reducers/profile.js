@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT } from '../actions/auth';
-import { UPDATE_PROFILE_IMAGE } from '../actions/profile';
+import { UPDATE_PROFILE_IMAGE, UPLOAD_ID, UPLOAD_DRIVER_LICENSE } from '../actions/profile';
 import User from '../../models/user';
 
 const initialState = {
@@ -7,6 +7,9 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+
+    let updatedUser;
+
     switch (action.type) {
         case LOGIN:
             const loggedUser = new User(
@@ -26,22 +29,67 @@ export default (state = initialState, action) => {
             };
         case LOGOUT:
             return initialState;
+
         case UPDATE_PROFILE_IMAGE:
 
-            const updatedUser = new User(
+            updatedUser = new User(
                 state.user.id,
                 state.user.firstName,
                 state.user.lastName,
                 state.user.email,
                 state.user.rating,
                 state.user.registrationDate,
-                action.picture
+                action.picture,
+                state.user.documentVerification
             );
 
             return {
                 ...state,
                 user: updatedUser
             };
+
+        case UPLOAD_ID:
+
+            updatedUser = new User(
+                state.user.id,
+                state.user.firstName,
+                state.user.lastName,
+                state.user.email,
+                state.user.rating,
+                state.user.registrationDate,
+                state.user.profilePicture,
+                {
+                    isIDVerified: action.idVerification,
+                    isDLVerified: state.user.documentVerification.isDLVerified
+                }
+            );
+
+            return {
+                ...state,
+                user: updatedUser
+            };
+
+        case UPLOAD_DRIVER_LICENSE:
+
+            updatedUser = new User(
+                state.user.id,
+                state.user.firstName,
+                state.user.lastName,
+                state.user.email,
+                state.user.rating,
+                state.user.registrationDate,
+                state.user.profilePicture,
+                {
+                    isIDVerified: state.user.isIDVerified,
+                    isDLVerified: action.licenseVerification
+                }
+            );
+
+            return {
+                ...state,
+                user: updatedUser
+            };
+            
         default:
             return state;
     }

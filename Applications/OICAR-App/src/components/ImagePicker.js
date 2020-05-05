@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
-import * as profileActions from '../store/actions/profile';
+import ImagePickerModal from '../components/ImagePickerModal';
 import { theme } from '../utils/theme';
 
-const ImgPicker = ({children,...props}) => {
+const ImgPicker = props => {
+
+    const [modalVisible, setModalVisible] = useState(false);  
+
+    const _onAddImagePress = () => {
+        setModalVisible(true);
+    }
+
+    const _onModalClose = () => {
+        setModalVisible(false);
+    } 
 
     const _verifyPermissions = async () => {
 
@@ -20,29 +30,41 @@ const ImgPicker = ({children,...props}) => {
         return true;
     };
 
-    const _onTakeImagePress = async () => {
+    const _onSelectedOption = async (option) => {
         const permissionGranted = await _verifyPermissions();
 
         if (!permissionGranted) {
             return;
         }
 
-        const picture = await ImagePicker.launchCameraAsync({
-            base64: true,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.5
-        });
+        let picture;
+        switch (option) {
+            case 'camera':
+                picture = await ImagePicker.launchCameraAsync(props.imageOptions);
+                break;
+            case 'gallery':
+                picture = await ImagePicker.launchImageLibraryAsync(props.imageOptions);
+                break;
+        }
 
-        props.onPictureChange(picture.base64);
+        props.onPictureSelected(props.id, picture.base64);
     };
 
     return (
-        <View  style={{...styles.containerphoto, ...props.style}}>
-        <TouchableOpacity onPress={_onTakeImagePress}>
-            {children}
-        </TouchableOpacity>
-    </View>
+        <View>
+            <View  style={{...styles.containerphoto, ...props.style}}>
+                <TouchableOpacity onPress={_onAddImagePress}>
+                    {props.children}
+                </TouchableOpacity>
+            </View>
+
+            <ImagePickerModal 
+                visible={modalVisible} 
+                onModalClose={_onModalClose} 
+                onSelectedOption={_onSelectedOption}
+            />
+
+        </View>
     );
 }
 
