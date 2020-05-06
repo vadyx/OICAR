@@ -2,7 +2,7 @@ import React from 'react';
 import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
-import { Ionicons,MaterialIcons,FontAwesome5} from '@expo/vector-icons';
+import { Ionicons,MaterialIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import EditProfileButton from '../../components/EditProfileButton';
@@ -121,6 +121,17 @@ const ProfileScreen = props => {
                             <Text style={styles.label3}>Dodaj</Text>
 
                         </ImagePicker>
+
+                      {/*
+                        <ImagePicker
+                            style={styles.imagepickersuccess}>
+
+                            <FontAwesome name="check" size={36} color={theme.colors.success} style={styles.photoicon}></FontAwesome>
+                            <Text style={styles.imagepickertextsuccess}>Dodano</Text>
+                            
+                        </ImagePicker>
+                        */}
+
                     </View>
 
                     <View style={styles.infoBox2}>
@@ -261,7 +272,27 @@ const styles = StyleSheet.create({
     },
     notloggedinstyle:{
         marginTop:26
+    },
+
+    imagepickersuccess:{
+        backgroundColor:"white",
+        shadowColor: "#ffffff",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 0,
+        elevation:0,
+        
+    },
+
+    imagepickertextsuccess:{
+        color:theme.colors.success,
+        fontSize:18,
+        alignSelf:"center"
     }
+
 
 });
 

@@ -12,6 +12,7 @@ export const theme = {
     white:'#ffffff',
     gold:'#d4af37',
     black:'#000000',
-    lightgrey:'#bbbbbb'
+    lightgrey:'#bbbbbb',
+    success:'#006400'
   },
 };
