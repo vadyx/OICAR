@@ -2,7 +2,8 @@ import React from 'react';
 import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
-import { Ionicons,MaterialIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
+import ActionButton from 'react-native-action-button';
+import { Ionicons,MaterialIcons,MaterialCommunityIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import EditProfileButton from '../../components/EditProfileButton';
@@ -45,7 +46,7 @@ const ProfileScreen = props => {
         
     };
 
-    if (!isLoggedIn) {
+   if (!isLoggedIn) {
         return (
             <NotLoggedInView 
                 titleText='Ups!'
@@ -85,7 +86,7 @@ const ProfileScreen = props => {
 
                 </View>
 
-                <Text style={styles.namestyle}>{loggedUser.firstName} {loggedUser.lastName}</Text>
+    <Text style={styles.namestyle}>{loggedUser.firstName} {loggedUser.lastName}</Text>
                 <StarRating
                     disabled={true}
                     maxStars={5}
@@ -149,6 +150,19 @@ const ProfileScreen = props => {
                 </View>
             </View>
         </ScrollView>
+        
+        <ActionButton buttonColor={theme.colors.lightgrey} size={50} offsetX={20} offsetY={20}>
+                <ActionButton.Item spaceBetween={10} textContainerStyle={styles.textactionbutton} buttonColor={theme.colors.primary} title="Postavke" onPress={() => {}}>
+                    <MaterialIcons name="settings" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item spaceBetween={10} buttonColor={theme.colors.darkgray} title="Moji oglasi" onPress={() => {}}>
+                    <MaterialCommunityIcons name="folder-move" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item spaceBetween={10} buttonColor={theme.colors.lightplusgrey} title="Odjavite se" onPress={() => {}}>
+                    <MaterialCommunityIcons name="logout" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+            </ActionButton>
+        
     </View>
    
     );
@@ -273,7 +287,12 @@ const styles = StyleSheet.create({
     notloggedinstyle:{
         marginTop:26
     },
-
+    actionButtonIcon: {
+        fontSize: 25,
+        alignSelf:"center",
+        color: 'white',
+        
+    },
     imagepickersuccess:{
         backgroundColor:"white",
         shadowColor: "#ffffff",
@@ -286,14 +305,12 @@ const styles = StyleSheet.create({
         elevation:0,
         
     },
-
     imagepickertextsuccess:{
         color:theme.colors.success,
         fontSize:18,
         alignSelf:"center"
-    }
-
-
+    },
+   
 });
 
 export default ProfileScreen;

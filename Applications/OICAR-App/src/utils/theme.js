@@ -13,6 +13,8 @@ export const theme = {
     gold:'#d4af37',
     black:'#000000',
     lightgrey:'#bbbbbb',
+    darkgray:'#444444',
+    lightplusgrey:'#989898',
     success:'#006400'
   },
 };
