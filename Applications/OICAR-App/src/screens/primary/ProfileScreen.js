@@ -2,13 +2,13 @@ import React from 'react';
 import StarRating from "react-native-star-rating";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
-import ActionButton from 'react-native-action-button';
 import { Ionicons,MaterialIcons,MaterialCommunityIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
-
+import ActionButton from '../../components/ActionButton'
 import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
+import ImagePickerSuccess from '../../components/ImagePickerSuccess';
 import * as profileActions from '../../store/actions/profile';
 
 import { profileImageOptions, documentImageOptions } from '../../utils/imageOptions';
@@ -64,8 +64,6 @@ const ProfileScreen = props => {
     <View style={styles.container}>   
         <ScrollView>
 
-            <EditProfileButton></EditProfileButton>
-
             <View style={styles.background}>
 
                 <View style={{ alignSelf: "center" }}>
@@ -113,7 +111,8 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
-                        <ImagePicker
+                        
+                        {/*<ImagePicker
                             id='IDCard'
                             imageOptions={documentImageOptions}
                             onPictureSelected={_onPictureSelected}>
@@ -121,17 +120,11 @@ const ProfileScreen = props => {
                             <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
                             <Text style={styles.label3}>Dodaj</Text>
 
-                        </ImagePicker>
+                        </ImagePicker> */}
 
-                      {/*
-                        <ImagePicker
-                            style={styles.imagepickersuccess}>
-
-                            <FontAwesome name="check" size={36} color={theme.colors.success} style={styles.photoicon}></FontAwesome>
-                            <Text style={styles.imagepickertextsuccess}>Dodano</Text>
-                            
-                        </ImagePicker>
-                        */}
+                        <ImagePickerSuccess>
+                            <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
+                        </ImagePickerSuccess>
 
                     </View>
 
@@ -151,17 +144,7 @@ const ProfileScreen = props => {
             </View>
         </ScrollView>
         
-        <ActionButton buttonColor={theme.colors.lightgrey} size={50} offsetX={20} offsetY={20}>
-                <ActionButton.Item spaceBetween={10} textContainerStyle={styles.textactionbutton} buttonColor={theme.colors.primary} title="Postavke" onPress={() => {}}>
-                    <MaterialIcons name="settings" style={styles.actionButtonIcon} />
-                </ActionButton.Item>
-                <ActionButton.Item spaceBetween={10} buttonColor={theme.colors.darkgray} title="Moji oglasi" onPress={() => {}}>
-                    <MaterialCommunityIcons name="folder-move" style={styles.actionButtonIcon} />
-                </ActionButton.Item>
-                <ActionButton.Item spaceBetween={10} buttonColor={theme.colors.lightplusgrey} title="Odjavite se" onPress={() => {}}>
-                    <MaterialCommunityIcons name="logout" style={styles.actionButtonIcon} />
-                </ActionButton.Item>
-            </ActionButton>
+        <ActionButton/>
         
     </View>
    
@@ -253,24 +236,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-    containerphoto:{
-        width:75,
-        height:75,
-        padding:0,
-        margin:0,
-        backgroundColor:theme.colors.primary,
-        borderRadius:10,
-        shadowColor: "#000",
-        //iPhone 
-        shadowOffset: {
-        width: 0,
-        height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        //Android
-        elevation: 5,
-    },
     namestyle:{
         fontSize: 28,
         color:theme.colors.secondary,
@@ -287,27 +252,9 @@ const styles = StyleSheet.create({
     notloggedinstyle:{
         marginTop:26
     },
-    actionButtonIcon: {
-        fontSize: 25,
-        alignSelf:"center",
-        color: 'white',
-        
-    },
-    imagepickersuccess:{
-        backgroundColor:"white",
-        shadowColor: "#ffffff",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation:0,
-        
-    },
     imagepickertextsuccess:{
         color:theme.colors.success,
-        fontSize:18,
+        fontSize:12,
         alignSelf:"center"
     },
    
