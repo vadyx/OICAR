@@ -80,7 +80,7 @@ export default (state = initialState, action) => {
                 state.user.registrationDate,
                 state.user.profilePicture,
                 {
-                    isIDVerified: state.user.isIDVerified,
+                    isIDVerified: state.user.documentVerification.isIDVerified,
                     isDLVerified: action.licenseVerification
                 }
             );

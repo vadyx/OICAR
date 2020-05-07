@@ -7,5 +7,5 @@ export const profileImageOptions = {
 
 export const documentImageOptions = {
     base64: true,
-    allowsEditing: false
+    allowsEditing: true
 };

@@ -5,10 +5,9 @@ import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { Ionicons,MaterialIcons,MaterialCommunityIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import ActionButton from '../../components/ActionButton'
-import EditProfileButton from '../../components/EditProfileButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
-import ImagePickerSuccess from '../../components/ImagePickerSuccess';
+import VerificationSuccess from '../../components/VerificationSuccess';
 import * as profileActions from '../../store/actions/profile';
 
 import { profileImageOptions, documentImageOptions } from '../../utils/imageOptions';
@@ -18,12 +17,6 @@ const ProfileScreen = props => {
 
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const loggedUser = useSelector(state => state.profile.user);
-
-    if (loggedUser !== null) {
-    console.log("User: " + loggedUser.firstName + " " + loggedUser.lastName);
-    console.log("ID Verified: " + loggedUser.documentVerification.isIDVerified);
-    console.log("License Verified: " + loggedUser.documentVerification.isDLVerified);
-    }
 
     const dispatch = useDispatch();
 
@@ -111,34 +104,53 @@ const ProfileScreen = props => {
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument osobne iskaznice:'.toUpperCase()} </Text>
+
+                        {loggedUser.documentVerification.isIDVerified ? 
+                            (
+                                <VerificationSuccess>
+                                    <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
+                                </VerificationSuccess>
+                            ) 
+                            : 
+                            (
+                                <ImagePicker
+                                    id='IDCard'
+                                    imageOptions={documentImageOptions}
+                                    onPictureSelected={_onPictureSelected}>
+
+                                    <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                                    <Text style={styles.label3}>Dodaj</Text>
+
+                                </ImagePicker>
+                            ) 
                         
-                        {/*<ImagePicker
-                            id='IDCard'
-                            imageOptions={documentImageOptions}
-                            onPictureSelected={_onPictureSelected}>
-
-                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                            <Text style={styles.label3}>Dodaj</Text>
-
-                        </ImagePicker> */}
-
-                        <ImagePickerSuccess>
-                            <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
-                        </ImagePickerSuccess>
+                        }
 
                     </View>
 
                     <View style={styles.infoBox2}>
                         <Text style={styles.label1}>{'Dokument vozačke dozvole:'.toUpperCase()} </Text>
-                        <ImagePicker
-                            id='DriverLicense'
-                            imageOptions={documentImageOptions}
-                            onPictureSelected={_onPictureSelected}>
+                        {loggedUser.documentVerification.isDLVerified ? 
+                            (
+                                <VerificationSuccess>
+                                    <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
+                                </VerificationSuccess>
+                            ) 
+                            : 
+                            (
+                                <ImagePicker
+                                    id='DriverLicense'
+                                    imageOptions={documentImageOptions}
+                                    onPictureSelected={_onPictureSelected}>
 
-                            <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
-                            <Text style={styles.label3}>Dodaj</Text>
+                                    <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
+                                    <Text style={styles.label3}>Dodaj</Text>
 
-                        </ImagePicker>
+                                </ImagePicker>
+                            ) 
+                        
+                        }
+                        
                     </View>
                 </View>
             </View>
