@@ -94,7 +94,9 @@ namespace WebServis.Controllers
                         Verification = new VerificationResponseModel 
                         {
                             DriverLicenseVerified = registeredUser.Verification.DriverLicenseVerified,
-                            PersonalIdentificationVerified = registeredUser.Verification.PersonalIdentificationVerified
+                            DriverLicenseVerificationExpirationDate = registeredUser.Verification.DriverLicenseVerificationExpirationDate,
+                            PersonalIdentificationVerified = registeredUser.Verification.PersonalIdentificationVerified,
+                            PersonalIdentificationVerificationExpirationDate = registeredUser.Verification.PersonalIdentificationVerificationExpirationDate
                         }
                     });
                 }

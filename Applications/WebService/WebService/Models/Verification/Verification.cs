@@ -24,9 +24,15 @@ namespace WebServis.Models.Verification
 
         public bool? DriverLicenseVerified { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime DriverLicenseVerificationExpirationDate { get; set; }
+
         public byte[] PersonalIdentification { get; set; }
 
         public bool? PersonalIdentificationVerified { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime PersonalIdentificationVerificationExpirationDate { get; set; }
 
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -99,6 +99,7 @@ namespace WebServis.Controllers
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
             registeredUser.Verification.DriverLicense = driverLicenseBytes;
             registeredUser.Verification.DriverLicenseVerified = true;
+            registeredUser.Verification.DriverLicenseVerificationExpirationDate = DateTime.Today.AddYears(1);
             db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
             db.Entry(registeredUser).State = EntityState.Modified;
 
@@ -133,6 +134,7 @@ namespace WebServis.Controllers
             RegisteredUser registeredUser = await db.RegisteredUsers.Where(user => user.IDRegisteredUser == id).SingleOrDefaultAsync();
             registeredUser.Verification.PersonalIdentification = personalIDBytes;
             registeredUser.Verification.PersonalIdentificationVerified = true;
+            registeredUser.Verification.PersonalIdentificationVerificationExpirationDate = DateTime.Today.AddYears(1);
             db.Entry(registeredUser).Property(user => user.LoginCredentialsID).IsModified = false;
             db.Entry(registeredUser).State = EntityState.Modified;
 

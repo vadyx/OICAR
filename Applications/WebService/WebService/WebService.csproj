@@ -137,6 +137,8 @@
     </Compile>
     <Compile Include="Models\Category\Category.cs" />
     <Compile Include="Models\Category\CategoryModel.cs" />
+    <Compile Include="Models\Category\VehicleManufacturer.cs" />
+    <Compile Include="Models\Category\VehicleModel.cs" />
     <Compile Include="Models\Login\LoginCredentials.cs" />
     <Compile Include="Models\Login\LoginCredentialsModel.cs" />
     <Compile Include="Models\Registration\RegisteredUser.cs" />
