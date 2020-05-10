@@ -1,23 +1,21 @@
 namespace WebServis.Models.Category
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("VehicleModel")]
-    public partial class VehicleModel
+    public partial class Category_VehicleManufacturer
     {
         [Key]
-        public int IDVehicleModel { get; set; }
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CategoryID { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string ModelName { get; set; }
-
-        [JsonIgnore]
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int VehicleManufacturerID { get; set; }
     }
 }

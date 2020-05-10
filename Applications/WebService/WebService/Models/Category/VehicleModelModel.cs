@@ -5,14 +5,14 @@ namespace WebServis.Models.Category
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class CategoryModel : DbContext
+    public partial class VehicleModelModel : DbContext
     {
-        public CategoryModel()
+        public VehicleModelModel()
             : base("name=apiCS")
         {
         }
 
-        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<VehicleModel> VehicleModel { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
