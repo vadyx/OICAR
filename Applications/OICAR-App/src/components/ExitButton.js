@@ -5,7 +5,7 @@ import { AntDesign} from '@expo/vector-icons';
 
 const BackButton = props => (
   <TouchableOpacity onPress={props.goBack} style={styles.container}>
-   <AntDesign name="arrowleft" size={30} color="black" />
+   <AntDesign name="closecircleo" size={30} color="black" />
   </TouchableOpacity>
 );
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 10 + getStatusBarHeight(),
-    left: 15,
+    right: 15,
   }
 });
 

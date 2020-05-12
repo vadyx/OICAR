@@ -1,10 +1,9 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-//import LoggedInTabNavigator from '../navigator/LoggedInTabNavigator';
 import { theme } from '../utils/theme';
-import { AntDesign,MaterialIcons,SimpleLineIcons,Feather } from '@expo/vector-icons';
+import { AntDesign,SimpleLineIcons,Feather } from '@expo/vector-icons';
 
 import {
   AuthScreen,
@@ -15,8 +14,13 @@ import {
   ExploreScreen,
   InboxScreen,
   ProfileScreen,
-  SearchScreen
+  SearchScreen,
+  StartAddPage,
+  AddCategory,
+  AddBrand,
+  AddName
 } from '../screens';
+
 
 const HomeTabNavigator = createBottomTabNavigator({
 
@@ -103,9 +107,22 @@ const AuthNavigator = createStackNavigator(
   }
 );
 
+const AddNavigator = createStackNavigator(
+  {
+    Kategorija:AddCategory,
+    AddName,
+    AddBrand
+  },
+
+  {
+    headerMode:"none",
+  }
+)
+
 const MainNavigator = createStackNavigator({
   Home: HomeTabNavigator,
-  Auth: AuthNavigator
+  Auth: AuthNavigator,
+  AddNav: AddNavigator
 }, 
 {
   headerMode: 'none'

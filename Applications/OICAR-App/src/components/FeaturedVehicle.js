@@ -11,8 +11,8 @@ import { theme } from "../utils/theme";
 const FeaturedVehicle = props => {
 
     return (
-        <View style={{  width: this.props.width / 2 - 28, 
-                        height: this.props.width / 2 + 10, 
+        <View style={{  width: props.width / 2 - 28, 
+                        height: props.height / 2 - 130, 
                         borderWidth: 0.8,
                         borderRadius:10,
                         backgroundColor:theme.colors.white,
@@ -33,16 +33,16 @@ const FeaturedVehicle = props => {
             <View style={styles.image_container}>
                 <Image
                     style={styles.imagestyle}
-                    source={this.props.imageUri} />
+                    source={props.imageUri} />
             </View>
             <View style={styles.description_container}>
-                <Text style={styles.texttype}>{this.props.type}</Text>
-                <Text style={styles.textname}>{this.props.name}</Text>
-                <Text style={styles.textprice}>{this.props.price}$</Text>
+                <Text style={styles.texttype}>{props.type}</Text>
+                <Text style={styles.textname}>{props.name}</Text>
+                <Text style={styles.textprice}>{props.price}$</Text>
                 <StarRating
                     disable={true}
                     maxStars={5}
-                    rating={this.props.rating}
+                    rating={props.rating}
                     starSize={10}
                     fullStarColor={theme.colors.gold}
                 />
