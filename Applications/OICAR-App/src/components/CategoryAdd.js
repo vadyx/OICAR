@@ -7,13 +7,13 @@ import {
 } from 'react-native'; 
 import { theme } from '../utils/theme';
 
-const CategoryAdd = ({children,...props}) => {
+const CategoryAdd = props => {
  
   return (
       <View style={styles.container1}>
         <View style={styles.category1}>
           <TouchableOpacity style={styles.tostyle} onPress={props.goNext}>
-              {children}
+              {props.children}
             <Text style={styles.txtstyle}>{props.name}</Text>
           </TouchableOpacity>
         </View>

@@ -8,7 +8,7 @@ export { default as ExploreScreen } from './primary/ExploreScreen';
 export { default as InboxScreen } from './primary/InboxScreen';
 export { default as ProfileScreen } from './primary/ProfileScreen';
 export { default as SearchScreen } from './primary/SearchScreen';
-export { default as StartAddPage } from './addListing/StartAddPage'; 
-export { default as AddCategory } from './addListing/AddCategory';
-export { default as AddName } from './addListing/AddName';
-export { default as AddBrand } from './addListing/AddBrand';
+
+export { default as AddCategoryScreen } from './addListing/AddCategoryScreen';
+export { default as AddTitleScreen } from './addListing/AddTitleScreen';
+export { default as AddBrandScreen } from './addListing/AddBrandScreen';

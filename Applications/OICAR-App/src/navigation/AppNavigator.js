@@ -15,10 +15,9 @@ import {
   InboxScreen,
   ProfileScreen,
   SearchScreen,
-  StartAddPage,
-  AddCategory,
-  AddBrand,
-  AddName
+  AddCategoryScreen,
+  AddBrandScreen,
+  AddTitleScreen
 } from '../screens';
 
 
@@ -109,9 +108,9 @@ const AuthNavigator = createStackNavigator(
 
 const AddNavigator = createStackNavigator(
   {
-    Kategorija:AddCategory,
-    AddName,
-    AddBrand
+    AddCategory: AddCategoryScreen,
+    AddBrand: AddBrandScreen,
+    AddTitle: AddTitleScreen
   },
 
   {
@@ -122,7 +121,7 @@ const AddNavigator = createStackNavigator(
 const MainNavigator = createStackNavigator({
   Home: HomeTabNavigator,
   Auth: AuthNavigator,
-  AddNav: AddNavigator
+  Add: AddNavigator
 }, 
 {
   headerMode: 'none'

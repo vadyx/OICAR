@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  Text,
-  TouchableOpacity
-} from 'react-native';
-import { MaterialIcons, Ionicons, Fontisto } from '@expo/vector-icons'; 
+  Text
+} from 'react-native'; 
 import { useSelector, useDispatch } from 'react-redux';
+
 import CategoryAdd from '../../components/CategoryAdd';
-import { theme } from '../../utils/theme';
 import * as categoriesActions from '../../store/actions/category';
 import ExitButton from '../../components/ExitButton';
+import NextScreenButton from '../../components/NextScreenButton';
+import { theme } from '../../utils/theme';
 
 const _renderCategoryItem = (item) => {
   return (
@@ -21,8 +21,7 @@ const _renderCategoryItem = (item) => {
   );
 }
 
-
-const AddCategory = props => {
+const AddCategoryScreen = props => {
 
   const categories = useSelector(state => state.categories.categories);
   const dispatch = useDispatch();
@@ -31,26 +30,19 @@ const AddCategory = props => {
     try {
       dispatch(categoriesActions.loadCategories());
     } catch (error) {
-      
+      // error handling
     }
   }
 
- 
   return (
     <View style={styles.container}>
       <ExitButton goBack={() => props.navigation.navigate('Add')} />
       <Text style={styles.headerstyle}>Odaberite kategoriju</Text>
       <View style={{marginTop:30}}>
-      {categories.map(item => _renderCategoryItem(item))}
+        {categories.map(item => _renderCategoryItem(item))}
       </View>
-     
-      
-      
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => props.navigation.navigate('AddName')}>
-        <MaterialIcons name="navigate-next" size={50} color={theme.colors.white} />
-      </TouchableOpacity>
+
+      <NextScreenButton navigate={() => props.navigation.navigate('AddBrand')} />
 
     </View>
   );
@@ -66,18 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginTop:70,
     fontWeight: '700',
-},
-  buttonContainer: {
-    backgroundColor: theme.colors.primary,
-    position:"absolute",    
-    bottom: 0,
-    right: 0,
-    margin:20,
-    width: 48,
-    height: 48,
-    borderRadius: 40,
-    alignItems: "center",
-    justifyContent: "center"
   },
   buttonText: {
     fontSize: 20,
@@ -89,4 +69,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddCategory;
+export default AddCategoryScreen;

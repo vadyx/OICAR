@@ -15,7 +15,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { Video } from 'expo-av';
 
-import Category from '../../components/Category';
+import CategoryExplore from '../../components/CategoryExplore';
 import FeaturedVehicle from '../../components/FeaturedVehicle';
 import Logo from "../../components/Logo";
 import * as categoriesActions from '../../store/actions/category';
@@ -25,7 +25,7 @@ const { height, width } = Dimensions.get('window');
 
 const _renderCategoryItem = (item) => {
   return (
-    <Category
+    <CategoryExplore
       key={item.id} 
       imageUri={item.imageUri}
       name={item.name}

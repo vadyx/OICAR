@@ -17,17 +17,16 @@ const AddListingScreen = props => {
   if(!isLoggedIn){
     return(
       <NotLoggedInView 
-      titleText='Ups!'
-      contentText='Prvo se morate prijaviti kako biste iznajmili svoje vozilo'
-      navigation={props.navigation}>
+        titleText='Ups!'
+        contentText='Prvo se morate prijaviti kako biste iznajmili svoje vozilo'
+        navigation={props.navigation}>
 
-      <MaterialCommunityIcons name="folder-lock" size={220} color={theme.colors.lightgrey} style={styles.iconstyle}/>
+        <MaterialCommunityIcons name="folder-lock" size={220} color={theme.colors.lightgrey} style={styles.iconstyle}/>
 
-    </NotLoggedInView>
-
+      </NotLoggedInView>
     );
-
   }
+
   return (
     <View style={styles.container}>
     <Text style={styles.headerstyle}>Želite iznajmiti svoje vozilo?</Text>
@@ -35,7 +34,7 @@ const AddListingScreen = props => {
     <FontAwesome name="hand-o-down" size={180} color={theme.colors.lightgrey} style={styles.iconstyle1} />
     <TouchableOpacity
       style={styles.buttonContainer}
-      onPress={() => props.navigation.navigate('Kategorija')}>
+      onPress={() => props.navigation.navigate('AddCategory')}>
       <Text style={styles.buttonText}>Iznajmi vozilo</Text>
     </TouchableOpacity>
   </View>
