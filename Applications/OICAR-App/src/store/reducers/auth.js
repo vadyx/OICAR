@@ -20,7 +20,8 @@ export default (state = initialState, action) => {
                 user: action.userData.id
             };
         case LOGOUT:
-            return initialState;
+            state = initialState;
+            return state;
         default:
             return state;
     }

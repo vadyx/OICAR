@@ -5,9 +5,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../utils/theme';
 
 const NextScreenButton = props => {
+
+    let buttonStyle = styles.buttonContainer;
+    if (props.disabled) {
+        buttonStyle = {...buttonStyle, ...{backgroundColor: '#919191' }};
+    }
+
     return (
         <TouchableOpacity
-            style={styles.buttonContainer}
+            style={buttonStyle}
+            disabled={props.disabled}
             onPress={props.navigate}>
 
             <MaterialIcons name="navigate-next" size={50} color={theme.colors.white} />

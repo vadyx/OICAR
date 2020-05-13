@@ -11,7 +11,7 @@ const CategoryAdd = props => {
 
   let buttonStyle = styles.tostyle;
   let textStyle = styles.txtstyle;
-  if (props.selected === true) {
+  if (props.selected) {
     buttonStyle = {...buttonStyle, ...{backgroundColor: theme.colors.primary}};
     textStyle = {...textStyle, ...{color: theme.colors.white}}
   }

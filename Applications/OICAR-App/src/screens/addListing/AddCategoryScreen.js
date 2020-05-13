@@ -14,7 +14,7 @@ import { theme } from '../../utils/theme';
 
 const AddCategoryScreen = props => {
 
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState();
 
   const categories = useSelector(state => state.categories.categories);
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const AddCategoryScreen = props => {
         {categories.map(item => _renderCategoryItem(item))}
       </View>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddBrand')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddBrand')} disabled={selectedCategory === undefined} />
 
     </View>
   );
