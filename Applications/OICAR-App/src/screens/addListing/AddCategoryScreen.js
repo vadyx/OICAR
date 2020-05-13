@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,22 +6,15 @@ import {
 } from 'react-native'; 
 import { useSelector, useDispatch } from 'react-redux';
 
-import CategoryAdd from '../../components/CategoryAdd';
 import * as categoriesActions from '../../store/actions/category';
+import CategoryAdd from '../../components/CategoryAdd';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
 
-const _renderCategoryItem = (item) => {
-  return (
-    <CategoryAdd
-      key={item.id} 
-      name={item.name}
-    />
-  );
-}
-
 const AddCategoryScreen = props => {
+
+  const [selectedCategory, setSelectedCategory] = useState(0);
 
   const categories = useSelector(state => state.categories.categories);
   const dispatch = useDispatch();
@@ -33,6 +26,23 @@ const AddCategoryScreen = props => {
       // error handling
     }
   }
+
+  const _onSelectedCategory = (categoryID) => {
+    setSelectedCategory(categoryID);
+  };
+
+  const _renderCategoryItem = (item) => {
+
+    return (
+      <CategoryAdd
+        key={item.id}
+        catID={item.id}
+        name={item.name}
+        selected={item.id === selectedCategory}
+        onSelected={_onSelectedCategory}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
