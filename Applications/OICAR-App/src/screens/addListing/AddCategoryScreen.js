@@ -16,7 +16,7 @@ const AddCategoryScreen = props => {
 
   const [selectedCategory, setSelectedCategory] = useState();
 
-  const categories = useSelector(state => state.vehicleInfo.categories);
+  const categories = useSelector(state => state.vehicleData.categories);
   const dispatch = useDispatch();
 
   if (categories.length === 0) {

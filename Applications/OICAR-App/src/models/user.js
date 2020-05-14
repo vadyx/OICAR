@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-class User {
+export class User {
 
     constructor(id, firstName, lastName, email, rating, registrationDate, profilePicture, documentVerification) {
         this.id = id,

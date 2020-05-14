@@ -1,4 +1,4 @@
-import { LOAD_CATEGORIES } from '../actions/category';
+import { LOAD_CATEGORIES } from '../actions/vehicleData';
 
 const initialState = {
     categories: []

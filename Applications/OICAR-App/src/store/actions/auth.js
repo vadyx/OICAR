@@ -1,3 +1,5 @@
+import DocumentVerification from '../../models/documentVerification';
+
 export const REGISTRATION = 'REGISTRATION';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -93,10 +95,12 @@ export const login = (username, password) => {
                 rating: resData.Rating,
                 registrationDate: resData.RegistrationDate,
                 profilePicture: resData.ProfileImage,
-                documentVerification: {
-                    isIDVerified: resData.Verification.PersonalIdentificationVerified,
-                    isDLVerified: resData.Verification.DriverLicenseVerified
-                }
+                documentVerification: new DocumentVerification(
+                    resData.Verification.PersonalIdentificationVerified,
+                    resData.Verification.PersonalIdentificationVerificationExpirationDate,
+                    resData.Verification.DriverLicenseVerified,
+                    resData.Verification.DriverLicenseVerificationExpirationDate
+                )
             }
         });
     };

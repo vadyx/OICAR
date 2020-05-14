@@ -35,7 +35,7 @@ const _renderCategoryItem = (item) => {
 
 const ExploreScreen = props => { 
 
-  const categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(state => state.vehicleData.categories);
   const dispatch = useDispatch();
 
   if (categories.length === 0) {

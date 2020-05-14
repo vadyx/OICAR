@@ -43,7 +43,8 @@ export const uploadID = (id, picture) => {
 
         dispatch({
             type: UPLOAD_ID,
-            idVerification: true
+            idVerification: true,
+            idExpirationDate: new Date().setFullYear(oneYearFromNow.getFullYear() + 1)
         });
     };
 };
@@ -66,7 +67,8 @@ export const uploadDriverLicense = (id, picture) => {
 
         dispatch({
             type: UPLOAD_DRIVER_LICENSE,
-            licenseVerification: true
+            licenseVerification: true,
+            licenseExpirationDate: new Date().setFullYear(oneYearFromNow.getFullYear() + 1)
         });
     };
 };
