@@ -108,7 +108,7 @@ const ProfileScreen = props => {
                         {loggedUser.documentVerification.isIDVerified ? 
                             (
                                 <VerificationSuccess>
-                                    <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
+                                    <Text style={styles.imagepickertextsuccess}>{loggedUser.documentVerification.displayDLExpirationDate}</Text>
                                 </VerificationSuccess>
                             ) 
                             : 
@@ -133,7 +133,7 @@ const ProfileScreen = props => {
                         {loggedUser.documentVerification.isDLVerified ? 
                             (
                                 <VerificationSuccess>
-                                    <Text style={styles.imagepickertextsuccess}>20.20.2020.</Text>
+                                    <Text style={styles.imagepickertextsuccess}>{loggedUser.documentVerification.displayDLExpirationDate}</Text>
                                 </VerificationSuccess>
                             ) 
                             : 

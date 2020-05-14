@@ -6,7 +6,7 @@ import {
 } from 'react-native'; 
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as categoriesActions from '../../store/actions/category';
+import * as vehicleDataActions from '../../store/actions/vehicleData';
 import CategoryAdd from '../../components/CategoryAdd';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
@@ -16,12 +16,12 @@ const AddCategoryScreen = props => {
 
   const [selectedCategory, setSelectedCategory] = useState();
 
-  const categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(state => state.vehicleData.categories);
   const dispatch = useDispatch();
 
   if (categories.length === 0) {
     try {
-      dispatch(categoriesActions.loadCategories());
+      dispatch(vehicleDataActions.loadCategories());
     } catch (error) {
       // error handling
     }
@@ -52,7 +52,7 @@ const AddCategoryScreen = props => {
         {categories.map(item => _renderCategoryItem(item))}
       </View>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddBrand')} disabled={selectedCategory === undefined} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddModel')} disabled={selectedCategory === undefined} />
 
     </View>
   );

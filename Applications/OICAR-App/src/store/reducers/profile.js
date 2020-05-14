@@ -1,6 +1,8 @@
 import { LOGIN, LOGOUT } from '../actions/auth';
 import { UPDATE_PROFILE_IMAGE, UPLOAD_ID, UPLOAD_DRIVER_LICENSE } from '../actions/profile';
+
 import User from '../../models/user';
+import DocumentVerification from '../../models/documentVerification';
 
 const initialState = {
     user: null
@@ -58,10 +60,12 @@ export default (state = initialState, action) => {
                 state.user.rating,
                 state.user.registrationDate,
                 state.user.profilePicture,
-                {
-                    isIDVerified: action.idVerification,
-                    isDLVerified: state.user.documentVerification.isDLVerified
-                }
+                new DocumentVerification (
+                    action.idVerification,
+                    action.idExpirationDate,
+                    state.user.documentVerification.isDLVerified,
+                    state.user.documentVerification.dlExpirationDate
+                )
             );
 
             return {
@@ -79,10 +83,12 @@ export default (state = initialState, action) => {
                 state.user.rating,
                 state.user.registrationDate,
                 state.user.profilePicture,
-                {
-                    isIDVerified: state.user.documentVerification.isIDVerified,
-                    isDLVerified: action.licenseVerification
-                }
+                new DocumentVerification (
+                    state.user.documentVerification.isIDVerified,
+                    state.user.documentVerification.idExpirationDate,
+                    action.licenseVerification,
+                    action.licenseExpirationDate
+                )
             );
 
             return {

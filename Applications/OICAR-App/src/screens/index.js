@@ -11,5 +11,5 @@ export { default as SearchScreen } from './primary/SearchScreen';
 
 export { default as AddCategoryScreen } from './addListing/AddCategoryScreen';
 export { default as AddTitleScreen } from './addListing/AddTitleScreen';
-export { default as AddBrandScreen } from './addListing/AddBrandScreen';
+export { default as AddModelScreen } from './addListing/AddModelScreen';
 export { default as AddBasicInfoScreen } from './addListing/AddBasicInfoScreen';

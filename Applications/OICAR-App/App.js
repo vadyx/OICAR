@@ -6,14 +6,16 @@ import ReduxThunk from 'redux-thunk';
 
 import authReducer from './src/store/reducers/auth';
 import profileReducer from './src/store/reducers/profile';
-import categoriesReducer from './src/store/reducers/category';
+import vehicleDataReducer from './src/store/reducers/vehicleData';
+import newListingReducer from './src/store/reducers/newListing';
 import AppNavigator from './src/navigation/AppNavigator';
 import { theme } from './src/utils/theme';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
-  categories: categoriesReducer
+  vehicleData: vehicleDataReducer,
+  newListing: newListingReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

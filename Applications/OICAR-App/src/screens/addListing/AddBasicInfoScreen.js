@@ -28,69 +28,49 @@ let data = [{
     value: '2019'
   }];
 
-  let drive = [{
-    label:'Zadnji',
-    value: 'Zadnji',
-  }, {
-    label:'Prednji',
-    value: 'Prednji',
-  },{
-    label:'4X4',
-    value: '4x4',
-  }];
-
-let sub_data = [{
-    label:'Dizel',
-    value: 'Dizel',
-  }, {
-    label:'Benzin',
-    value: 'Benzin',
-  }, {
-    label:'Plin',
-    value: 'Plin',
-  },{
-    label:'Hibrid',
-    value: 'Hibrid',
-  },{
-    label:'Elektro',
-    value: 'Elektro',
-  }];
-
-let transmission = [{
-      label:'Manuelni',
-      value: 'Manual',
+  let sub_data = [{
+      label:'Dizel',value: 'Dizel',
     }, {
-      label:'Automatik',
-      value: 'Automatic',
-    }];
+      label:'Benzin',value: 'Benzin',
+    }, {
+      label:'Plin',value: 'Plin',
+    },{
+      label:'Hibrid',value: 'Hibrid',
+    },{
+      label:'Elektro',value: 'Elektro',
+    }
+  ];
 
-let type = [{
-    label:'Limuzina',
-    value: 'Limuzina',
-  }, {
-    label:'Mali auto',
-    value: 'Mali auto',
-  }, {
-    label:'Karavan',
-    value: 'Karavan'
-  },{
-      label:'Terenac',
-      value: 'Terenac'
-  },{
-      label:'Kabriolet',
-      value: 'Kabriolet'
-  },{
-      label:'Caddy',
-      value: 'Caddy'
-  },{
-      label:'Sportski',
-      value: 'Sportski'
-  }];  
+  let transmission = [{
+      label:'Mehanički',value: 'Manual',
+    }, {
+      label:'Automatski',value: 'Automatic',
+    }
+  ];
 
-const items = [{
-    name: 'Dodatna oprema',
-    id: 0,
-    /*icon: icon*/
+
+  let type = [{
+      label:'Limuzina',value: 'Limuzina',
+    }, {
+      label:'Mali auto',value: 'Mali auto',
+    }, {
+      label:'Karavan',value: 'Karavan'
+    }, {
+      label:'Terenac',value: 'Terenac'
+    }, {
+      label:'Kabriolet',value: 'Kabriolet'
+    }, {
+      label:'Caddy',value: 'Caddy'
+    }, {
+      label:'Sportski',value: 'Sportski'
+    }
+  ];  
+
+  const items = [
+    {
+      name: 'Dodatna oprema',
+      id: 0,
+      /*icon: icon*/
       children: [
         {
           name: 'Park assist',
@@ -109,7 +89,7 @@ const items = [{
           id: 4,
         },
         {
-          name: 'Masaža sjedišta',
+          name: 'Grijanje sjedala',
           id: 5,
         },
         {
@@ -129,41 +109,34 @@ const items = [{
           id: 9,
         },
       ],
-    },
+    }
   ];
 
-const placeholder = {
-  label: 'Godište vozila',
-  value: null,
-  color:theme.colors.lightgrey
-};
+  const placeholder = {
+    label: 'Godište vozila',
+    value: null,
+    color:theme.colors.lightgrey
+  };
 
-const placeholder_drive = {
-  label: 'Pogon',
-  value: null,
-  color:theme.colors.lightgrey
-};
+  const placeholder_model = {
+    label: 'Gorivo',
+    value: null,
+    color:theme.colors.lightgrey
+  };
 
-const placeholder_model = {
-  label: 'Gorivo',
-  value: null,
-  color:theme.colors.lightgrey
-};
+  const placeholder_transmission = {
+    label: 'Tip prijenosa',
+    value: null,
+    color:theme.colors.lightgrey  
+  };
 
-const placeholder_transmission = {
-  label: 'Tip prijenosa',
-  value: null,
-  color:theme.colors.lightgrey  
-};
-
-const placeholder_type = {
-  label: 'Tip vozila',
-  value: null,
-  color:theme.colors.lightgrey  
-};
+  const placeholder_type = {
+    label: 'Tip vozila',
+    value: null,
+    color:theme.colors.lightgrey  
+  };
 
 export default class AddBasicInfoScreen extends Component  {
-
     
 constructor() {
     super();

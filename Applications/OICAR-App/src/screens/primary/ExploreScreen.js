@@ -18,7 +18,7 @@ import { Video } from 'expo-av';
 import CategoryExplore from '../../components/CategoryExplore';
 import FeaturedVehicle from '../../components/FeaturedVehicle';
 import Logo from "../../components/Logo";
-import * as categoriesActions from '../../store/actions/category';
+import * as vehicleDataActions from '../../store/actions/vehicleData';
 import { theme } from "../../utils/theme";
 
 const { height, width } = Dimensions.get('window');
@@ -35,14 +35,14 @@ const _renderCategoryItem = (item) => {
 
 const ExploreScreen = props => { 
 
-  const categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(state => state.vehicleData.categories);
   const dispatch = useDispatch();
 
   if (categories.length === 0) {
     try {
-      dispatch(categoriesActions.loadCategories());
+      dispatch(vehicleDataActions.loadCategories());
     } catch (error) {
-      
+      //error handling
     }
   }
 
