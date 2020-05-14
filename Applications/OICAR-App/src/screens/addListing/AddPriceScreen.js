@@ -5,6 +5,7 @@ import {
   Picker,
   StyleSheet
 } from 'react-native';
+
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
@@ -13,22 +14,6 @@ import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
 import { ScrollView } from 'react-native-gesture-handler';
 
-let data = [{
-    label:'2017',
-    value: '2017',
-  }, {
-    label:'2018',
-    value: '2018',
-  }, {
-    label:'2019',
-    value: '2019'
-  }];
-
-const placeholder = {
-    label: 'Godište vozila',
-    value: null,
-    };  
-
 const AddPriceScreen = props => {
 
   const [selectedValue, setSelectedValue] = useState("sat");
@@ -36,26 +21,26 @@ const AddPriceScreen = props => {
   return (
     <View style={styles.container}>
         <ScrollView style={styles.scrollview}>
-        <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-        <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
-        <View style={styles.contentstyle}>     
-            <Text style={styles.headerstyle}>Cijena vozila</Text>
-            <View style={{flexDirection:"row",justifyContent:"center"}}>
-            <Input 
-                keyboardType = 'numeric'
-                style={styles.input}/>
-            <Picker
-                selectedValue={selectedValue}
-                mode="dropdown"
-                style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
-                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-                <Picker.Item label=" po satu" value="sat" />
-                <Picker.Item label=" po danu" value="dan" />
-                <Picker.Item label=" po tjednu" value="tjedan" />
-            </Picker>
+            <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+            <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
+            <View style={styles.contentstyle}>     
+                <Text style={styles.headerstyle}>Cijena vozila</Text>
+                <View style={{flexDirection:"row",justifyContent:"center"}}>
+                    <Input 
+                        keyboardType = 'numeric'
+                        style={styles.input}/>
+                    <Picker
+                        selectedValue={selectedValue}
+                        mode="dropdown"
+                        style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label=" po satu" value="sat" />
+                        <Picker.Item label=" po danu" value="dan" />
+                        <Picker.Item label=" po tjednu" value="tjedan" />
+                    </Picker>
+                </View>
             </View>
-        </View>
         </ScrollView>
         <NextScreenButton navigate={() => props.navigation.navigate('')} />
     </View>

@@ -17,20 +17,20 @@ const AddDescriptionScreen = props => {
 
   return (
     <View style={styles.container}>
-    <ScrollView style={styles.scrollview}>
-      <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-      <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
-      <View style={styles.contentstyle}>     
-        <Text style={styles.headerstyle}>Detaljan opis vozila</Text>
-        <Text style={styles.paragraphstyle}>Detaljno opišite svoje vozilo </Text>
-        <Input 
-        label = "Opis vozila"
-        multiline={true}
-        numberOfLines = {10}
-        />
-      </View>
-      </ScrollView>
-      <NextScreenButton navigate={() => props.navigation.navigate('AddPrice')} />
+        <ScrollView style={styles.scrollview}>
+            <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+            <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
+            <View style={styles.contentstyle}>     
+                <Text style={styles.headerstyle}>Detaljan opis vozila</Text>
+                <Text style={styles.paragraphstyle}>Detaljno opišite svoje vozilo </Text>
+                <Input 
+                label = "Opis vozila"
+                multiline={true}
+                numberOfLines = {10}
+                />
+            </View>
+        </ScrollView>
+        <NextScreenButton navigate={() => props.navigation.navigate('AddPrice')} />
     </View>
   );
 }
