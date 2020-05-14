@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -151,20 +151,13 @@ let data = [{
     color:theme.colors.lightgrey  
   };
 
-export default class AddBasicInfoScreen extends Component  {
+const AddBasicInfoScreen = props => {
     
-constructor() {
-    super();
-    this.state = {
-      selectedItems: [],
-    };
-  }
+  const [selectedItems, setSelectedItems] = useState();
 
-  onSelectedItemsChange = (selectedItems) => {
-    this.setState({ selectedItems });
+  const _onSelectedItemsChange = (selectedItems) => {
+    setSelectedItems(selectedItems);
   };
-
-render(){
 
   return (
       
@@ -172,143 +165,143 @@ render(){
      
       <ScrollView style={styles.scrollviewcontainer}>
 
-      <BackButton goBack={() => props.navigation.goBack()} />
-      <ExitButton goBack={() => props.navigation.navigate('Add')} />
-      <View style={styles.contentstyle}>
-        <Text style={styles.headerstyle}>Osnovne informacije</Text>
-        <View style={styles.rnpstyle}>
-          <RNPickerSelect
-            placeholder={placeholder}
-            onValueChange={(value) => console.log(value)}
-            items={data}
-            style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                },
-            }}
-          />
+        <BackButton goBack={() => props.navigation.goBack()} />
+        <ExitButton goBack={() => props.navigation.navigate('Add')} />
 
-          <Divider style={styles.divider} />
-          
-          <RNPickerSelect
-            placeholder={placeholder_drive}
-            onValueChange={(value) => console.log(value)}
-            items={drive}
-            style={{
+        <View style={styles.contentstyle}>
+          <Text style={styles.headerstyle}>Osnovne informacije</Text>
+          <View style={styles.rnpstyle}>
+            <RNPickerSelect
+              placeholder={placeholder}
+              onValueChange={(value) => console.log(value)}
+              items={data}
+              style={{
                 placeholder: {
                 color: theme.colors.primary,
                 fontSize: 12,
                 fontWeight: 'bold',
-                },
-            }}
-          />
-         
-          
-          <Divider style={styles.divider} />
-          
-          <Input
-          id="snagamotora"
-          label="Snaga motora"
-          returnKeyType="next"
-          style={styles.input}
-          />
-
-          <Divider style={styles.divider} />  
-            
-          <RNPickerSelect
-            placeholder={placeholder_model}
-            onValueChange={(value) => console.log(value)}
-            items={sub_data}
-            style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                },
+                }
               }}
             />
 
-          <Divider style={styles.divider} />
-
-          <RNPickerSelect
-            placeholder={placeholder_transmission}
-            onValueChange={(value) => console.log(value)}
-            items={transmission}
-            style={{
+            <Divider style={styles.divider} />
+            
+            <RNPickerSelect
+              placeholder={placeholder_drive}
+              onValueChange={(value) => console.log(value)}
+              items={drive}
+              style={{
                 placeholder: {
                 color: theme.colors.primary,
                 fontSize: 12,
                 fontWeight: 'bold',
-                },
+                }
               }}
-          />
-          
-          <Divider style={styles.divider} />
+            />
 
-          <RNPickerSelect
-            placeholder={placeholder_type}
-            onValueChange={(value) => console.log(value)}
-            items={type}
-            style={{
+            <Divider style={styles.divider} />
+            
+            <Input
+              id="snagamotora"
+              label="Snaga motora"
+              returnKeyType="next"
+              style={styles.input}
+            />
+
+            <Divider style={styles.divider} />  
+              
+            <RNPickerSelect
+              placeholder={placeholder_model}
+              onValueChange={(value) => console.log(value)}
+              items={sub_data}
+              style={{
                 placeholder: {
                 color: theme.colors.primary,
                 fontSize: 12,
                 fontWeight: 'bold',
-                },
+                }
               }}
-          />
+            />
 
-          <Divider style={styles.divider} />
+            <Divider style={styles.divider} />
 
-          <SectionedMultiSelect
-            items={items}
-            hideSearch={true}
-            showDropDowns={false}
-            expandDropDowns={true}
-            uniqueKey="id"
-            subKey="children"
-            iconKey="icon"
-            selectText="Dodatna oprema"
-            confirmText="Dodaj"
-            selectedText = ""
-            showDropDowns={true}
-            readOnlyHeadings={true}
-            onSelectedItemsChange={this.onSelectedItemsChange}
-            selectedItems={this.state.selectedItems}
-            styles={{button:{
-            backgroundColor:theme.colors.primary,
-            height:60
-            },
-            item:{
-                marginVertical:10,
-            },
-            itemText:{
-                fontSize:30
-            },
-            subItemText:{
-                fontSize:18
-            },
-            subItem:{
-                paddingVertical:9,
-                borderBottomWidth:1,
-                borderBottomColor:theme.colors.lightgrey
-            },
-            selectToggleText:{
-                color:theme.colors.primary
-            }
-          }}
-          />
-          <Divider style={styles.divider} />
+            <RNPickerSelect
+              placeholder={placeholder_transmission}
+              onValueChange={(value) => console.log(value)}
+              items={transmission}
+              style={{
+                placeholder: {
+                color: theme.colors.primary,
+                fontSize: 12,
+                fontWeight: 'bold',
+                }
+              }}
+            />
+            
+            <Divider style={styles.divider} />
 
+            <RNPickerSelect
+              placeholder={placeholder_type}
+              onValueChange={(value) => console.log(value)}
+              items={type}
+              style={{
+                placeholder: {
+                color: theme.colors.primary,
+                fontSize: 12,
+                fontWeight: 'bold',
+                }
+              }}
+            />
+
+            <Divider style={styles.divider} />
+
+            <SectionedMultiSelect
+              items={items}
+              hideSearch={true}
+              showDropDowns={false}
+              expandDropDowns={true}
+              uniqueKey="id"
+              subKey="children"
+              iconKey="icon"
+              selectText="Dodatna oprema"
+              confirmText="Dodaj"
+              selectedText = ""
+              showDropDowns={true}
+              readOnlyHeadings={true}
+              onSelectedItemsChange={_onSelectedItemsChange}
+              selectedItems={selectedItems}
+              styles={{button:{
+              backgroundColor:theme.colors.primary,
+              height:60
+              },
+              item:{
+                  marginVertical:10,
+              },
+              itemText:{
+                  fontSize:30
+              },
+              subItemText:{
+                  fontSize:18
+              },
+              subItem:{
+                  paddingVertical:9,
+                  borderBottomWidth:1,
+                  borderBottomColor:theme.colors.lightgrey
+              },
+              selectToggleText:{
+                  color:theme.colors.primary
+              }
+            }}
+            />
+            <Divider style={styles.divider} />
+
+          </View>
         </View>
-      </View>
       </ScrollView>
 
-      <NextScreenButton navigate = {() => navigation.navigate('AddTitle')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('')} />
     </View>
-  )}
+  )
 };
 
 const styles = StyleSheet.create({
@@ -341,3 +334,5 @@ const styles = StyleSheet.create({
     marginVertical:5
   }
 });
+
+export default AddBasicInfoScreen;
