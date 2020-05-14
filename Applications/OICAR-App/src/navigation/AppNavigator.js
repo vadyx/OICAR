@@ -17,7 +17,8 @@ import {
   SearchScreen,
   AddCategoryScreen,
   AddBrandScreen,
-  AddTitleScreen
+  AddTitleScreen,
+  AddBasicInfoScreen
 } from '../screens';
 
 
@@ -110,7 +111,8 @@ const AddNavigator = createStackNavigator(
   {
     AddCategory: AddCategoryScreen,
     AddBrand: AddBrandScreen,
-    AddTitle: AddTitleScreen
+    AddTitle: AddTitleScreen,
+    AddBasicInfo: AddBasicInfoScreen
   },
 
   {

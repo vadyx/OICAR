@@ -9,25 +9,39 @@ import { theme } from '../../utils/theme';
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
-import { Dropdown } from 'react-native-material-dropdown';
+import RNPickerSelect from 'react-native-picker-select';
+import { Divider } from 'react-native-elements';
 
 const AddBrandScreen = props => {
 
     let data = [{
-      value: 'Audi',
+      label:'Audi',value: 'Audi',
     }, {
-      value: 'Bmw',
+      label:'Bmw',value: 'Bmw',
     }, {
-      value: 'Mercedes'
+      label:'Mercedes',value: 'Mercedes'
     }];
 
     let sub_data = [{
-        value: 'A1',
+      label:'Audi A1',value: 'A1',
     }, {
-      value: 'A2',
+      label:'Audi A2',value: 'A2',
     }, {
-      value: 'A3',
+      label:'Audi A3',value: 'A3',
     }];
+
+    const placeholder = {
+      label: 'Odaberite marku vozila',
+      value: null,
+      color:theme.colors.lightgrey
+  };
+  const placeholder_model = {
+    label: 'Odaberite model vozila',
+    value: null,
+    color:theme.colors.lightgrey
+
+    
+};
 
   return (
     <View style={styles.container}>
@@ -35,16 +49,32 @@ const AddBrandScreen = props => {
       <ExitButton goBack={() => props.navigation.navigate('Add')} />
       
       <View style={styles.contentstyle}>
-        <Text style={styles.headerstyle}>Odaberite marku vozila</Text>
-        <Dropdown
-          label='Marka vozila'
-          data={data}
-        />
-      
-        <Dropdown
-          label='Model vozila'
-          data={sub_data}
-        />
+        <Text style={styles.headerstyle}>Marka i model vozila</Text>
+        <View style={styles.rnpstyle}>
+
+          <RNPickerSelect
+              placeholder={placeholder}
+              onValueChange={(value) => console.log(value)}
+              items={data}
+              style={{
+                placeholder: {
+                  color: theme.colors.primary,
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                },
+              }}
+          />
+
+          <Divider style={{ backgroundColor: 'black', marginVertical:15 }} />
+          
+          <RNPickerSelect
+              placeholder={placeholder_model}
+              onValueChange={(value) => console.log(value)}
+              items={sub_data}
+              disabled={true}
+          />
+
+        </View>
       </View>
 
       <NextScreenButton navigate={() => props.navigation.navigate('AddTitle')} />
@@ -57,17 +87,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems:"center",
+    justifyContent:"center",
     backgroundColor: theme.colors.white
   },
   contentstyle:{
-      marginTop:100,
+    marginTop:-70,
     width:"80%",
   },
   headerstyle: {
     fontSize: 32,
-    marginVertical:30,
     textAlign:"center",
     fontWeight: '700',
+  },
+  rnpstyle:{
+    marginTop:50
   }
 });
 

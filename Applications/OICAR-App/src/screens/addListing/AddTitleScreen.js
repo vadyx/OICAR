@@ -19,10 +19,10 @@ const AddTitleScreen = props => {
       <ExitButton goBack={() => props.navigation.navigate('Add')} />
       <View style={styles.contentstyle}>     
         <Text style={styles.headerstyle}>Unesite naziv vašega oglasa</Text>
-        <Input placeholder='npr. Audi A3 ...' />
+        <Input  placeholder='npr. Audi A3 ...' />
       </View>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddBasicInfo')} />
 
     </View>
   );
@@ -32,15 +32,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems:"center",
+    justifyContent:"center",
     backgroundColor: theme.colors.white
   },
   contentstyle:{
-    marginTop:100,
+    marginTop:-100,
     width:"80%",
   },
   headerstyle: {
     fontSize: 32,
-    marginVertical:30,
+    paddingBottom:50,
     textAlign:"center",
     fontWeight: '700',
   }

@@ -47,7 +47,7 @@ const AddCategoryScreen = props => {
   return (
     <View style={styles.container}>
       <ExitButton goBack={() => props.navigation.navigate('Add')} />
-      <Text style={styles.headerstyle}>Odaberite kategoriju</Text>
+      <Text style={styles.headerstyle}>Kategorija vozila</Text>
       <View style={{marginTop:30}}>
         {categories.map(item => _renderCategoryItem(item))}
       </View>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   headerstyle: {
     fontSize: 32,
-    marginTop:70,
+    marginTop:80,
     fontWeight: '700',
   },
   buttonText: {
