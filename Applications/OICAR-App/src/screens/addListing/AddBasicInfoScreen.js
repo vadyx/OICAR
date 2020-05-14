@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { theme } from '../../utils/theme';
 import Input from '../../components/Input'
@@ -165,8 +166,8 @@ const AddBasicInfoScreen = props => {
      
       <ScrollView style={styles.scrollviewcontainer}>
 
-        <BackButton goBack={() => props.navigation.goBack()} />
-        <ExitButton goBack={() => props.navigation.navigate('Add')} />
+        <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+        <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
 
         <View style={styles.contentstyle}>
           <Text style={styles.headerstyle}>Osnovne informacije</Text>
@@ -299,7 +300,7 @@ const AddBasicInfoScreen = props => {
         </View>
       </ScrollView>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddDescription')} />
     </View>
   )
 };
@@ -307,6 +308,7 @@ const AddBasicInfoScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:getStatusBarHeight(),
     backgroundColor: theme.colors.white
   },
   scrollviewcontainer:{
@@ -332,6 +334,9 @@ const styles = StyleSheet.create({
   divider:{
     backgroundColor: 'black',
     marginVertical:5
+  },
+  backandexit:{
+    marginTop:-getStatusBarHeight()
   }
 });
 

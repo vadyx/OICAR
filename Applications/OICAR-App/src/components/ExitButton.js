@@ -16,7 +16,7 @@ const ExitButton = props => {
   };
   
   return (
-    <TouchableOpacity onPress={_onClosing} style={styles.container}>
+    <TouchableOpacity onPress={_onClosing} style={{...styles.container,...props.style}}>
       <AntDesign name="closecircleo" size={30} color="black" />
     </TouchableOpacity>
   );  

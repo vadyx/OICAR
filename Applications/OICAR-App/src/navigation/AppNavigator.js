@@ -18,7 +18,9 @@ import {
   AddCategoryScreen,
   AddModelScreen,
   AddTitleScreen,
-  AddBasicInfoScreen
+  AddBasicInfoScreen,
+  AddDescriptionScreen,
+  AddPriceScreen
 } from '../screens';
 
 
@@ -112,7 +114,9 @@ const AddNavigator = createStackNavigator(
     AddCategory: AddCategoryScreen,
     AddModel: AddModelScreen,
     AddTitle: AddTitleScreen,
-    AddBasicInfo: AddBasicInfoScreen
+    AddBasicInfo: AddBasicInfoScreen,
+    AddDescription: AddDescriptionScreen,
+    AddPrice: AddPriceScreen
   },
 
   {

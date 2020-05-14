@@ -8,7 +8,7 @@ const NextScreenButton = props => {
 
     let buttonStyle = styles.buttonContainer;
     if (props.disabled) {
-        buttonStyle = {...buttonStyle, ...{backgroundColor: '#919191' }};
+        buttonStyle = {...buttonStyle, ...{backgroundColor: '#919191'}};
     }
 
     return (

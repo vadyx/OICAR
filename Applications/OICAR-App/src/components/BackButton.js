@@ -4,7 +4,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { AntDesign} from '@expo/vector-icons'; 
 
 const BackButton = props => (
-  <TouchableOpacity onPress={props.goBack} style={styles.container}>
+  <TouchableOpacity onPress={props.goBack} style={{...styles.container,...props.style}}>
    <AntDesign name="arrowleft" size={30} color="black" />
   </TouchableOpacity>
 );
