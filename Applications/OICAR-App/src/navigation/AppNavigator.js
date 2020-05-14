@@ -16,7 +16,7 @@ import {
   ProfileScreen,
   SearchScreen,
   AddCategoryScreen,
-  AddBrandScreen,
+  AddModelScreen,
   AddTitleScreen,
   AddBasicInfoScreen
 } from '../screens';
@@ -110,7 +110,7 @@ const AuthNavigator = createStackNavigator(
 const AddNavigator = createStackNavigator(
   {
     AddCategory: AddCategoryScreen,
-    AddBrand: AddBrandScreen,
+    AddModel: AddModelScreen,
     AddTitle: AddTitleScreen,
     AddBasicInfo: AddBasicInfoScreen
   },

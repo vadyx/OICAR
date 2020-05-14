@@ -22,111 +22,114 @@ let data = [{
   }];
 
   let sub_data = [{
-    label:'Dizel',value: 'Dizel',
-  }, {
-    label:'Benzin',value: 'Benzin',
-  }, {
-    label:'Plin',value: 'Plin',
-  },{
-    label:'Hibrid',value: 'Hibrid',
-  },{
-    label:'Elektro',value: 'Elektro',
-  }];
+      label:'Dizel',value: 'Dizel',
+    }, {
+      label:'Benzin',value: 'Benzin',
+    }, {
+      label:'Plin',value: 'Plin',
+    },{
+      label:'Hibrid',value: 'Hibrid',
+    },{
+      label:'Elektro',value: 'Elektro',
+    }
+  ];
 
   let transmission = [{
-      label:'Manuelni',value: 'Manual',
+      label:'Mehanički',value: 'Manual',
     }, {
-      label:'Automatik',value: 'Automatic',
-    }];
+      label:'Automatski',value: 'Automatic',
+    }
+  ];
 
 
   let type = [{
-    label:'Limuzina',value: 'Limuzina',
-  }, {
-    label:'Mali auto',value: 'Mali auto',
-  }, {
-    label:'Karavan',value: 'Karavan'
-  },{
+      label:'Limuzina',value: 'Limuzina',
+    }, {
+      label:'Mali auto',value: 'Mali auto',
+    }, {
+      label:'Karavan',value: 'Karavan'
+    }, {
       label:'Terenac',value: 'Terenac'
-  },{
+    }, {
       label:'Kabriolet',value: 'Kabriolet'
-  },{
+    }, {
       label:'Caddy',value: 'Caddy'
-  },{
+    }, {
       label:'Sportski',value: 'Sportski'
-  }];  
+    }
+  ];  
 
   const items = [
-      {
-        name: 'Dodatna oprema',
-        id: 0,
-        /*icon: icon*/
-        children: [
-          {
-            name: 'Park assist',
-            id: 1,
-          },
-          {
-            name: 'Vozilo prilagođeno invalidima',
-            id: 2,
-          },
-          {
-            name: 'Tempomat',
-            id: 3,
-          },
-          {
-            name: 'Navigacija',
-            id: 4,
-          },
-          {
-            name: 'Masaža sjedišta',
-            id: 5,
-          },
-          {
-            name: 'Alarm',
-            id: 6,
-          },
-          {
-            name: 'Sjedalica za djecu',
-            id: 7,
-          },
-          {
-            name: 'AUX',
-            id: 8,
-          },
-          {
-            name: 'Zimske gume',
-            id: 9,
-          },
-        ],
-      },
-    ];
+    {
+      name: 'Dodatna oprema',
+      id: 0,
+      /*icon: icon*/
+      children: [
+        {
+          name: 'Park assist',
+          id: 1,
+        },
+        {
+          name: 'Vozilo prilagođeno invalidima',
+          id: 2,
+        },
+        {
+          name: 'Tempomat',
+          id: 3,
+        },
+        {
+          name: 'Navigacija',
+          id: 4,
+        },
+        {
+          name: 'Grijanje sjedala',
+          id: 5,
+        },
+        {
+          name: 'Alarm',
+          id: 6,
+        },
+        {
+          name: 'Sjedalica za djecu',
+          id: 7,
+        },
+        {
+          name: 'AUX',
+          id: 8,
+        },
+        {
+          name: 'Zimske gume',
+          id: 9,
+        },
+      ],
+    }
+  ];
 
   const placeholder = {
     label: 'Godište vozila',
     value: null,
     color:theme.colors.lightgrey
-};
-const placeholder_model = {
-  label: 'Gorivo',
-  value: null,
-  color:theme.colors.lightgrey
-};
+  };
 
-const placeholder_transmission = {
-  label: 'Tip prijenosa',
-  value: null,
-  color:theme.colors.lightgrey  
-};
+  const placeholder_model = {
+    label: 'Gorivo',
+    value: null,
+    color:theme.colors.lightgrey
+  };
 
-const placeholder_type = {
-  label: 'Tip vozila',
-  value: null,
-  color:theme.colors.lightgrey  
-};
+  const placeholder_transmission = {
+    label: 'Tip prijenosa',
+    value: null,
+    color:theme.colors.lightgrey  
+  };
+
+  const placeholder_type = {
+    label: 'Tip vozila',
+    value: null,
+    color:theme.colors.lightgrey  
+  };
 
 export default class AddBasicInfoScreen extends Component  {
-
     
 constructor() {
     super();

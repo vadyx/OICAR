@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { AntDesign} from '@expo/vector-icons'; 
 
-const BackButton = props => (
+const ExitButton = props => (
   <TouchableOpacity onPress={props.goBack} style={styles.container}>
    <AntDesign name="closecircleo" size={30} color="black" />
   </TouchableOpacity>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default memo(BackButton);
+export default memo(ExitButton);
