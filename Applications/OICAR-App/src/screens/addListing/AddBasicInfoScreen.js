@@ -3,8 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  TouchableOpacity
 } from 'react-native';
 
 import { theme } from '../../utils/theme';
@@ -26,6 +24,17 @@ let data = [{
   }, {
     label:'2019',
     value: '2019'
+  }];
+
+  let drive = [{
+    label:'Prednji',
+    value: 'Prednji',
+  }, {
+    label:'Zadnji',
+    value: 'Zadnji',
+  }, {
+    label:'4X4',
+    value: '4X4'
   }];
 
   let sub_data = [{
@@ -114,6 +123,12 @@ let data = [{
 
   const placeholder = {
     label: 'Godište vozila',
+    value: null,
+    color:theme.colors.lightgrey
+  };
+
+  const placeholder_drive = {
+    label: 'Pogon',
     value: null,
     color:theme.colors.lightgrey
   };
