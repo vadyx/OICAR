@@ -20,29 +20,36 @@ const AddPriceScreen = props => {
 
   return (
     <View style={styles.container}>
-        <ScrollView style={styles.scrollview}>
-            <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-            <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
-            <View style={styles.contentstyle}>     
-                <Text style={styles.headerstyle}>Cijena vozila</Text>
-                <View style={{flexDirection:"row",justifyContent:"center"}}>
-                    <Input 
-                        keyboardType = 'numeric'
-                        style={styles.input}/>
-                    <Picker
-                        selectedValue={selectedValue}
-                        mode="dropdown"
-                        style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label=" po satu" value="sat" />
-                        <Picker.Item label=" po danu" value="dan" />
-                        <Picker.Item label=" po tjednu" value="tjedan" />
-                    </Picker>
-                </View>
-            </View>
-        </ScrollView>
-        <NextScreenButton navigate={() => props.navigation.navigate('')} />
+      <ScrollView style={styles.scrollview}>
+        <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+        <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
+
+        <View style={styles.contentstyle}>     
+          <Text style={styles.headerstyle}>Cijena vozila</Text>
+          <View style={{flexDirection:"row",justifyContent:"center"}}>
+            <Input 
+              keyboardType = 'numeric'
+              style={styles.input}
+            />
+
+            <Picker
+              selectedValue={selectedValue}
+              mode="dropdown"
+              style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
+              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+
+              <Picker.Item label=" po satu" value="sat" />
+              <Picker.Item label=" po danu" value="dan" />
+              <Picker.Item label=" po tjednu" value="tjedan" />
+
+            </Picker>
+          </View>
+        </View>
+
+      </ScrollView>
+
+      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+
     </View>
   );
 }

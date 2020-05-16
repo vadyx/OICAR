@@ -7,6 +7,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as vehicleDataActions from '../../store/actions/vehicleData';
+import * as newListingActions from '../../store/actions/newListing';
 import CategoryAdd from '../../components/CategoryAdd';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
@@ -31,6 +32,12 @@ const AddCategoryScreen = props => {
     setSelectedCategory(categoryID);
   };
 
+  const _onNextPressed = async () => {
+    dispatch(newListingActions.setCategory(selectedCategory));
+    await dispatch(vehicleDataActions.loadManufacturers(selectedCategory));
+    props.navigation.navigate('AddModel');
+  }
+
   const _renderCategoryItem = (item) => {
 
     return (
@@ -52,7 +59,7 @@ const AddCategoryScreen = props => {
         {categories.map(item => _renderCategoryItem(item))}
       </View>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddModel')} disabled={selectedCategory === undefined} />
+      <NextScreenButton navigate={_onNextPressed} disabled={selectedCategory === undefined} />
 
     </View>
   );

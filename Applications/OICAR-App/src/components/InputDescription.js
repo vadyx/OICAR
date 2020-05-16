@@ -7,15 +7,14 @@ import { theme } from '../utils/theme';
 const InputDescription = props => {
 
   return (
-
-      <TextInput
-        {...props}
-        editable
-        style={{...styles.input, ...props.style}}
-        selectionColor={theme.colors.primary}
-        underlineColor="transparent"
-        mode="outlined"
-      />
+    <TextInput
+      {...props}
+      editable
+      style={{...styles.input, ...props.style}}
+      selectionColor={theme.colors.primary}
+      underlineColor="transparent"
+      mode="outlined"
+    />
   );
 };
 
