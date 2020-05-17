@@ -104,73 +104,127 @@ create table Category_VehicleManufacturer
 
 )
 
-create table EngineType
+create table FuelType
 (
-	IDEngineType int primary key identity,
-	EngineType nvarchar(50) not null
+	IDFuelType int primary key identity,
+	FuelType nvarchar(70)
+)
+
+create table DriveType
+(
+	IDDriveType int primary key identity,
+	DriveType nvarchar(70)
+)
+
+create table GearShiftType
+(
+	IDGearShiftType int primary key identity,
+	GearShiftType nvarchar(70)
+)
+
+create table PriceBy
+(
+	IDPriceBy int primary key identity,
+	PriceBy nvarchar(70)
+)
+
+create table VehicleAccessories
+(
+	IDVehicleAccessories int primary key identity,
+	VehicleAccessories nvarchar(70)
+)
+
+create table SubCategory
+(
+	IDSubCategory int primary key identity,
+	SubCategory nvarchar(70),
+	CategoryID int not null,
+
+	CONSTRAINT FK_SubCategory_Category FOREIGN KEY (CategoryID)
+		REFERENCES Category(IDCategory)
 )
 
 create table Vehicle
 (
 	IDVehicle int primary key identity,
-	UserID int not null,
-	RegistrationPlate nvarchar(15) not null,
+	CategoryID int not null,
+	VehicleManufacturerID int not null,
 	VehicleModelID int not null,
-	ManufacturingDate date not null,
-	Kilometers int not null,
-	EngineTypeID int not null,
-	FuelEfficiency decimal(2,1) not null,
-	IsActive bit not null,
+	ManufacturingYear int not null,
+	FuelTypeID int not null,
+	DriveTypeID int not null,
+	GearShiftTypeID int not null,
+	Kilometers float not null,
 
-	CONSTRAINT FK_Vehicle_User FOREIGN KEY (UserID)
-		REFERENCES RegisteredUser(IDRegisteredUser),
+	CONSTRAINT FK_Vehicle_Category FOREIGN KEY (CategoryID)
+		REFERENCES Category(IDCategory),
+	CONSTRAINT FK_Vehicle_VehicleManufacturer FOREIGN KEY (VehicleManufacturerID)
+		REFERENCES VehicleManufacturer(IDVehicleManufacturer),
 	CONSTRAINT FK_Vehicle_VehicleModel FOREIGN KEY (VehicleModelID)
 		REFERENCES VehicleModel(IDVehicleModel),
-	CONSTRAINT FK_Vehicle_EngineType FOREIGN KEY (EngineTypeID)
-		REFERENCES EngineType(IDEngineType)
+	CONSTRAINT FK_Vehicle_FuelType FOREIGN KEY (FuelTypeID)
+		REFERENCES FuelType(IDFuelType),
+	CONSTRAINT FK_Vehicle_DriveType FOREIGN KEY (DriveTypeID)
+		REFERENCES DriveType(IDDriveType),
+	CONSTRAINT FK_Vehicle_GerShiftType FOREIGN KEY (GearShiftTypeID)
+		REFERENCES GearShiftType(IDGearShiftType)
 )
 
-create table VehiclePicture
+create table VehicleAccessories_Vehicle
 (
-	IDVehiclePicture int primary key identity,
-	PicturePath nvarchar(max) not null,
+	VehicleAccessoriesID int not null,
 	VehicleID int not null,
 
-	CONSTRAINT FK_VehiclePicture_Vehicle FOREIGN KEY (VehicleID)
+	CONSTRAINT FK_VehicleAccessories_Vehicle_VehicleAccessories FOREIGN KEY (VehicleAccessoriesID)
+		REFERENCES VehicleAccessories(IDVehicleAccessories),
+	CONSTRAINT FK_VehicleAccessories_Vehicle_Vehicle FOREIGN KEY (VehicleID)
+		REFERENCES Vehicle(IDVehicle),
+
+	UNIQUE(VehicleAccessoriesID, VehicleID)
+)
+select * from VehicleAccessories_Vehicle
+create table Vehicle_SubCategories
+(
+	VehicleID int not null,
+	SubCategoryID int not null,
+
+	CONSTRAINT FK_Vehicle_SubCategories_Vehicle FOREIGN KEY (VehicleID)
+		REFERENCES Vehicle(IDVehicle),
+	CONSTRAINT FK_Vehicle_SubCategories_SubCategory FOREIGN KEY (SubCategoryID)
+		REFERENCES SubCategory(IDSubCategory),
+
+	UNIQUE(VehicleID, SubCategoryID)
+)
+
+create table VehicleImage
+(
+	IDVehicleImage int primary key identity,
+	ImagePath nvarchar(max) not null,
+	VehicleID int not null,
+
+	CONSTRAINT FK_VehicleImage_Vehicle FOREIGN KEY (VehicleID)
 		REFERENCES Vehicle(IDVehicle)
 )
 
 create table Listing
 (
 	IDListing int primary key identity,
-	VehicleID int not null,
-	DatePosted date not null,
-	IsActive bit not null,
+	Title nvarchar(max),
 	ListingDescription nvarchar(max),
-	CityID int not null,
+	VehicleID int not null,
+	Price float not null,
+	PriceByID int not null,
+	AvailableFromDate date not null,
+	AvailableToDate date not null,
 	LocationCoordinateX decimal(9,6) not null,
 	LocationCoordinateY decimal(9,6) not null,
+	UserID int not null,
 
 	CONSTRAINT FK_Listing_Vehicle FOREIGN KEY (VehicleID)
 		REFERENCES Vehicle(IDVehicle),
-	CONSTRAINT FK_Listing_City FOREIGN KEY (CityID)
-		REFERENCES City(IDCity)
-)
-
-create table Rental
-(
-	IDRental int primary key identity,
-	ListingID int not null,
-	RenterID int not null,
-	DateStart date not null,
-	DateEnd date not null,
-	IsActive bit not null,
-	IsSuccessful bit not null,
-	Rating int,
-
-	CONSTRAINT FK_Rental_Listing FOREIGN KEY (ListingID)
-		REFERENCES Listing(IDListing),
-	CONSTRAINT FK_Rental_User FOREIGN KEY (RenterID)
+	CONSTRAINT FK_Listing_PriceBy FOREIGN KEY (PriceByID)
+		REFERENCES PriceBy(IDPriceBy),
+	CONSTRAINT FK_Listing_User FOREIGN KEY (UserID)
 		REFERENCES RegisteredUser(IDRegisteredUser),
 )
 

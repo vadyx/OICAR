@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebServis.Models.Category;
 
-namespace WebServis.Controllers
+namespace WebServis.Controllers.Categories
 {
     public class VehicleModelsController : ApiController
     {

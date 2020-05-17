@@ -20,7 +20,7 @@ using System.Web.Http.Results;
 using WebServis.Models.Registration;
 using WebServis.Models.Verification;
 
-namespace WebServis.Controllers
+namespace WebServis.Controllers.User
 {
     public class RegisteredUsersController : ApiController
     {

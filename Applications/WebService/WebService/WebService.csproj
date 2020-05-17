@@ -129,11 +129,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\LoginCredentialsController.cs" />
-    <Compile Include="Controllers\RegisteredUsersController.cs" />
-    <Compile Include="Controllers\VehicleManufacturersController.cs" />
-    <Compile Include="Controllers\VehicleModelsController.cs" />
+    <Compile Include="Controllers\Categories\CategoriesController.cs" />
+    <Compile Include="Controllers\Listings\ListingsController.cs" />
+    <Compile Include="Controllers\Listings\PricesByController.cs" />
+    <Compile Include="Controllers\User\LoginCredentialsController.cs" />
+    <Compile Include="Controllers\User\RegisteredUsersController.cs" />
+    <Compile Include="Controllers\Categories\VehicleManufacturersController.cs" />
+    <Compile Include="Controllers\Categories\VehicleModelsController.cs" />
+    <Compile Include="Controllers\Vehicle\DriveTypesController.cs" />
+    <Compile Include="Controllers\Vehicle\FuelTypesController.cs" />
+    <Compile Include="Controllers\Vehicle\GearShiftTypesController.cs" />
+    <Compile Include="Controllers\Vehicle\SubCategoriesController.cs" />
+    <Compile Include="Controllers\Vehicle\VehicleAccessoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -144,11 +151,30 @@
     <Compile Include="Models\Category\VehicleManufacturer.cs" />
     <Compile Include="Models\Category\VehicleModel.cs" />
     <Compile Include="Models\Category\VehicleModelModel.cs" />
+    <Compile Include="Models\Listings\Listing.cs" />
+    <Compile Include="Models\Listings\ListingModel.cs" />
+    <Compile Include="Models\Listings\PriceBy.cs" />
+    <Compile Include="Models\Listings\PriceByModel.cs" />
+    <Compile Include="Models\Listings\Vehicle.cs" />
+    <Compile Include="Models\Listings\VehicleAccessories_Vehicle.cs" />
+    <Compile Include="Models\Listings\VehicleAccessories_Vehicle_Model.cs" />
+    <Compile Include="Models\Listings\Vehicle_SubCategories.cs" />
+    <Compile Include="Models\Listings\Vehicle_SubCategories_Model.cs" />
     <Compile Include="Models\Login\LoginCredentials.cs" />
     <Compile Include="Models\Login\LoginCredentialsModel.cs" />
     <Compile Include="Models\Registration\RegisteredUser.cs" />
     <Compile Include="Models\Registration\RegisteredUserModel.cs" />
     <Compile Include="Models\Category\VehicleManufacturerModel.cs" />
+    <Compile Include="Models\Vehicle\DriveType.cs" />
+    <Compile Include="Models\Vehicle\DriveTypeModel.cs" />
+    <Compile Include="Models\Vehicle\FuelType.cs" />
+    <Compile Include="Models\Vehicle\FuelTypeModel.cs" />
+    <Compile Include="Models\Vehicle\GearShiftType.cs" />
+    <Compile Include="Models\Vehicle\GearShiftTypeModel.cs" />
+    <Compile Include="Models\Vehicle\SubCategory.cs" />
+    <Compile Include="Models\Vehicle\SubCategoryModel.cs" />
+    <Compile Include="Models\Vehicle\VehicleAccessories.cs" />
+    <Compile Include="Models\Vehicle\VehicleAccessoriesModel.cs" />
     <Compile Include="Models\Verification\VerificationModel.cs" />
     <Compile Include="Models\Verification\Verification.cs" />
     <Compile Include="Models\ViewModels\RegisteredUserResponseModel.cs" />
@@ -182,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\test\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

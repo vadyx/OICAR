@@ -16,7 +16,7 @@ using WebServis.Models.Registration;
 using WebServis.Models.ViewModels;
 using WebServis.PasswordSecurity;
 
-namespace WebServis.Controllers
+namespace WebServis.Controllers.User
 {
     public class LoginCredentialsController : ApiController
     {
