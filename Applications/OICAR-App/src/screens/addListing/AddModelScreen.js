@@ -44,6 +44,11 @@ const AddBrandScreen = props => {
   
   const dispatch = useDispatch();
 
+  const _onNextPressed = async () => {
+    dispatch(newListingActions.setManufacturerAndModel(selectedManufacturer, selectedModel));
+    props.navigation.navigate('AddTitle');
+  }
+
   useEffect(() => {
     if (firstEntry) {
       manufacturer_dropdown_data.length = 0;
@@ -110,7 +115,7 @@ const AddBrandScreen = props => {
 
       <NextScreenButton 
         disabled={selectedManufacturer === null || selectedModel === null}
-        navigate={() => props.navigation.navigate('AddTitle')} />
+        navigate={_onNextPressed} />
 
     </View>
   );
