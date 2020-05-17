@@ -1,47 +1,70 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet
 } from 'react-native';
-
-import { theme } from '../../utils/theme';
-import BackButton from '../../components/BackButton';
-import ExitButton from '../../components/ExitButton';
-import NextScreenButton from '../../components/NextScreenButton';
+import { useSelector, useDispatch } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Divider } from 'react-native-elements';
 
+import BackButton from '../../components/BackButton';
+import ExitButton from '../../components/ExitButton';
+import NextScreenButton from '../../components/NextScreenButton';
+import * as newListingActions from '../../store/actions/newListing';
+import * as vehicleDataActions from '../../store/actions/vehicleData';
+import { theme } from '../../utils/theme';
+
+const manufacturer_dropdown_data = [];
+const model_dropdown_data = [];
+
 const AddBrandScreen = props => {
 
-    let data = [{
-      label:'Audi',value: 'Audi',
-    }, {
-      label:'Bmw',value: 'Bmw',
-    }, {
-      label:'Mercedes',value: 'Mercedes'
-    }];
+  const listingData = useSelector(state => state.newListing);
 
-    let sub_data = [{
-      label:'Audi A1',value: 'A1',
-    }, {
-      label:'Audi A2',value: 'A2',
-    }, {
-      label:'Audi A3',value: 'A3',
-    }];
+  const [firstEntry, setFirstEntry] = useState(true);
+  const [selectedManufacturer, setSelectedManufacturer] = useState(listingData.manufacturerID);
+  const [selectedModel, setSelectedModel] = useState(listingData.modelID);
 
-    const placeholder = {
-      label: 'Odaberite marku vozila',
-      value: null,
-      color:theme.colors.lightgrey
-  };
-  const placeholder_model = {
-    label: 'Odaberite model vozila',
-    value: null,
-    color:theme.colors.lightgrey
+  const manufacturers = useSelector(state => state.vehicleData.manufacturers);
+  const models = useSelector(state => state.vehicleData.models);
 
-    
-};
+  if (models.length !== 0) {
+    model_dropdown_data.length = 0;
+
+    for (const index in models) { 
+      model_dropdown_data.push(
+        {
+          label: models[index].name,
+          value: models[index].id
+        }
+      );
+    }
+  }
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (firstEntry) {
+      manufacturer_dropdown_data.length = 0;
+      for (const index in manufacturers) { 
+        manufacturer_dropdown_data.push(
+          {
+            label: manufacturers[index].name,
+            value: manufacturers[index].id
+          }
+        );
+      }
+
+      setFirstEntry(false);
+    }
+  }, [firstEntry]);
+
+  useEffect(() => {
+    if (selectedManufacturer !== null) {
+      dispatch(vehicleDataActions.loadModels(selectedManufacturer));         
+    }
+  }, [selectedManufacturer]);
 
   return (
     <View style={styles.container}>
@@ -53,31 +76,41 @@ const AddBrandScreen = props => {
         <View style={styles.rnpstyle}>
 
           <RNPickerSelect
-              placeholder={placeholder}
-              onValueChange={(value) => console.log(value)}
-              items={data}
-              style={{
-                placeholder: {
-                  color: theme.colors.primary,
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                },
-              }}
+            placeholder={{
+              label: 'Odaberite marku vozila',
+              value: null,
+              color:theme.colors.lightgrey
+            }}
+            onValueChange={(value) => setSelectedManufacturer(value)}
+            items={manufacturer_dropdown_data}
+            style={{
+              placeholder: {
+                color: theme.colors.primary,
+                fontSize: 12,
+                fontWeight: 'bold',
+              },
+            }}
           />
 
           <Divider style={{ backgroundColor: 'black', marginVertical:15 }} />
           
           <RNPickerSelect
-              placeholder={placeholder_model}
-              onValueChange={(value) => console.log(value)}
-              items={sub_data}
-              disabled={true}
+            placeholder={{
+              label: 'Odaberite model vozila',
+              value: null,
+              color: theme.colors.lightgrey
+            }}
+            onValueChange={(value) => setSelectedModel(value)}
+            items={model_dropdown_data}
+            disabled={selectedManufacturer === null}
           />
 
         </View>
       </View>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddTitle')} />
+      <NextScreenButton 
+        disabled={selectedManufacturer === null || selectedModel === null}
+        navigate={() => props.navigation.navigate('AddTitle')} />
 
     </View>
   );
