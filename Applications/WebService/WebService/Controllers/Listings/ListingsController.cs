@@ -18,6 +18,7 @@ namespace WebServis.Controllers.Listings
         private ListingModel db = new ListingModel();
         private VehicleAccessories_Vehicle_Model db_vehicleAccesories_vehicle = new VehicleAccessories_Vehicle_Model();
         private Vehicle_SubCategories_Model db_vehicle_SubCategories_Model = new Vehicle_SubCategories_Model();
+        private VehicleImageModel db_vehicleImageModel = new VehicleImageModel();
 
         // GET: api/Listings
         public IQueryable<Listing> GetListing()
@@ -119,6 +120,26 @@ namespace WebServis.Controllers.Listings
             try
             {
                 await db_vehicle_SubCategories_Model.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
+            foreach (var image in listing.Images)
+            {
+                byte[] imageBytes = Convert.FromBase64String(image);
+                db_vehicleImageModel.VehicleImage.Add(
+                    new VehicleImage
+                    {
+                        VehicleImageString = imageBytes,
+                        VehicleID = listing.VehicleID
+                    });
+            }
+
+            try
+            {
+                await db_vehicleImageModel.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {

@@ -33,6 +33,7 @@ namespace WebServis.Models.Listings
 
             modelBuilder.Entity<Vehicle>().Ignore(v => v.SubCategoryID);
             modelBuilder.Entity<Vehicle>().Ignore(v => v.Accessories);
+            modelBuilder.Entity<Listing>().Ignore(l => l.Images);
         }
     }
 }

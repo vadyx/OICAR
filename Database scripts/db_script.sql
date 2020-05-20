@@ -182,7 +182,7 @@ create table VehicleAccessories_Vehicle
 
 	UNIQUE(VehicleAccessoriesID, VehicleID)
 )
-select * from VehicleAccessories_Vehicle
+
 create table Vehicle_SubCategories
 (
 	VehicleID int not null,
@@ -199,7 +199,7 @@ create table Vehicle_SubCategories
 create table VehicleImage
 (
 	IDVehicleImage int primary key identity,
-	ImagePath nvarchar(max) not null,
+	VehicleImageString varbinary(max) not null,
 	VehicleID int not null,
 
 	CONSTRAINT FK_VehicleImage_Vehicle FOREIGN KEY (VehicleID)
@@ -209,7 +209,7 @@ create table VehicleImage
 create table Listing
 (
 	IDListing int primary key identity,
-	Title nvarchar(max),
+	Title nvarchar(max) not null,
 	ListingDescription nvarchar(max),
 	VehicleID int not null,
 	Price float not null,

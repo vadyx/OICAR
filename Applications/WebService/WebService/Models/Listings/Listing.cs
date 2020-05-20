@@ -34,6 +34,8 @@ namespace WebServis.Models.Listings
 
         public int UserID { get; set; }
 
+        public string[] Images { get; set; }
+
         public virtual Vehicle Vehicle { get; set; }
     }
 }

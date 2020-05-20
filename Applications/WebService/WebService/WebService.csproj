@@ -158,6 +158,8 @@
     <Compile Include="Models\Listings\Vehicle.cs" />
     <Compile Include="Models\Listings\VehicleAccessories_Vehicle.cs" />
     <Compile Include="Models\Listings\VehicleAccessories_Vehicle_Model.cs" />
+    <Compile Include="Models\Listings\VehicleImage.cs" />
+    <Compile Include="Models\Listings\VehicleImageModel.cs" />
     <Compile Include="Models\Listings\Vehicle_SubCategories.cs" />
     <Compile Include="Models\Listings\Vehicle_SubCategories_Model.cs" />
     <Compile Include="Models\Login\LoginCredentials.cs" />

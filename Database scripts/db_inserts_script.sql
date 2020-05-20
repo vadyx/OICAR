@@ -2,7 +2,7 @@
 go
 
 insert into FuelType values('Benzin')
-insert into FuelType values('Dizel')
+insert into FuelType values('Diesel')
 insert into FuelType values('Električni')
 insert into FuelType values('Plin')
 
