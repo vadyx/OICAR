@@ -48,7 +48,7 @@ const AddPriceScreen = props => {
 
       </ScrollView>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddDate')} />
 
     </View>
   );
