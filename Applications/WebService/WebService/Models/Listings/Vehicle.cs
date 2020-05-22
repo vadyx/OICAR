@@ -23,19 +23,21 @@ namespace WebServis.Models.Listings
 
         public int VehicleManufacturerID { get; set; }
 
-        public int VehicleModelID { get; set; }
+        public int? VehicleModelID { get; set; }
 
-        public int SubCategoryID { get; set; }
+        public int? SubCategoryID { get; set; }
 
-        public int ManufacturingYear { get; set; }
+        public int? ManufacturingYear { get; set; }
 
-        public int FuelTypeID { get; set; }
+        public int? FuelTypeID { get; set; }
 
-        public int DriveTypeID { get; set; }
+        public int? DriveTypeID { get; set; }
 
-        public int GearShiftTypeID { get; set; }
+        public int? GearShiftTypeID { get; set; }
 
-        public double Kilometers { get; set; }
+        public double? Kilometers { get; set; }
+
+        public double? EnginePower { get; set; }
 
         public int[] Accessories { get; set; }
 

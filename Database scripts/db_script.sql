@@ -149,12 +149,13 @@ create table Vehicle
 	IDVehicle int primary key identity,
 	CategoryID int not null,
 	VehicleManufacturerID int not null,
-	VehicleModelID int not null,
-	ManufacturingYear int not null,
-	FuelTypeID int not null,
-	DriveTypeID int not null,
-	GearShiftTypeID int not null,
-	Kilometers float not null,
+	VehicleModelID int null,
+	ManufacturingYear int null,
+	FuelTypeID int null,
+	DriveTypeID int null,
+	GearShiftTypeID int null,
+	Kilometers float null,
+	EnginePower float null,
 
 	CONSTRAINT FK_Vehicle_Category FOREIGN KEY (CategoryID)
 		REFERENCES Category(IDCategory),
@@ -216,8 +217,8 @@ create table Listing
 	PriceByID int not null,
 	AvailableFromDate date not null,
 	AvailableToDate date not null,
-	LocationCoordinateX decimal(9,6) not null,
-	LocationCoordinateY decimal(9,6) not null,
+	LocationCoordinateX decimal(9,6) null,
+	LocationCoordinateY decimal(9,6) null,
 	UserID int not null,
 
 	CONSTRAINT FK_Listing_Vehicle FOREIGN KEY (VehicleID)

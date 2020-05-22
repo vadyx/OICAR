@@ -5,6 +5,8 @@ namespace WebServis.Models.Listings
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization;
 
     [Table("Listing")]
     public partial class Listing
@@ -28,9 +30,9 @@ namespace WebServis.Models.Listings
         [Column(TypeName = "date")]
         public DateTime AvailableToDate { get; set; }
 
-        public decimal LocationCoordinateX { get; set; }
+        public decimal? LocationCoordinateX { get; set; }
 
-        public decimal LocationCoordinateY { get; set; }
+        public decimal? LocationCoordinateY { get; set; }
 
         public int UserID { get; set; }
 

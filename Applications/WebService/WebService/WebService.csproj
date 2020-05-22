@@ -179,6 +179,7 @@
     <Compile Include="Models\Vehicle\VehicleAccessoriesModel.cs" />
     <Compile Include="Models\Verification\VerificationModel.cs" />
     <Compile Include="Models\Verification\Verification.cs" />
+    <Compile Include="Models\ViewModels\ListingResponseModel.cs" />
     <Compile Include="Models\ViewModels\RegisteredUserResponseModel.cs" />
     <Compile Include="Models\ViewModels\VerificationResponseModel.cs" />
     <Compile Include="PasswordSecurity\PasswordStorage.cs" />
