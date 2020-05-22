@@ -1,9 +1,25 @@
-import { LOAD_CATEGORIES, LOAD_MANUFACTURERS, LOAD_MODELS } from '../actions/vehicleData';
+import { 
+    LOAD_CATEGORIES, 
+    LOAD_SUBCATEGORIES,
+    LOAD_MANUFACTURERS, 
+    LOAD_MODELS, 
+    LOAD_YEARS, 
+    LOAD_DRIVE_TYPES, 
+    LOAD_FUEL_TYPES, 
+    LOAD_GEAR_SHIFT_TYPES,
+    LOAD_VEHICLE_ACCESSORIES
+} from '../actions/vehicleData';
 
 const initialState = {
     categories: [],
+    subcategories: [],
     manufacturers: [],
-    models: []
+    models: [],
+    years: [],
+    wheelDrives: [],
+    fuelTypes: [],
+    gearShiftTypes: [],
+    vehicleAccessories: []
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +28,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 categories: action.categories
+            };
+        case LOAD_SUBCATEGORIES:
+            return {
+                ...state,
+                subcategories: action.subcategories
             };
         case LOAD_MANUFACTURERS:
             return {
@@ -22,6 +43,31 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 models: action.models
+            };
+        case LOAD_YEARS:
+            return {
+                ...state,
+                years: action.years
+            };
+        case LOAD_DRIVE_TYPES:
+            return {
+                ...state,
+                wheelDrives: action.wheelDrives
+            };
+        case LOAD_FUEL_TYPES:
+            return {
+                ...state,
+                fuelTypes: action.fuelTypes
+            };
+        case LOAD_GEAR_SHIFT_TYPES:
+            return {
+                ...state,
+                gearShiftTypes: action.gearShiftTypes
+            };
+        case LOAD_VEHICLE_ACCESSORIES:
+            return {
+                ...state,
+                vehicleAccessories: action.vehicleAccessories
             };
         default:
             return state;

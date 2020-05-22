@@ -131,7 +131,6 @@ const LoginScreen = props => {
         returnKeyType="next"
         onInputChange={_onInputChange}
         updateState={!!updateInputState}
-        required
         login
       />
 
@@ -144,7 +143,6 @@ const LoginScreen = props => {
         updateState={!!updateInputState}
         errorText={formState.errorMsg}
         secureTextEntry
-        required
         login
       />
 

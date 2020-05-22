@@ -11,18 +11,50 @@ import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import * as newListingActions from '../../store/actions/newListing';
+import * as vehicleDataActions from '../../store/actions/vehicleData';
 import { theme } from '../../utils/theme';
 
 const AddTitleScreen = props => {
 
   const newListing = useSelector(state => state.newListing);
+  const vehicleData = useSelector(state => state.vehicleData);
 
   const [title, setTitle] = useState(newListing.title);
   const dispatch = useDispatch();
 
-  const _onNextPressed = () => {
+  const _onNextPressed = async () => {
     dispatch(newListingActions.setTitle);
-    props.navigation.navigate('AddBasicInfo');
+
+    try {
+      if (vehicleData.years.length === 0) {
+        await dispatch(vehicleDataActions.loadManufacturingYears());
+      }
+
+      if (vehicleData.wheelDrives.length === 0) {
+        await dispatch(vehicleDataActions.loadWheelDrives());
+      }
+
+      if (vehicleData.fuelTypes.length === 0) {
+        await dispatch(vehicleDataActions.loadFuelTypes());
+      }
+
+      if (vehicleData.gearShiftTypes.length === 0) {
+        await dispatch(vehicleDataActions.loadGearShiftTypes());
+      }
+
+      if (vehicleData.subcategories.length === 0) {
+        await dispatch(vehicleDataActions.loadSubcategories(newListing.categoryID));
+      }
+
+      if (vehicleData.vehicleAccessories.length === 0) {
+        await dispatch(vehicleDataActions.loadVehicleAccessories());
+      }
+
+      props.navigation.navigate('AddBasicInfo');
+    } catch (error) {
+      //error handling logic
+    }
+    
   };
 
   return (
@@ -38,7 +70,7 @@ const AddTitleScreen = props => {
       </View>
 
       <NextScreenButton
-        disabled={title === ""}
+        disabled={title === null}
         navigate={_onNextPressed}
       />
 

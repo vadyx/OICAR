@@ -1,10 +1,18 @@
-import { SET_CATEGORY, NEW_LISTING_CLOSE, SET_MANUFACTURER_MODEL, SET_TITLE } from '../actions/newListing';
+import { SET_CATEGORY, NEW_LISTING_CLOSE, SET_MANUFACTURER_MODEL, SET_TITLE, SET_BASIC_INFO } from '../actions/newListing';
 
 const initialState = {
     categoryID: null,
     manufacturerID: null,
     modelID: null,
-    title: ''
+    title: null,
+    subcategoryID: null,
+    year: null,
+    enginePower: null,
+    traveledKM: null,
+    fuelTypeID: null,
+    gearShiftID: null,
+    wheelDriveID: null,
+    accessories: null
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +32,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 title: action.title
+            };
+        case SET_BASIC_INFO:
+            return {
+                ...state,
+                subcategoryID: action.subcategoryID,
+                enginePower: action.enginePower,
+                traveledKM: action.traveledKM,
+                year: action.year,
+                fuelTypeID: action.fuelTypeID,
+                gearShiftID: action.gearShiftID,
+                wheelDriveID: action.wheelDriveID,
+                accessories: action.accessories
             };
         case NEW_LISTING_CLOSE:
             state = initialState;

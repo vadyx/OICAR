@@ -8,7 +8,8 @@ import {
   maxLengthValidator, 
   emailValidator,
   usernameValidator,
-  passwordValidator
+  passwordValidator,
+  numberValidator
 } from '../utils/validation';
 import { theme } from '../utils/theme';
 
@@ -41,7 +42,6 @@ const Input = props => {
   const { onInputChange, id } = props;
 
   useEffect(() => {
-
     if (props.updateState) {
       setUpdateState(true);
     }
@@ -49,13 +49,15 @@ const Input = props => {
 
   useEffect(() => {
 
-    if (updateState && props.registration) {
-      onInputChange(id, inputState.value, inputState.isValid, inputState.error);
-    }
+    if (updateState) {
+      if (props.registration || props.number) {
+        onInputChange(id, inputState.value, inputState.isValid, inputState.error);
+      }
 
-    if(updateState && props.login) { 
-      onInputChange(id, inputState.value, inputState.isValid);
-    }
+      if (props.login) { 
+        onInputChange(id, inputState.value, inputState.isValid);
+      }
+   }
 
     setUpdateState(false);
   }, [updateState]);
@@ -90,11 +92,22 @@ const Input = props => {
         isValid = false;
         errorMsg = `${props.label} može sadržavati maksimalno  ${props.maxLength} znakova!`;
       }
-  
-      if (props.required && !isEmptyValidator(text)) {
+    }
+
+    if (props.required) {
+      if (props.number && !numberValidator(text)) {
+        isValid = false;
+        errorMsg = `${props.label} nije važeći broj!`;
+      }
+
+      if (!isEmptyValidator(text)) {
         isValid = false;
         errorMsg = `${props.label} ne smije biti prazno!`;
       }
+    }
+
+    if (props.autoUpdate) {
+      setUpdateState(true);
     }
 
     dispatch({
