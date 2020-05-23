@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
-import Input from '../../components/InputDescription';
+import Input from '../../components/Input';
 import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
 
@@ -40,16 +40,18 @@ const AddPriceScreen = props => {
 
         <View style={styles.contentstyle}>     
           <Text style={styles.headerstyle}>Cijena vozila</Text>
-          <View style={{flexDirection:"row",justifyContent:"center"}}>
+          <View style={styles.inputpickerbox}>
             <Input 
               keyboardType = 'numeric'
               style={styles.input}
             />
 
+            <Text style={styles.currencylabel}>kn  /</Text>
+
             <Picker
               selectedValue={selectedPricePeriod}
               mode="dropdown"
-              style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
+              style={styles.picker}
               onValueChange={(itemValue, itemIndex) => setSelectedPricePeriod(itemValue)}>
 
               {pricePeriods.map(item => _renderPriceDropdownItem(item))}
@@ -89,11 +91,29 @@ const styles = StyleSheet.create({
   input:{
       alignSelf:"center",
       width:"40%",
-      height:45
+      height:50
   },
   backandexit:{
     marginTop:-getStatusBarHeight()
   },
+  currencylabel:{
+    color:theme.colors.primary,
+    fontSize:16,
+    marginLeft:10,
+    marginTop:3
+  },
+  inputpickerbox:{
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  picker:{ 
+    height: 20, 
+    width: 108, 
+    alignSelf:"center", 
+    color:theme.colors.primary
+  }
+  
 });
 
 export default AddPriceScreen;
