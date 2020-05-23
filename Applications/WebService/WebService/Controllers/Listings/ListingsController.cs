@@ -33,42 +33,42 @@ namespace WebServis.Controllers.Listings
             return db.Listing;
         }
 
-        //[Route("api/listings/{categoryID}")]
-        //[ResponseType(typeof(ListingResponseModel))]
-        //public IHttpActionResult GetListing(int categoryID)
-        //{
-        //    List<ListingResponseModel> listingResponseModels;
-        //    try
-        //    {
-        //        listingResponseModels = new List<ListingResponseModel>();
-        //        foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
-        //        {
-        //            bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
-        //            listingResponseModels.Add(
-        //                new ListingResponseModel
-        //                {
-        //                    IDListing = listing.IDListing,
-        //                    Title = listing.Title,
-        //                    ListingDescription = listing.ListingDescription == null ? "" : listing.ListingDescription,
-        //                    Price = listing.Price,
-        //                    PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
-        //                    Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
-        //                    Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
-        //                    VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
-        //                    VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
-        //                });
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
+        [Route("api/shortListings/{categoryID}")]
+        [ResponseType(typeof(ListingResponseModel))]
+        public IHttpActionResult GetListing(int categoryID)
+        {
+            List<ListingResponseModel> listingResponseModels;
+            try
+            {
+                listingResponseModels = new List<ListingResponseModel>();
+                foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
+                {
+                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                    listingResponseModels.Add(
+                        new ListingResponseModel
+                        {
+                            IDListing = listing.IDListing,
+                            Title = listing.Title,
+                            ListingDescription = listing.ListingDescription == null ? "" : listing.ListingDescription,
+                            Price = listing.Price,
+                            PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
+                        });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
            
 
-        //    return Ok(listingResponseModels);
-        //}
+            return Ok(listingResponseModels);
+        }
 
-        // PUT: api/Listings/5
+         //PUT: api/Listings/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutListing(int id, Listing listing)
         {
