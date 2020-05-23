@@ -1,164 +1,261 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import RNPickerSelect from 'react-native-picker-select';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { Divider } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { theme } from '../../utils/theme';
 import Input from '../../components/Input'
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
-import RNPickerSelect from 'react-native-picker-select';
-import { Divider } from 'react-native-elements';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import { ScrollView } from 'react-native-gesture-handler';
+import * as dropdownConverter from '../../utils/dropdownDataConverter';
+import * as newListingActions from '../../store/actions/newListing';
 
-let data = [{
-    label:'2017',
-    value: '2017',
-  }, {
-    label:'2018',
-    value: '2018',
-  }, {
-    label:'2019',
-    value: '2019'
-  }];
+const SET_SUBCATEGORY = "SET_SUBCATEGORY";
+const SET_ENGINE_POWER = "SET_ENGINE_POWER";
+const SET_TRAVELED_KM = "SET_TRAVELED_KM";
+const SET_YEAR = "SET_YEAR";
+const SET_FUEL_TYPE = "SET_FUEL_TYPE";
+const SET_GEAR_SHIFT = "SET_GEAR_SHIFT";
+const SET_WHEEL_DRIVE = "SET_WHEEL_DRIVE";
+const SET_ACCESSORIES = "SET_ACCESSORIES";
+const CHECK_INFO_VALIDITY = "CHECK_INFO_VALIDITY";
 
-  let drive = [{
-    label:'Prednji',
-    value: 'Prednji',
-  }, {
-    label:'Zadnji',
-    value: 'Zadnji',
-  }, {
-    label:'4X4',
-    value: '4X4'
-  }];
+const infoReducer = (state, action) => {
+  switch (action.type) {
+    case SET_SUBCATEGORY:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          subcategoryID: action.value
+        }
+      };
+    case SET_ENGINE_POWER:
+      return {
+        ...state,
+        enginePowerValid: action.isValid,
+        enginePowerError: action.error,
+        values: {
+          ...state.values,
+          enginePower: action.value
+        }
+      };
+    case SET_TRAVELED_KM:
+      return {
+        ...state,
+        traveledKMValid: action.isValid,
+        traveledKMError: action.error,
+        values: {
+          ...state.values,
+          traveledKM: action.value
+        }
+      };
+    case SET_YEAR:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          year: action.value
+        }
+      };
+    case SET_FUEL_TYPE:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          fuelTypeID: action.value
+        }
+      };
+    case SET_GEAR_SHIFT:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          gearShiftID: action.value
+        }
+      };
+    case SET_WHEEL_DRIVE:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          wheelDriveID: action.value
+        }
+      };
+    case SET_ACCESSORIES:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          accessories: action.value
+        }
+      };
+    case CHECK_INFO_VALIDITY:
+      let validity = 
+        state.enginePowerValid &&
+        state.traveledKMValid &&
+        state.values.fuelTypeID !== null &&
+        state.values.gearShiftID !== null &&
+        state.values.subcategoryID !== null
+      ;
 
-  let sub_data = [{
-      label:'Dizel',value: 'Dizel',
-    }, {
-      label:'Benzin',value: 'Benzin',
-    }, {
-      label:'Plin',value: 'Plin',
-    },{
-      label:'Hibrid',value: 'Hibrid',
-    },{
-      label:'Elektro',value: 'Elektro',
-    }
-  ];
+      return {
+        ...state,
+        inputValid: validity
+      };
+  }
 
-  let transmission = [{
-      label:'Mehanički',value: 'Manual',
-    }, {
-      label:'Automatski',value: 'Automatic',
-    }
-  ];
+  return state;
+};
 
+const placeholder_subcategory = {
+  label: 'Tip vozila',
+  value: null,
+  color:theme.colors.lightgrey  
+};
 
-  let type = [{
-      label:'Limuzina',value: 'Limuzina',
-    }, {
-      label:'Mali auto',value: 'Mali auto',
-    }, {
-      label:'Karavan',value: 'Karavan'
-    }, {
-      label:'Terenac',value: 'Terenac'
-    }, {
-      label:'Kabriolet',value: 'Kabriolet'
-    }, {
-      label:'Caddy',value: 'Caddy'
-    }, {
-      label:'Sportski',value: 'Sportski'
-    }
-  ];  
+const placeholder_year = {
+  label: 'Godište vozila',
+  value: null,
+  color:theme.colors.lightgrey
+};
 
-  const items = [
-    {
-      name: 'Dodatna oprema',
-      id: 0,
-      /*icon: icon*/
-      children: [
-        {
-          name: 'Park assist',
-          id: 1,
-        },
-        {
-          name: 'Vozilo prilagođeno invalidima',
-          id: 2,
-        },
-        {
-          name: 'Tempomat',
-          id: 3,
-        },
-        {
-          name: 'Navigacija',
-          id: 4,
-        },
-        {
-          name: 'Grijanje sjedala',
-          id: 5,
-        },
-        {
-          name: 'Alarm',
-          id: 6,
-        },
-        {
-          name: 'Sjedalica za djecu',
-          id: 7,
-        },
-        {
-          name: 'AUX',
-          id: 8,
-        },
-        {
-          name: 'Zimske gume',
-          id: 9,
-        },
-      ],
-    }
-  ];
+const placeholder_fuel = {
+  label: 'Gorivo',
+  value: null,
+  color:theme.colors.lightgrey
+};
 
-  const placeholder = {
-    label: 'Godište vozila',
-    value: null,
-    color:theme.colors.lightgrey
-  };
+const placeholder_gearShift = {
+  label: 'Tip prijenosa',
+  value: null,
+  color:theme.colors.lightgrey  
+};
 
-  const placeholder_drive = {
-    label: 'Pogon',
-    value: null,
-    color:theme.colors.lightgrey
-  };
+const placeholder_wheelDrive = {
+  label: 'Pogon',
+  value: null,
+  color:theme.colors.lightgrey
+};
 
-  const placeholder_model = {
-    label: 'Gorivo',
-    value: null,
-    color:theme.colors.lightgrey
-  };
-
-  const placeholder_transmission = {
-    label: 'Tip prijenosa',
-    value: null,
-    color:theme.colors.lightgrey  
-  };
-
-  const placeholder_type = {
-    label: 'Tip vozila',
-    value: null,
-    color:theme.colors.lightgrey  
-  };
+const subcategory_dropdown_data = [];
+const fuel_dropdown_data = [];
+const gearShift_dropdown_data = [];
+const wheelDrive_dropdown_data = [];
+const accessories_dropdown_data = [];
 
 const AddBasicInfoScreen = props => {
-    
-  const [selectedItems, setSelectedItems] = useState();
+  
+  const vehicleData = useSelector(state => state.vehicleData);
+  const newListing = useSelector(state => state.newListing);
 
-  const _onSelectedItemsChange = (selectedItems) => {
-    setSelectedItems(selectedItems);
+  const [firstLoad, setFirstLoad] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const [infoState, dispatchInfoState] = useReducer(infoReducer, {
+    values: {
+      subcategoryID: newListing.subcategoryID,
+      enginePower: newListing.enginePower,
+      traveledKM: newListing.traveledKM,
+      year: newListing.year,
+      fuelTypeID: newListing.fuelTypeID,
+      gearShiftID: newListing.gearShiftID,
+      wheelDriveID: newListing.wheelDriveID,
+      accessories: newListing.accessories
+    },
+    enginePowerValid: newListing.enginePower === null ? false : true,
+    traveledKMValid: newListing.traveledKM === null ? false : true,
+    enginePowerError: "",
+    traveledKMError: "",
+    inputValid: false
+  });
+
+  const years_dropdown_data = vehicleData.years;
+
+  const _onPickerSelect = (value, action) => {
+    dispatchInfoState({
+      type: action,
+      value: value
+    });
   };
+
+  const _onInputChange = useCallback((id, value, isValid, error) => {
+
+    const type = id === "enginePower" ? SET_ENGINE_POWER : SET_TRAVELED_KM;
+
+    dispatchInfoState({
+      type: type,
+      value: value,
+      isValid: isValid,
+      error: error
+    });
+
+  }, [dispatchInfoState]);
+
+  const _onNextPressed = () => {
+    dispatch(newListingActions.setBasicInfo(
+      infoState.values.subcategoryID,
+      infoState.values.enginePower,
+      infoState.values.traveledKM,
+      infoState.values.year,
+      infoState.values.fuelTypeID,
+      infoState.values.gearShiftID,
+      infoState.values.wheelDriveID,
+      infoState.values.accessories,
+    ));
+    
+    props.navigation.navigate("AddDescription");
+  };
+
+  useEffect(() => {
+    if (firstLoad) {
+
+      if (wheelDrive_dropdown_data.length === 0) {
+        dropdownConverter.convert(vehicleData.wheelDrives, wheelDrive_dropdown_data);
+      }
+
+      if (fuel_dropdown_data.length === 0) {
+        dropdownConverter.convert(vehicleData.fuelTypes, fuel_dropdown_data);
+      }
+
+      if (gearShift_dropdown_data.length === 0) {
+        dropdownConverter.convert(vehicleData.gearShiftTypes, gearShift_dropdown_data);
+      }
+
+      if (subcategory_dropdown_data.length === 0) {
+        dropdownConverter.convert(vehicleData.subcategories, subcategory_dropdown_data);
+      }
+
+      if (accessories_dropdown_data.length === 0) {
+        let items = [];
+        dropdownConverter.convert(vehicleData.vehicleAccessories, items);
+
+        accessories_dropdown_data.push({
+          label: 'Dodatna oprema',
+          value: 0,
+          children: items
+        })
+      }
+    }
+
+    setFirstLoad(false);
+  }, [firstLoad]);
+
+  useEffect(() => {
+    dispatchInfoState({
+      type: CHECK_INFO_VALIDITY
+    });
+  }, [infoState.values]);
 
   return (
       
@@ -172,10 +269,11 @@ const AddBasicInfoScreen = props => {
         <View style={styles.contentstyle}>
           <Text style={styles.headerstyle}>Osnovne informacije</Text>
           <View style={styles.rnpstyle}>
+
             <RNPickerSelect
-              placeholder={placeholder}
-              onValueChange={(value) => console.log(value)}
-              items={data}
+              placeholder={placeholder_subcategory}
+              onValueChange={(value) => _onPickerSelect(value, SET_SUBCATEGORY)}
+              items={subcategory_dropdown_data}
               style={{
                 placeholder: {
                 color: theme.colors.primary,
@@ -186,35 +284,58 @@ const AddBasicInfoScreen = props => {
             />
 
             <Divider style={styles.divider} />
-            
-            <RNPickerSelect
-              placeholder={placeholder_drive}
-              onValueChange={(value) => console.log(value)}
-              items={drive}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
-            />
 
-            <Divider style={styles.divider} />
-            
-            <Input
-              id="snagamotora"
-              label="Snaga motora"
+            <Input style={styles.input}
+              id="enginePower"
+              label="Snaga motora u kW"
               returnKeyType="next"
-              style={styles.input}
+              onInputChange={_onInputChange}
+              keyboardType="numeric"
+              displayError={!infoState.enginePowerValid}
+              updateState={false}
+              errorText={infoState.enginePowerError}
+              required
+              autoUpdate
+              number
             />
 
-            <Divider style={styles.divider} />  
+            <Divider style={styles.divider} /> 
+
+            <Input style={styles.input}
+              id="traveledKM"
+              label="Broj prijeđenih km"
+              returnKeyType="next"
+              onInputChange={_onInputChange}
+              keyboardType="numeric"
+              displayError={!infoState.traveledKMValid}
+              updateState={false}
+              errorText={infoState.traveledKMError}
+              required
+              autoUpdate
+              number
+            />
+
+            <Divider style={styles.divider} /> 
+
+            <RNPickerSelect
+              placeholder={placeholder_year}
+              onValueChange={(value) => _onPickerSelect(value, SET_YEAR)}
+              items={years_dropdown_data}
+              style={{
+                placeholder: {
+                color: theme.colors.primary,
+                fontSize: 12,
+                fontWeight: 'bold',
+                }
+              }}
+            />
+
+            <Divider style={styles.divider} /> 
               
             <RNPickerSelect
-              placeholder={placeholder_model}
-              onValueChange={(value) => console.log(value)}
-              items={sub_data}
+              placeholder={placeholder_fuel}
+              onValueChange={(value) => _onPickerSelect(value, SET_FUEL_TYPE)}
+              items={fuel_dropdown_data}
               style={{
                 placeholder: {
                 color: theme.colors.primary,
@@ -227,9 +348,9 @@ const AddBasicInfoScreen = props => {
             <Divider style={styles.divider} />
 
             <RNPickerSelect
-              placeholder={placeholder_transmission}
-              onValueChange={(value) => console.log(value)}
-              items={transmission}
+              placeholder={placeholder_gearShift}
+              onValueChange={(value) => _onPickerSelect(value, SET_GEAR_SHIFT)}
+              items={gearShift_dropdown_data}
               style={{
                 placeholder: {
                 color: theme.colors.primary,
@@ -242,9 +363,9 @@ const AddBasicInfoScreen = props => {
             <Divider style={styles.divider} />
 
             <RNPickerSelect
-              placeholder={placeholder_type}
-              onValueChange={(value) => console.log(value)}
-              items={type}
+              placeholder={placeholder_wheelDrive}
+              onValueChange={(value) => _onPickerSelect(value, SET_WHEEL_DRIVE)}
+              items={wheelDrive_dropdown_data}
               style={{
                 placeholder: {
                 color: theme.colors.primary,
@@ -257,42 +378,47 @@ const AddBasicInfoScreen = props => {
             <Divider style={styles.divider} />
 
             <SectionedMultiSelect
-              items={items}
+              items={accessories_dropdown_data}
               hideSearch={true}
               showDropDowns={false}
               expandDropDowns={true}
-              uniqueKey="id"
+              uniqueKey="value"
+              displayKey="label"
               subKey="children"
               iconKey="icon"
               selectText="Dodatna oprema"
               confirmText="Dodaj"
               selectedText = ""
-              showDropDowns={true}
               readOnlyHeadings={true}
-              onSelectedItemsChange={_onSelectedItemsChange}
-              selectedItems={selectedItems}
-              styles={{button:{
-              backgroundColor:theme.colors.primary,
-              height:60
-              },
-              item:{
+              onSelectedItemsChange={(selectedItems) => _onPickerSelect(selectedItems, SET_ACCESSORIES)}
+              selectedItems={infoState.values.accessories === null ? [] : infoState.values.accessories}
+              styles={{
+                button: {
+                  backgroundColor:theme.colors.primary,
+                  height:60
+                },
+
+                item: {
                   marginVertical:10,
-              },
-              itemText:{
+                },
+
+                itemText:{
                   fontSize:30
-              },
-              subItemText:{
+                },
+                subItemText:{
                   fontSize:18
-              },
-              subItem:{
+                },
+
+                subItem:{
                   paddingVertical:9,
                   borderBottomWidth:1,
                   borderBottomColor:theme.colors.lightgrey
-              },
-              selectToggleText:{
+                },
+
+                selectToggleText:{
                   color:theme.colors.primary
-              }
-            }}
+                }
+              }}
             />
             <Divider style={styles.divider} />
 
@@ -300,7 +426,9 @@ const AddBasicInfoScreen = props => {
         </View>
       </ScrollView>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddDescription')} />
+      <NextScreenButton 
+        disabled={!infoState.inputValid}
+        navigate={_onNextPressed} />
     </View>
   )
 };
@@ -316,6 +444,7 @@ const styles = StyleSheet.create({
   },
   contentstyle:{
     marginTop:80,
+    marginBottom: 80,
     width:"80%",
     alignSelf:"center"
   },

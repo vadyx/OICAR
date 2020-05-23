@@ -13,6 +13,7 @@ import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import * as newListingActions from '../../store/actions/newListing';
 import * as vehicleDataActions from '../../store/actions/vehicleData';
+import * as dropdownConverter from '../../utils/dropdownDataConverter';
 import { theme } from '../../utils/theme';
 
 const manufacturer_dropdown_data = [];
@@ -31,15 +32,7 @@ const AddBrandScreen = props => {
 
   if (models.length !== 0) {
     model_dropdown_data.length = 0;
-
-    for (const index in models) { 
-      model_dropdown_data.push(
-        {
-          label: models[index].name,
-          value: models[index].id
-        }
-      );
-    }
+    dropdownConverter.convert(models, model_dropdown_data);
   }
   
   const dispatch = useDispatch();
@@ -52,22 +45,14 @@ const AddBrandScreen = props => {
   useEffect(() => {
     if (firstEntry) {
       manufacturer_dropdown_data.length = 0;
-      for (const index in manufacturers) { 
-        manufacturer_dropdown_data.push(
-          {
-            label: manufacturers[index].name,
-            value: manufacturers[index].id
-          }
-        );
-      }
-
+      dropdownConverter.convert(manufacturers, manufacturer_dropdown_data);
       setFirstEntry(false);
     }
   }, [firstEntry]);
 
   useEffect(() => {
     if (selectedManufacturer !== null) {
-      dispatch(vehicleDataActions.loadModels(selectedManufacturer));         
+      dispatch(vehicleDataActions.loadModels(selectedManufacturer));           
     }
   }, [selectedManufacturer]);
 

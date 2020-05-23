@@ -1,0 +1,10 @@
+class FuelType {
+
+    constructor(id, name) {
+        this.id = id,
+        this.name = name
+    }
+
+}
+
+export default FuelType;

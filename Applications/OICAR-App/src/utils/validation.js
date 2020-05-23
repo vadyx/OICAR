@@ -51,3 +51,7 @@ export const maxLengthValidator = (text, lenght) => {
 
   return true;
 };
+
+export const numberValidator = (text) => {
+  return !isNaN(text);
+};

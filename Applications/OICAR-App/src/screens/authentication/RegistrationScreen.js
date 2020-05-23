@@ -1,6 +1,6 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Background from '../../components/Background';
 import Header from '../../components/Header';
@@ -64,7 +64,6 @@ const RegisterScreen = props => {
   const [updateInputState, setUpdateInputState] = useState(false);
 
   const dispatch = useDispatch();
-  const registrationSuccessful = useSelector(state => state.auth.registrationSuccessful);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -115,9 +114,7 @@ const RegisterScreen = props => {
       //show Registration Successful modal
 
     } catch (error) {
-
       _onInputChange(error.id, formState.inputValues[error.id], false, error.message);
-
     }
 
     setUpdateInputState(false);

@@ -228,12 +228,3 @@ create table Listing
 	CONSTRAINT FK_Listing_User FOREIGN KEY (UserID)
 		REFERENCES RegisteredUser(IDRegisteredUser),
 )
-
-
-/*
-use master
-go
-drop database OICAR_Project
-go
-
-*/
