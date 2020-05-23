@@ -16,3 +16,4 @@ export { default as AddBasicInfoScreen } from './addListing/AddBasicInfoScreen';
 export { default as AddDescriptionScreen } from './addListing/AddDescriptionScreen';
 export { default as AddPriceScreen } from './addListing/AddPriceScreen';
 export { default as AddDateScreen } from './addListing/AddDateScreen';
+export { default as AddPicturesScreen } from './addListing/AddPicturesScreen';

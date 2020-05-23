@@ -39,7 +39,7 @@ const AddDateScreen = props => {
   return (
     <View style={styles.container}>
         <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-        <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('AddPrice')} />
+        <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
         <Text style={styles.headerstyle}>Raspoloživost vozila</Text>
         <View style={styles.boxstyle}>
             <Text style={styles.lblstyle}>Od</Text>
@@ -70,7 +70,7 @@ const AddDateScreen = props => {
             />
         )}
 
-      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+      <NextScreenButton navigate={() => props.navigation.navigate('AddPictures')} />
     </View>
   );
 }

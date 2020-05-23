@@ -21,7 +21,8 @@ import {
   AddBasicInfoScreen,
   AddDescriptionScreen,
   AddPriceScreen,
-  AddDateScreen
+  AddDateScreen,
+  AddPicturesScreen
 } from '../screens';
 
 
@@ -118,7 +119,9 @@ const AddNavigator = createStackNavigator(
     AddBasicInfo: AddBasicInfoScreen,
     AddDescription: AddDescriptionScreen,
     AddPrice: AddPriceScreen,
-    AddDate: AddDateScreen
+    AddDate: AddDateScreen,
+    AddPictures: AddPicturesScreen
+    
   },
 
   {
