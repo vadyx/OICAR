@@ -5,18 +5,32 @@ import {
   Picker,
   StyleSheet
 } from 'react-native';
-
+import { ScrollView } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useSelector, useDispatch } from 'react-redux';
+
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import Input from '../../components/InputDescription';
 import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
-import { ScrollView } from 'react-native-gesture-handler';
+
+const _renderPriceDropdownItem = (item) => {
+  return (
+    <Picker.Item 
+      key={item.id}
+      label={item.name} 
+      value={item.id} 
+    />
+  );
+}
 
 const AddPriceScreen = props => {
 
-  const [selectedValue, setSelectedValue] = useState("sat");
+  const pricePeriods = useSelector(state => state.vehicleData.pricePeriods);
+  const newListing = useSelector(state => state.newListing);
+
+  const [selectedPricePeriod, setSelectedPricePeriod] = useState(newListing.pricePeriodID === null ? 1 : newListing.pricePeriodID);
 
   return (
     <View style={styles.container}>
@@ -33,14 +47,12 @@ const AddPriceScreen = props => {
             />
 
             <Picker
-              selectedValue={selectedValue}
+              selectedValue={selectedPricePeriod}
               mode="dropdown"
               style={{ height: 20, width: 135, alignSelf:"center", color:theme.colors.primary}}
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+              onValueChange={(itemValue, itemIndex) => setSelectedPricePeriod(itemValue)}>
 
-              <Picker.Item label=" po satu" value="sat" />
-              <Picker.Item label=" po danu" value="dan" />
-              <Picker.Item label=" po tjednu" value="tjedan" />
+              {pricePeriods.map(item => _renderPriceDropdownItem(item))}
 
             </Picker>
           </View>

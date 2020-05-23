@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { theme } from '../utils/theme';
 

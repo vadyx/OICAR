@@ -6,6 +6,7 @@ import WheelDrive from '../../models/wheelDrive';
 import FuelType from '../../models/fuelType';
 import GearShift from '../../models/gearShift';
 import VehicleAccessory from '../../models/vehicleAccessory';
+import PricePeriod from '../../models/pricePeriod';
 
 export const LOAD_CATEGORIES = "LOAD_CATEGORIES";
 export const LOAD_SUBCATEGORIES = "LOAD_SUBCATEGORIES";
@@ -16,6 +17,7 @@ export const LOAD_DRIVE_TYPES = "LOAD_DRIVE_TYPES";
 export const LOAD_FUEL_TYPES = "LOAD_FUEL_TYPES";
 export const LOAD_GEAR_SHIFT_TYPES = "LOAD_GEAR_SHIFT_TYPES";
 export const LOAD_VEHICLE_ACCESSORIES = "LOAD_VEHICLE_ACCESSORIES";
+export const LOAD_PRICE_PERIODS = "LOAD_PRICE_PERIODS";
 
 export const loadCategories = () => {
     return async dispatch => {
@@ -232,6 +234,31 @@ export const loadVehicleAccessories = () => {
         dispatch({
             type: LOAD_VEHICLE_ACCESSORIES,
             vehicleAccessories: loadedAccessories
+        });
+    };
+};
+
+export const loadPricePeriods = () => {
+    return async dispatch => {
+        const response = await fetch('http://192.168.1.3:12335/api/listing/priceBy');
+
+        if (!response.ok) {
+            throw new Error("Price periods not loaded");
+        }
+
+        const resData = await response.json();
+        const loadedPricePeriods = [];
+
+        for (const index in resData) {
+            loadedPricePeriods.push(new PricePeriod(
+                resData[index].IDPriceBy,
+                resData[index].PriceBy1.toLowerCase()
+            ));
+        }
+
+        dispatch({
+            type: LOAD_PRICE_PERIODS,
+            pricePeriods: loadedPricePeriods
         });
     };
 };

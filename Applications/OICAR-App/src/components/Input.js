@@ -68,11 +68,6 @@ const Input = props => {
     let errorMsg = '';
 
     if (props.registration) {
-      if (props.email && !emailValidator(text)) {
-        isValid = false;
-        errorMsg = 'Ups! Potrebna je ispravna adresa e-pošte.'
-      }
-  
       if (props.username && !usernameValidator(text)) {
         isValid = false;
         errorMsg = 'Korisničko ime nije u ispravnom obliku!';
@@ -82,24 +77,31 @@ const Input = props => {
         isValid = false;
         errorMsg = 'Lozinka mora sadržavati barem jedno malo, jedno veliko slovo te jedan broj!';
       }
-  
-      if (props.minLength && !minLengthValidator(text, props.minLength)) {
+    }
+
+    if (props.email && !emailValidator(text)) {
+      isValid = false;
+      errorMsg = 'Ups! Potrebna je ispravna adresa e-pošte.'
+    }
+
+    if (props.minLength && !minLengthValidator(text, props.minLength)) {
+      isValid = false;
+      errorMsg = `${props.label} mora sadržavati minimalno ${props.minLength} znaka!`;
+    }
+
+    if (props.maxLength && !maxLengthValidator(text, props.maxLength)) {
+      isValid = false;
+      errorMsg = `${props.label} može sadržavati maksimalno  ${props.maxLength} znakova!`;
+    }
+
+    if (props.number) {
+      if (!numberValidator(text)) {
         isValid = false;
-        errorMsg = `${props.label} mora sadržavati minimalno ${props.minLength} znaka!`;
-      }
-  
-      if (props.maxLength && !maxLengthValidator(text, props.maxLength)) {
-        isValid = false;
-        errorMsg = `${props.label} može sadržavati maksimalno  ${props.maxLength} znakova!`;
+        errorMsg = `${props.label} nije važeći broj!`;
       }
     }
 
     if (props.required) {
-      if (props.number && !numberValidator(text)) {
-        isValid = false;
-        errorMsg = `${props.label} nije važeći broj!`;
-      }
-
       if (!isEmptyValidator(text)) {
         isValid = false;
         errorMsg = `${props.label} ne smije biti prazno!`;

@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
 
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import Input from '../../components/InputDescription';
+import * as vehicleDataActions from '../../store/actions/vehicleData';
+import * as newListingActions from '../../store/actions/newListing';
 import { theme } from '../../utils/theme';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const AddDescriptionScreen = props => {
 
+  const [descriptionText, setDescriptionText] = useState('');
+
+  const dispatch = useDispatch();
+
+  const _onNextPressed = async () => {
+    dispatch(newListingActions.setDescription(descriptionText));
+    await dispatch(vehicleDataActions.loadPricePeriods());
+    props.navigation.navigate('AddPrice');
+  };
+
   return (
     <View style={styles.container}>
+
       <ScrollView style={styles.scrollview}>
         <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
         <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
@@ -24,13 +38,16 @@ const AddDescriptionScreen = props => {
           <Text style={styles.headerstyle}>Detaljan opis vozila</Text>
           <Text style={styles.paragraphstyle}>Detaljno opišite svoje vozilo</Text>
           <Input 
-          label = "Opis vozila"
-          multiline={true}
-          numberOfLines = {10}
+            label = "Opis vozila"
+            multiline={true}
+            numberOfLines={10}
+            onChangeText={(text) => setDescriptionText(text)}
           />
         </View>
       </ScrollView>
-      <NextScreenButton navigate={() => props.navigation.navigate('AddPrice')} />
+
+      <NextScreenButton navigate={_onNextPressed} />
+
     </View>
   );
 }
@@ -46,6 +63,7 @@ const styles = StyleSheet.create({
   },
   contentstyle:{
     marginTop:100,
+    marginBottom:80,
     width:"80%",
     alignSelf:"center",
   },

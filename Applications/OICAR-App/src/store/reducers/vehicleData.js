@@ -7,7 +7,8 @@ import {
     LOAD_DRIVE_TYPES, 
     LOAD_FUEL_TYPES, 
     LOAD_GEAR_SHIFT_TYPES,
-    LOAD_VEHICLE_ACCESSORIES
+    LOAD_VEHICLE_ACCESSORIES,
+    LOAD_PRICE_PERIODS
 } from '../actions/vehicleData';
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
     wheelDrives: [],
     fuelTypes: [],
     gearShiftTypes: [],
-    vehicleAccessories: []
+    vehicleAccessories: [],
+    pricePeriods: []
 };
 
 export default (state = initialState, action) => {
@@ -68,6 +70,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 vehicleAccessories: action.vehicleAccessories
+            };
+        case LOAD_PRICE_PERIODS:
+            return {
+                ...state,
+                pricePeriods: action.pricePeriods
             };
         default:
             return state;
