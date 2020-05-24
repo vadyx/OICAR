@@ -50,9 +50,23 @@ const AddBrandScreen = props => {
     }
   }, [firstEntry]);
 
+  const modelstyle = {
+    placeholder: {
+      color: selectedManufacturer !== null ? theme.colors.darkgray : theme.colors.lightgrey,
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
+    inputAndroid:{
+      color:theme.colors.primary
+    },
+    inputIOS:{
+      color:theme.colors.primary
+    }
+  };
+
   useEffect(() => {
     if (selectedManufacturer !== null) {
-      dispatch(vehicleDataActions.loadModels(selectedManufacturer));           
+      dispatch(vehicleDataActions.loadModels(selectedManufacturer));     
     }
   }, [selectedManufacturer]);
 
@@ -75,10 +89,16 @@ const AddBrandScreen = props => {
             items={manufacturer_dropdown_data}
             style={{
               placeholder: {
-                color: theme.colors.primary,
+                color: theme.colors.darkgray,
                 fontSize: 12,
                 fontWeight: 'bold',
               },
+              inputAndroid:{
+                color:theme.colors.primary
+              },
+              inputIOS:{
+                color:theme.colors.primary
+              }
             }}
           />
 
@@ -93,6 +113,7 @@ const AddBrandScreen = props => {
             onValueChange={(value) => setSelectedModel(value)}
             items={model_dropdown_data}
             disabled={selectedManufacturer === null}
+            style={modelstyle}
           />
 
         </View>

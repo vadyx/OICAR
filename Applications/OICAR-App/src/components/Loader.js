@@ -41,7 +41,7 @@ Loader.propTypes = {
 const styles = StyleSheet.create({
   wrapper: {
     zIndex: 9,
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: 'rgba(255,255,255,0.8)',
     position: 'absolute',
     width: '100%',
     height: '100%',

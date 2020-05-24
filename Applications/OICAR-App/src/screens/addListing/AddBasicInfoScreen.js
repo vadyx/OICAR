@@ -257,6 +257,20 @@ const AddBasicInfoScreen = props => {
     });
   }, [infoState.values]);
 
+  let dropdownsstyles = {
+    placeholder: {
+      color: theme.colors.darkgray,
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
+    inputAndroid:{
+      color:theme.colors.primary
+    },
+    inputIOS:{
+      color:theme.colors.primary
+    }
+  };
+
   return (
       
     <View style={styles.container}>
@@ -274,13 +288,7 @@ const AddBasicInfoScreen = props => {
               placeholder={placeholder_subcategory}
               onValueChange={(value) => _onPickerSelect(value, SET_SUBCATEGORY)}
               items={subcategory_dropdown_data}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
+              style={dropdownsstyles}
             />
 
             <Divider style={styles.divider} />
@@ -321,13 +329,7 @@ const AddBasicInfoScreen = props => {
               placeholder={placeholder_year}
               onValueChange={(value) => _onPickerSelect(value, SET_YEAR)}
               items={years_dropdown_data}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
+              style={dropdownsstyles}
             />
 
             <Divider style={styles.divider} /> 
@@ -336,13 +338,7 @@ const AddBasicInfoScreen = props => {
               placeholder={placeholder_fuel}
               onValueChange={(value) => _onPickerSelect(value, SET_FUEL_TYPE)}
               items={fuel_dropdown_data}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
+              style={dropdownsstyles}
             />
 
             <Divider style={styles.divider} />
@@ -351,13 +347,7 @@ const AddBasicInfoScreen = props => {
               placeholder={placeholder_gearShift}
               onValueChange={(value) => _onPickerSelect(value, SET_GEAR_SHIFT)}
               items={gearShift_dropdown_data}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
+              style={dropdownsstyles}
             />
             
             <Divider style={styles.divider} />
@@ -366,13 +356,7 @@ const AddBasicInfoScreen = props => {
               placeholder={placeholder_wheelDrive}
               onValueChange={(value) => _onPickerSelect(value, SET_WHEEL_DRIVE)}
               items={wheelDrive_dropdown_data}
-              style={{
-                placeholder: {
-                color: theme.colors.primary,
-                fontSize: 12,
-                fontWeight: 'bold',
-                }
-              }}
+              style={dropdownsstyles}
             />
 
             <Divider style={styles.divider} />
@@ -416,7 +400,7 @@ const AddBasicInfoScreen = props => {
                 },
 
                 selectToggleText:{
-                  color:theme.colors.primary
+                  color:infoState.values.accessories === null ? theme.colors.darkgray : theme.colors.primary
                 }
               }}
             />
