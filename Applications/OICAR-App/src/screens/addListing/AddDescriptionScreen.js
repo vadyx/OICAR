@@ -42,6 +42,7 @@ const AddDescriptionScreen = props => {
             multiline={true}
             numberOfLines={10}
             onChangeText={(text) => setDescriptionText(text)}
+            style={styles.inputstyle}
           />
         </View>
       </ScrollView>
@@ -59,7 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white
   },
   scrollview:{
-    flex:1
+    flex:1,
+    marginBottom:80
   },
   contentstyle:{
     marginTop:100,
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
   },
   backandexit:{
     marginTop:-getStatusBarHeight()
-  }
+  },
 });
 
 export default AddDescriptionScreen;

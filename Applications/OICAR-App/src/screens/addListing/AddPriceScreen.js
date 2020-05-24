@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   picker:{ 
     height: 20, 
-    width: 108, 
+    width: 110, 
     alignSelf:"center", 
     color:theme.colors.primary
   }
