@@ -13,6 +13,7 @@ import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import Input from '../../components/Input';
 import NextScreenButton from '../../components/NextScreenButton';
+import * as newListingActions from '../../store/actions/newListing';
 import { theme } from '../../utils/theme';
 
 const _renderPriceDropdownItem = (item) => {
@@ -30,7 +31,23 @@ const AddPriceScreen = props => {
   const pricePeriods = useSelector(state => state.vehicleData.pricePeriods);
   const newListing = useSelector(state => state.newListing);
 
+  const [price, setPrice] = useState(newListing.price);
   const [selectedPricePeriod, setSelectedPricePeriod] = useState(newListing.pricePeriodID === null ? 1 : newListing.pricePeriodID);
+
+  const dispatch = useDispatch();
+
+  const _onInputChange = (value, isInputValid) => {
+    if (isInputValid) {
+      setPrice(parseInt(value));
+    } else {
+      setPrice(null);
+    }
+  };
+
+  const _onNextPressed = () => {
+    dispatch(newListingActions.setPrice);
+    props.navigation.navigate('AddDate');
+  };
 
   return (
     <View style={styles.container}>
@@ -42,8 +59,14 @@ const AddPriceScreen = props => {
           <Text style={styles.headerstyle}>Cijena vozila</Text>
           <View style={styles.inputpickerbox}>
             <Input 
-              keyboardType = 'numeric'
+              keyboardType = 'decimal-pad'
               style={styles.input}
+              onInputChange={_onInputChange}
+              price
+              required
+              autoUpdate
+              number
+              minNumber={0.1}
             />
 
             <Text style={styles.currencylabel}>kn  /</Text>
@@ -52,7 +75,7 @@ const AddPriceScreen = props => {
               selectedValue={selectedPricePeriod}
               mode="dropdown"
               style={styles.picker}
-              onValueChange={(itemValue, itemIndex) => setSelectedPricePeriod(itemValue)}>
+              onValueChange={(itemValue) => setSelectedPricePeriod(itemValue)}>
 
               {pricePeriods.map(item => _renderPriceDropdownItem(item))}
 
@@ -62,7 +85,9 @@ const AddPriceScreen = props => {
 
       </ScrollView>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('AddDate')} />
+      <NextScreenButton 
+        disabled={price === null}
+        navigate={_onNextPressed} />
 
     </View>
   );
@@ -109,7 +134,7 @@ const styles = StyleSheet.create({
   },
   picker:{ 
     height: 20, 
-    width: 110, 
+    width: 110,
     alignSelf:"center", 
     color:theme.colors.primary
   }

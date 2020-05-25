@@ -9,7 +9,9 @@ import {
   emailValidator,
   usernameValidator,
   passwordValidator,
-  numberValidator
+  numberValidator,
+  minNumberValidator,
+  maxNumberValidator
 } from '../utils/validation';
 import { theme } from '../utils/theme';
 
@@ -50,12 +52,16 @@ const Input = props => {
   useEffect(() => {
 
     if (updateState) {
-      if (props.registration || props.number) {
+      if (props.registration || props.basicInfo) {
         onInputChange(id, inputState.value, inputState.isValid, inputState.error);
       }
 
       if (props.login) { 
         onInputChange(id, inputState.value, inputState.isValid);
+      }
+
+      if (props.price) {
+        onInputChange(inputState.value, inputState.isValid);
       }
    }
 
@@ -95,6 +101,16 @@ const Input = props => {
     }
 
     if (props.number) {
+      if (props.minNumber && !minNumberValidator(text, props.minNumber)) {
+        isValid = false;
+        errorMsg = `${props.label} ne smije biti manji od ${props.minNumber}!`;
+      }
+
+      if (props.maxNumber && !maxNumberValidator(text, props.maxNumber)) {
+        isValid = false;
+        errorMsg = `${props.label} ne smije biti veći od ${props.minNumber}!`;
+      }
+
       if (!numberValidator(text)) {
         isValid = false;
         errorMsg = `${props.label} nije važeći broj!`;

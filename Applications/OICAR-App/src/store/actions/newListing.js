@@ -3,6 +3,7 @@ export const SET_MANUFACTURER_MODEL = "SET_MANUFACTURER_MODEL";
 export const SET_TITLE = "SET_TITLE";
 export const SET_BASIC_INFO = "SET_BASIC_INFO";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
+export const SET_PRICE = "SET_PRICE";
 export const NEW_LISTING_CLOSE = "SET CATEGORY";
 
 export const setCategory = categoryID => {
@@ -47,6 +48,14 @@ export const setDescription = description => {
         description: description
     };
 }
+
+export const setPrice = (price, periodID) => {
+    return {
+        type: SET_PRICE,
+        price: price,
+        pricePeriodID: periodID
+    };
+};
 
 export const newListingClose = () => {
     return {

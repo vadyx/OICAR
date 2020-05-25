@@ -124,7 +124,7 @@ export const loadManufacturingYears = () => {
     const years = [];
     const currentYear = parseInt(new Date().getFullYear());
 
-    for (var i = 1990; i <= currentYear; i++) {
+    for (var i = currentYear; i >= 1990; i--) {
 
         years.push({
             label: `${i}`,

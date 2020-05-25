@@ -37,7 +37,7 @@ export const isEmptyValidator = text => {
 };
 
 export const minLengthValidator = (text, lenght) => {
-  if (!text || text.length < lenght) {
+  if (!text || text.length <= lenght) {
     return false;
   }
 
@@ -45,7 +45,7 @@ export const minLengthValidator = (text, lenght) => {
 };
 
 export const maxLengthValidator = (text, lenght) => {
-  if (!text || text.length > lenght) {
+  if (!text || text.length >= lenght) {
     return false;
   }
 
@@ -54,4 +54,14 @@ export const maxLengthValidator = (text, lenght) => {
 
 export const numberValidator = (text) => {
   return !isNaN(text);
+};
+
+export const minNumberValidator = (text, min) => {
+  const num = parseFloat(text);
+  return num >= min;
+};
+
+export const maxNumberValidator = (text, max) => {
+  const num = parseFloat(text);
+  return num <= max;
 };

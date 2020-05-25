@@ -4,7 +4,8 @@ import {
     SET_MANUFACTURER_MODEL, 
     SET_TITLE, 
     SET_BASIC_INFO, 
-    SET_DESCRIPTION
+    SET_DESCRIPTION,
+    SET_PRICE
 } from '../actions/newListing';
 
 const initialState = {
@@ -59,6 +60,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 description: action.description
+            };
+        case SET_PRICE:
+            return {
+                ...state,
+                price: action.price,
+                pricePeriodID: action.pricePeriodID
             };
         case NEW_LISTING_CLOSE:
             state = initialState;

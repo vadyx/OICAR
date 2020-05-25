@@ -302,9 +302,12 @@ const AddBasicInfoScreen = props => {
               displayError={!infoState.enginePowerValid}
               updateState={false}
               errorText={infoState.enginePowerError}
+              basicInfo
               required
               autoUpdate
               number
+              minNumber={1}
+              maxNumber={800}
             />
 
             <Divider style={styles.divider} /> 
@@ -318,9 +321,11 @@ const AddBasicInfoScreen = props => {
               displayError={!infoState.traveledKMValid}
               updateState={false}
               errorText={infoState.traveledKMError}
+              basicInfo
               required
               autoUpdate
               number
+              minNumber={1}
             />
 
             <Divider style={styles.divider} /> 
