@@ -52,11 +52,13 @@ const ImgPicker = props => {
 
     return (
         <View>
-            <View  style={{...styles.containerphoto, ...props.style}}>
-                <TouchableOpacity onPress={_onAddImagePress}>
+            
+                <TouchableOpacity
+                    style={{...styles.containerphoto, ...props.style}}
+                    onPress={_onAddImagePress}>
                     {props.children}
                 </TouchableOpacity>
-            </View>
+            
 
             <ImagePickerModal 
                 visible={modalVisible} 

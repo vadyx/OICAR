@@ -9,6 +9,7 @@ import NextScreenButton from '../../components/NextScreenButton';
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import PictureBox from '../../components/AddPicturesBox';
+import ImagePicker from '../../components/ImagePicker';
 import { theme } from '../../utils/theme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -26,9 +27,9 @@ const AddPicturesScreen = props => {
             <PictureBox/>
             <PictureBox/>
         </View>
-        <TouchableOpacity style={styles.buttonstyle}>
-            <Text style={styles.butontextstyle}>Dodajte slike</Text>
-        </TouchableOpacity>
+        <ImagePicker style={styles.ipstyle}>
+          <Text style={styles.butontextstyle}>Dodaj slike</Text>
+        </ImagePicker>
         <Text style={styles.labelstyle}>*Možete dodati do 5 slika!</Text>
 
       <NextScreenButton navigate={() => props.navigation.navigate('')} />
@@ -100,6 +101,25 @@ const styles = StyleSheet.create({
       flexDirection:"row",
       paddingTop:100,
       paddingBottom:100,
+  },
+  ipstyle:{
+    width:150,
+    height:50,
+    backgroundColor:"transparent",
+    borderWidth:1,
+    justifyContent:"center",
+    alignItems:"center",
+    shadowColor: "#ffffff",
+        //iPhone 
+        shadowOffset: {
+        width: 0,
+        height: 0,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 0,
+    elevation:0,
+    borderColor:theme.colors.primary
+
   }
 });
 
