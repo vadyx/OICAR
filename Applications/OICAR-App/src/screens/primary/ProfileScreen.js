@@ -10,7 +10,7 @@ import ImagePicker from '../../components/ImagePicker';
 import VerificationSuccess from '../../components/VerificationSuccess';
 import * as profileActions from '../../store/actions/profile';
 
-import { profileImageOptions, documentImageOptions } from '../../utils/imageOptions';
+import { profileImageOptions, fullSizeImageOptions } from '../../utils/imageOptions';
 import { theme } from '../../utils/theme';
 
 const ProfileScreen = props => {
@@ -115,7 +115,7 @@ const ProfileScreen = props => {
                             (
                                 <ImagePicker
                                     id='IDCard'
-                                    imageOptions={documentImageOptions}
+                                    imageOptions={fullSizeImageOptions}
                                     onPictureSelected={_onPictureSelected}>
 
                                     <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>
@@ -140,7 +140,7 @@ const ProfileScreen = props => {
                             (
                                 <ImagePicker
                                     id='DriverLicense'
-                                    imageOptions={documentImageOptions}
+                                    imageOptions={fullSizeImageOptions}
                                     onPictureSelected={_onPictureSelected}>
 
                                     <MaterialIcons name="photo-camera" size={36} color={theme.colors.white} style={styles.photoicon}></MaterialIcons>

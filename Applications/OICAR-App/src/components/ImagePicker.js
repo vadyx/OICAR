@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { ImageBrowser } from 'expo-multiple-media-imagepicker';
 import * as Permissions from 'expo-permissions';
 
 import ImagePickerModal from '../components/ImagePickerModal';
@@ -9,6 +10,7 @@ import { theme } from '../utils/theme';
 const ImgPicker = props => {
 
     const [modalVisible, setModalVisible] = useState(false);  
+    const [showMultiPicker, setShowMultiPicker] = useState(false);  
 
     const _onAddImagePress = () => {
         setModalVisible(true);
@@ -43,12 +45,35 @@ const ImgPicker = props => {
                 picture = await ImagePicker.launchCameraAsync(props.imageOptions);
                 break;
             case 'gallery':
-                picture = await ImagePicker.launchImageLibraryAsync(props.imageOptions);
+                if (props.multiImage) {
+                    setShowMultiPicker(true);
+                } else {
+                    picture = await ImagePicker.launchImageLibraryAsync(props.imageOptions);
+                }
+                
                 break;
         }
 
-        props.onPictureSelected(props.id, picture.base64);
+        if (!props.multiImage) {
+            props.onPictureSelected(props.id, picture.base64);
+        }
     };
+
+    if (showMultiPicker) {
+        return (
+            <ImageBrowser 
+                max={101} // Maximum number of pickable image. default is None
+                headerCloseText={'キャンセル'} // Close button text on header. default is 'Close'.
+                headerDoneText={'　　完了'} // Done button text on header. default is 'Done'.
+                headerButtonColor={'#E31676'} // Button color on header.
+                headerSelectText={'枚の画像を選択中'} // Word when picking.  default is 'n selected'.
+                mediaSubtype={'screenshot'} // Only iOS, Filter by MediaSubtype. default is display all.
+                badgeColor={'#E31676'} // Badge color when picking.
+                emptyText={'選択できる画像がありません'} // Empty Text
+                callback={() => {}} // Callback functinon on press Done or Cancel Button. Argument is Asset Infomartion of the picked images wrapping by the Promise. />
+            />
+        );
+    }
 
     return (
         <View>

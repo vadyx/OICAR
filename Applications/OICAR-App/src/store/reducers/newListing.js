@@ -37,6 +37,7 @@ export default (state = initialState, action) => {
                 categoryID: action.categoryID
             };
         case SET_MANUFACTURER_MODEL:
+            console.log("setting model...");
             return {
                 ...state,
                 manufacturerID: action.manufacturerID,
@@ -77,8 +78,7 @@ export default (state = initialState, action) => {
                 endDate: action.endDate
             };
         case NEW_LISTING_CLOSE:
-            state = initialState;
-            return state;
+            return initialState;
         default:
             return state;
     }

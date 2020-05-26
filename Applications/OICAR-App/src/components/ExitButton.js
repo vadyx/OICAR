@@ -10,7 +10,7 @@ const ExitButton = props => {
   
   const dispatch = useDispatch();
 
-  const _onClosing = () => {
+  const _onClosing = async () => {
     dispatch(newListingActions.newListingClose());
     props.goBack();
   };

@@ -29,7 +29,7 @@ const AddBrandScreen = props => {
 
   const manufacturers = useSelector(state => state.vehicleData.manufacturers);
   const models = useSelector(state => state.vehicleData.models);
-
+  
   if (models.length !== 0) {
     model_dropdown_data.length = 0;
     dropdownConverter.convert(models, model_dropdown_data);

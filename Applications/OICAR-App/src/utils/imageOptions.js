@@ -5,7 +5,7 @@ export const profileImageOptions = {
     quality: 0.5
 };
 
-export const documentImageOptions = {
+export const fullSizeImageOptions = {
     base64: true,
     allowsEditing: true
 };

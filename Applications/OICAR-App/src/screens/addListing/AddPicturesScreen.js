@@ -27,9 +27,14 @@ const AddPicturesScreen = props => {
             <PictureBox/>
             <PictureBox/>
         </View>
-        <ImagePicker style={styles.ipstyle}>
+
+        <ImagePicker 
+          style={styles.ipstyle}
+          multiImage
+        >
           <Text style={styles.butontextstyle}>Dodaj slike</Text>
         </ImagePicker>
+
         <Text style={styles.labelstyle}>*Možete dodati do 5 slika!</Text>
 
       <NextScreenButton navigate={() => props.navigation.navigate('')} />

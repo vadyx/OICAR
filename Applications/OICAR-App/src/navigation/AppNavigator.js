@@ -120,8 +120,7 @@ const AddNavigator = createStackNavigator(
     AddDescription: AddDescriptionScreen,
     AddPrice: AddPriceScreen,
     AddDate: AddDateScreen,
-    AddPictures: AddPicturesScreen
-    
+    AddPictures: AddPicturesScreen    
   },
 
   {
