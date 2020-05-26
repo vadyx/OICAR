@@ -159,9 +159,9 @@ const LoginScreen = props => {
       </Button>
 
       <Loader
-          modalVisible={loadVisible}
-          animationType="fade"
-        />
+        modalVisible={loadVisible}
+        animationType="fade"
+      />
 
       <View style={styles.row}>
         <Text style={styles.label}>Još nemate račun? </Text>

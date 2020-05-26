@@ -5,13 +5,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+
 import NextScreenButton from '../../components/NextScreenButton';
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import PictureBox from '../../components/AddPicturesBox';
 import ImagePicker from '../../components/ImagePicker';
+import MultiImageModal from '../../components/MultiImageModal';
 import { theme } from '../../utils/theme';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AddPicturesScreen = props => {
 
@@ -38,6 +39,9 @@ const AddPicturesScreen = props => {
         <Text style={styles.labelstyle}>*Možete dodati do 5 slika!</Text>
 
       <NextScreenButton navigate={() => props.navigation.navigate('')} />
+
+      <MultiImageModal />
+
     </View>
   );
 }
@@ -125,6 +129,11 @@ const styles = StyleSheet.create({
     elevation:0,
     borderColor:theme.colors.primary
 
+  },
+  ibstyle: {
+    position: 'absolute',
+    bottom: 0,
+    height: 300
   }
 });
 

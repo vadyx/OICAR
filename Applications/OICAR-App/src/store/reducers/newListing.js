@@ -37,7 +37,6 @@ export default (state = initialState, action) => {
                 categoryID: action.categoryID
             };
         case SET_MANUFACTURER_MODEL:
-            console.log("setting model...");
             return {
                 ...state,
                 manufacturerID: action.manufacturerID,
