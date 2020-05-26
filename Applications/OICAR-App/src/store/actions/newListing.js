@@ -4,6 +4,7 @@ export const SET_TITLE = "SET_TITLE";
 export const SET_BASIC_INFO = "SET_BASIC_INFO";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SET_PRICE = "SET_PRICE";
+export const SET_DATES = "SET_DATES";
 export const NEW_LISTING_CLOSE = "SET CATEGORY";
 
 export const setCategory = categoryID => {
@@ -55,6 +56,14 @@ export const setPrice = (price, periodID) => {
         price: price,
         pricePeriodID: periodID
     };
+};
+
+export const setDates = (startDate, endDate) => {
+    return {
+        type: SET_DATES,
+        startDate: startDate,
+        endDate: endDate
+    }
 };
 
 export const newListingClose = () => {

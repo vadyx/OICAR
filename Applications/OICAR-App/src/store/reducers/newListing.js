@@ -5,7 +5,8 @@ import {
     SET_TITLE, 
     SET_BASIC_INFO, 
     SET_DESCRIPTION,
-    SET_PRICE
+    SET_PRICE,
+    SET_DATES
 } from '../actions/newListing';
 
 const initialState = {
@@ -23,7 +24,9 @@ const initialState = {
     accessories: null,
     description: null,
     price: null,
-    pricePeriodID: null
+    pricePeriodID: null,
+    startDate: null,
+    endDate: null
 };
 
 export default (state = initialState, action) => {
@@ -66,6 +69,12 @@ export default (state = initialState, action) => {
                 ...state,
                 price: action.price,
                 pricePeriodID: action.pricePeriodID
+            };
+        case SET_DATES:
+            return {
+                ...state,
+                startDate: action.startDate,
+                endDate: action.endDate
             };
         case NEW_LISTING_CLOSE:
             state = initialState;

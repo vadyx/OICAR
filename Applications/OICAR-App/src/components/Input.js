@@ -108,7 +108,7 @@ const Input = props => {
 
       if (props.maxNumber && !maxNumberValidator(text, props.maxNumber)) {
         isValid = false;
-        errorMsg = `${props.label} ne smije biti veći od ${props.minNumber}!`;
+        errorMsg = `${props.label} ne smije biti veći od ${props.maxNumber}!`;
       }
 
       if (!numberValidator(text)) {
