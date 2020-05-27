@@ -108,6 +108,7 @@ const RegisterScreen = props => {
           formState.inputValues.password
         ));  
         
+        // ubaci modal
         props.navigation.navigate('Auth');
       }
 

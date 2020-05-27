@@ -11,7 +11,6 @@ const DatePicker = props => {
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const _onDateChanged = (event, selectedDate) => {
-        console.log(selectedDate);
         setShowDatePicker(false);
         props.onDateChanged(props.id, selectedDate);
     }
@@ -19,7 +18,7 @@ const DatePicker = props => {
     return (
         <View>
             <View style={styles.boxstyle}>
-                <Text style={styles.lblstyle}>Od</Text>
+                <Text style={styles.lblstyle}>{props.label}</Text>
                 <TouchableOpacity style={styles.tostyle} onPress={() => setShowDatePicker(true)}>
                     <Fontisto name="date" size={24} color={theme.colors.primary}/>
                     <Text style={styles.labelstyle}>{moment(props.date).format('DD.MM.YYYY')}</Text>

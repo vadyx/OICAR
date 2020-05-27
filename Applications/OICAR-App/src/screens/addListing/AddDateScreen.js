@@ -56,6 +56,7 @@ const AddDateScreen = props => {
 
         <DatePicker
           id='startDate'
+          label="Od"
           date={startDate}
           minimumDate={currentDate}
           onDateChanged={_onDateChanged}
@@ -63,6 +64,7 @@ const AddDateScreen = props => {
 
         <DatePicker
           id='endDate'
+          label="Do"
           date={endDate}
           minimumDate={nextDayDate}
           onDateChanged={_onDateChanged}
