@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, Children } from 'react';
 import  { StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { theme } from '../utils/theme';
 
-const NextScreenButton = props => {
+const NextScreenButton = ({children,...props}) => {
 
     let buttonStyle = styles.buttonContainer;
     if (props.disabled) {
@@ -13,10 +13,10 @@ const NextScreenButton = props => {
 
     return (
         <TouchableOpacity
-            style={buttonStyle}
+            style={{...buttonStyle,...props.style}}
             disabled={props.disabled}
             onPress={props.navigate}>
-
+            {children}
             <MaterialIcons name="navigate-next" size={50} color={theme.colors.white} />
         
         </TouchableOpacity>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  Modal
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -13,8 +14,21 @@ import PictureBox from '../../components/AddPicturesBox';
 import ImagePicker from '../../components/ImagePicker';
 import MultiImageModal from '../../components/MultiImageModal';
 import { theme } from '../../utils/theme';
+import ModalSuccess from '../../components/ModalSuccess';
+
 
 const AddPicturesScreen = props => {
+  
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  const _onModalShow = () => {
+    setModalVisible(true);
+    setTimeout(() => {
+      setModalVisible(false);
+      props.navigation.navigate('Add');
+    },
+    3000);
+  }
 
   return (
     <View style={styles.container}>
@@ -38,12 +52,15 @@ const AddPicturesScreen = props => {
 
         <Text style={styles.labelstyle}>*Možete dodati do 5 slika!</Text>
 
-      <NextScreenButton navigate={() => props.navigation.navigate('')} />
+        <NextScreenButton style={styles.nsbstyle} navigate={_onModalShow}>
+          <Text style={styles.nsbtextstyle}>Objavite oglas</Text>
+        </NextScreenButton>
 
-      <MultiImageModal />
+        <MultiImageModal />
+        <ModalSuccess visible={modalVisible}/>
 
-    </View>
-  );
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -134,7 +151,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: 300
-  }
+  },
+  nsbstyle:{
+    height:50,
+    width:200,
+    paddingLeft:20,
+    flexDirection:"row"
+  },
+  nsbtextstyle:{
+    fontSize:20,
+    paddingBottom:5,
+    fontWeight:"600",
+    color:theme.colors.white
+  },
+  modalstyle:{
+    flex:1,
+    backgroundColor:"red"
+  },
 });
 
 export default AddPicturesScreen;
