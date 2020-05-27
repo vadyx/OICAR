@@ -7,11 +7,10 @@ const ImagePickerModal = props =>{
 
     return(
     <Modal
-    animationType="fade"
-    transparent={true}
-    visible={props.visible}
-    onRequestClose={props.onModalClose}
-    >
+        animationType="fade"
+        transparent={true}
+        visible={props.visible}
+        onRequestClose={props.onModalClose}>
 
         <View style={styles.modal}>
             <View style={styles.modalContainer}>

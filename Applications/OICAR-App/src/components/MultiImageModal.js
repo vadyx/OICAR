@@ -8,17 +8,17 @@ const MultiImageModal = props => {
         <Modal
             animationType='none'
             transparent={true}
-            visible={false}>
+            visible={props.visible}>
             <View style={styles.container}>
                 <View style={styles.innerView}>
                     <ImageBrowser 
-                        max={5} 
+                        max={props.maxImages} 
                         headerCloseText={'Zatvori'}
                         headerDoneText={'Potvrdi'}
                         headerButtonColor={theme.colors.primary}
                         headerSelectText={'Odabranih'}
                         badgeColor={theme.colors.primary}
-                        callback={() => {}}
+                        callback={props.onSelectedImages}
                     />
                 </View>
             </View>

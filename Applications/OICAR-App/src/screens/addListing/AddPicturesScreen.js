@@ -12,23 +12,42 @@ import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import PictureBox from '../../components/AddPicturesBox';
 import ImagePicker from '../../components/ImagePicker';
-import MultiImageModal from '../../components/MultiImageModal';
 import { theme } from '../../utils/theme';
 import ModalSuccess from '../../components/ModalSuccess';
 
+const MAX_IMAGES = 5;
+
+const _renderPictureBox = (item, index) => {
+  return (
+    <PictureBox
+      key={index}
+      imageUri={item}
+    />
+  );
+};
 
 const AddPicturesScreen = props => {
   
-  const [modalVisible, setModalVisible] = useState(false);
-  
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+
   const _onModalShow = () => {
-    setModalVisible(true);
+    setSuccessModalVisible(true);
     setTimeout(() => {
-      setModalVisible(false);
+      setSuccessModalVisible(false);
       props.navigation.navigate('Add');
     },
     3000);
   }
+
+  const _onImagesSelected = images => {
+    const imageUris = [];
+    for (var index in images) {
+      imageUris.push(images[index].uri);
+    }
+
+    setSelectedImages([...selectedImages, ...imageUris]);
+  };
 
   return (
     <View style={styles.container}>
@@ -36,16 +55,20 @@ const AddPicturesScreen = props => {
         <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
         <Text style={styles.headerstyle}>Slike vozila</Text>
         <View style={styles.pictureboxcontainer}>
+          {selectedImages.map((item, index) => _renderPictureBox(item, index))}
+
+            {/* <PictureBox/>
             <PictureBox/>
             <PictureBox/>
             <PictureBox/>
-            <PictureBox/>
-            <PictureBox/>
+            <PictureBox/> */}
         </View>
 
         <ImagePicker 
           style={styles.ipstyle}
           multiImage
+          multiImageAction={_onImagesSelected}
+          maxImages={MAX_IMAGES - selectedImages.length}
         >
           <Text style={styles.butontextstyle}>Dodaj slike</Text>
         </ImagePicker>
@@ -56,8 +79,7 @@ const AddPicturesScreen = props => {
           <Text style={styles.nsbtextstyle}>Objavite oglas</Text>
         </NextScreenButton>
 
-        <MultiImageModal />
-        <ModalSuccess visible={modalVisible}/>
+        <ModalSuccess visible={successModalVisible}/>
 
       </View>
     );

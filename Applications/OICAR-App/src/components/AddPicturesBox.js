@@ -1,14 +1,13 @@
 import React from "react";
 import {
     View,
-    Text,
     StyleSheet,
     Image
 } from "react-native";
 
 import { theme } from "../utils/theme";
 
-const PicturesBox = props => {
+const PictureBox = props => {
 
     return (
             <View style={styles.imagecontainer}>
@@ -55,4 +54,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default PicturesBox;
+export default PictureBox;

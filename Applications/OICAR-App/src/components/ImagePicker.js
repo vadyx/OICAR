@@ -4,20 +4,28 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 import ImagePickerModal from '../components/ImagePickerModal';
+import MultiImageModal from '../components/MultiImageModal';
 import { theme } from '../utils/theme';
 
 const ImgPicker = props => {
 
-    const [modalVisible, setModalVisible] = useState(false);  
-    const [showMultiPicker, setShowMultiPicker] = useState(false);  
+    const [optionModalVisible, setOptionModalVisible] = useState(false);  
+    const [multiPickerVisible, setMultiPickerVisible] = useState(false);  
 
     const _onAddImagePress = () => {
-        setModalVisible(true);
+        setOptionModalVisible(true);
     }
 
-    const _onModalClose = () => {
-        setModalVisible(false);
-    } 
+    const _onOptionModalClose = () => {
+        setOptionModalVisible(false);
+    }
+
+    const _multiPickerAction = (callback) => {
+        callback.then((images) => {
+            props.multiImageAction(images);
+            setMultiPickerVisible(false);
+        }).catch((e) => {/* error handling */})
+    }
 
     const _verifyPermissions = async () => {
 
@@ -45,7 +53,7 @@ const ImgPicker = props => {
                 break;
             case 'gallery':
                 if (props.multiImage) {
-                    setShowMultiPicker(true);
+                    setMultiPickerVisible(true);
                 } else {
                     picture = await ImagePicker.launchImageLibraryAsync(props.imageOptions);
                 }
@@ -58,9 +66,6 @@ const ImgPicker = props => {
         }
     };
 
-    if (showMultiPicker) {
-    }
-
     return (
         <View>
             
@@ -72,10 +77,15 @@ const ImgPicker = props => {
             
 
             <ImagePickerModal 
-                visible={modalVisible} 
-                onModalClose={_onModalClose} 
+                visible={optionModalVisible} 
+                onModalClose={_onOptionModalClose} 
                 onSelectedOption={_onSelectedOption}
             />
+
+            <MultiImageModal
+                visible={multiPickerVisible}
+                maxImages={props.maxImages}
+                onSelectedImages={_multiPickerAction}  />
 
         </View>
     );
