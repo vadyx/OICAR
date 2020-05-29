@@ -11,8 +11,7 @@ const PictureBox = props => {
 
     return (
             <View style={styles.imagecontainer}>
-
-                <Image source={{ uri: props.imageUri }}
+                <Image source={{ uri: props.imageUri}}
                     style={styles.imagestyle}
                 />
             </View>

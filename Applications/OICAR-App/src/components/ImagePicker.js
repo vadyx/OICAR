@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
@@ -20,9 +21,22 @@ const ImgPicker = props => {
         setOptionModalVisible(false);
     }
 
+    const _imageConverter = async (image) => {
+        const base64Image = await FileSystem.readAsStringAsync(image.uri, { encoding: FileSystem.EncodingType.Base64 });
+        return base64Image;
+    };
+
     const _multiPickerAction = (callback) => {
-        callback.then((images) => {
-            props.multiImageAction(images);
+        callback.then(async (images) => {
+            const base64Images = [];
+            let convertedImage;
+
+            for (const index in images) {
+                convertedImage = await _imageConverter(images[index]);
+                base64Images.push(convertedImage);
+            }
+
+            props.multiImageAction(base64Images);
             setMultiPickerVisible(false);
         }).catch((e) => {/* error handling */})
     }
@@ -56,12 +70,13 @@ const ImgPicker = props => {
                     setMultiPickerVisible(true);
                 } else {
                     picture = await ImagePicker.launchImageLibraryAsync(props.imageOptions);
-                }
-                
+                }              
                 break;
         }
 
-        if (!props.multiImage) {
+        if (picture !== undefined) {
+            console.log("the picture was taken");
+            console.log(picture.base64);
             props.onPictureSelected(props.id, picture.base64);
         }
     };
