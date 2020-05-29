@@ -12,16 +12,18 @@ import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
 import PictureBox from '../../components/AddPicturesBox';
 import ImagePicker from '../../components/ImagePicker';
-import { theme } from '../../utils/theme';
 import ModalSuccess from '../../components/ModalSuccess';
+import { fullSizeImageOptions } from '../../utils/imageOptions';
+import { theme } from '../../utils/theme';
 
 const MAX_IMAGES = 5;
 
 const _renderPictureBox = (item, index) => {
+  //console.log(item);
   return (
     <PictureBox
       key={index}
-      imageUri={item}
+      imageUri={`data:image/jpg;base64,${item}`}
     />
   );
 };
@@ -40,13 +42,17 @@ const AddPicturesScreen = props => {
     3000);
   }
 
+  const _onPictureSelected = (id, image) => {
+    setSelectedImages([...selectedImages, image]);
+  }
+
   const _onImagesSelected = images => {
-    const imageUris = [];
+    const base64Images = [];
     for (var index in images) {
-      imageUris.push(images[index].uri);
+      base64Images.push(images[index]);
     }
 
-    setSelectedImages([...selectedImages, ...imageUris]);
+    setSelectedImages([...selectedImages, ...base64Images]);
   };
 
   return (
@@ -56,16 +62,13 @@ const AddPicturesScreen = props => {
         <Text style={styles.headerstyle}>Slike vozila</Text>
         <View style={styles.pictureboxcontainer}>
           {selectedImages.map((item, index) => _renderPictureBox(item, index))}
-
-            {/* <PictureBox/>
-            <PictureBox/>
-            <PictureBox/>
-            <PictureBox/>
-            <PictureBox/> */}
         </View>
 
         <ImagePicker 
+          id="newListingImages"
           style={styles.ipstyle}
+          imageOptions={fullSizeImageOptions}
+          onPictureSelected={_onPictureSelected}
           multiImage
           multiImageAction={_onImagesSelected}
           maxImages={MAX_IMAGES - selectedImages.length}
