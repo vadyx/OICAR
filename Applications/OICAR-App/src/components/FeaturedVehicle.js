@@ -30,7 +30,7 @@ const FeaturedVehicle = props => {
                         elevation: 10,
                         }}>
 
-            <View style={styles.image_container}>
+            <View style={{width: "100%", height: props.imageHeight}}>
                 <Image
                     style={styles.imagestyle}
                     source={props.imageUri} />
@@ -54,10 +54,6 @@ const FeaturedVehicle = props => {
 
 const styles = StyleSheet.create({
 
-    image_container:{
-        width:"100%",
-        height:110
-    },
     description_container:{
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',

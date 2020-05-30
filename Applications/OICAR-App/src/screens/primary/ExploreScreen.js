@@ -75,85 +75,91 @@ const ExploreScreen = props => {
           scrollEventThrottle={16}
           style={styles.scrollviewstyle}>
 
-          <View style={styles.category_video_container}>
+          <View style={styles.dataContainer}>
 
-            <Text style={styles.textstyle}>
-              Kategorije vozila
-            </Text>
-                    
-            <View style={styles.category_container}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
+            <View style={styles.category_video_container}>
 
-                {categories.map(item => _renderCategoryItem(item))}
-
-              </ScrollView>
-            </View>
-                    
-            <View style={styles.video_container}>
-              
-              <Text style={styles.textstyle1}>
-                Turistička opcija
+              <Text style={styles.textstyle}>
+                Kategorije vozila
               </Text>
-              
-              <Text style={styles.textstyle2}>
-                Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
-              </Text>
-                        
-              <View style={styles.video_view}>
-                  <Video
-                      source={require("../../assets/Boat.mp4")}
-                      rate={1.0}
-                      isMuted={true}
-                      resizeMode="contain"
-                      shouldPlay={!!props.isFocused}
-                      isLooping
-                      style={styles.video1}
-                    />
+                      
+              <View style={styles.category_container}>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+
+                  {categories.map(item => _renderCategoryItem(item))}
+
+                </ScrollView>
+              </View>
+                      
+              <View style={styles.video_container}>
+                
+                <Text style={styles.textstyle1}>
+                  Turistička opcija
+                </Text>
+                
+                <Text style={styles.textstyle2}>
+                  Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
+                </Text>
+                          
+                <View style={styles.video_view}>
+                    <Video
+                        source={require("../../assets/Boat.mp4")}
+                        rate={1.0}
+                        isMuted={true}
+                        resizeMode="contain"
+                        shouldPlay={!!props.isFocused}
+                        isLooping
+                        style={styles.video1}
+                      />
+                </View>
+
               </View>
 
             </View>
+            
+            <View style={styles.home_container}>
+              <View style={styles.vehicle_text_container}>
+                <Text style={styles.textstyle}>
+                  Vozila širom Hrvatske
+                </Text>
+                        
+                <View style={styles.home_view}>
+                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
+                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                    imageUri={require('../../assets/scooter.jpg')}
+                    name="Aprilia Scooter 1"
+                    type="Motocikl"
+                    price={20}
+                    rating={4}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                  />
+                  
+                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
+                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                    imageUri={require('../../assets/audia3.jpg')}
+                    name="Audi A3"
+                    type="Automobil"
+                    price={42}
+                    rating={3.5}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                  />
 
-          </View>
-          
-          <View style={styles.home_container}>
+                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
+                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                    imageUri={require('../../assets/car3.jpg')}
+                    name="Fiat Punto"
+                    type="Automobil"
+                    price={30}
+                    rating={4.5}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                  />
 
-            <Text style={styles.textstyle}>
-              Vozila širom Hrvatske
-            </Text>
-                    
-            <View style={styles.home_view}>
-              <FeaturedVehicle width={width}
-                height={height}
-                imageUri={require('../../assets/scooter.jpg')}
-                name="Aprilia Scooter 1"
-                type="Motocikl"
-                price={20}
-                rating={4}
-              />
-              
-              <FeaturedVehicle width={width}
-                height={height}
-                imageUri={require('../../assets/audia3.jpg')}
-                name="Audi A3"
-                type="Automobil"
-                price={42}
-                rating={3.5}
-              />
-
-              <FeaturedVehicle width={width}
-                height={height}
-                imageUri={require('../../assets/car3.jpg')}
-                name="Fiat Punto"
-                type="Automobil"
-                price={30}
-                rating={4.5}
-              />
-
+                </View>
+              </View>
             </View>
           </View>
-          
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -174,15 +180,15 @@ const styles = StyleSheet.create({
       shadowColor: "black",
       shadowOpacity: 0.5,
       //samo radi na Android
-      elevation: 5
-
+      elevation: 5,
+      justifyContent: Platform.OS === "web" ? "center" : null
     },
     search_container:{
       flexDirection: 'row',
       padding: 5,
-      width:"80%",
+      width: Platform.OS === "web" ? "40%" : "80%",
       height:40,
-      backgroundColor: 'white',
+      backgroundColor: Platform.OS === "web" ? '#e1ede7' : 'white',
       marginHorizontal: 10,
       borderRadius:10,
       shadowOffset: { width: 0, height: 0 },
@@ -194,7 +200,8 @@ const styles = StyleSheet.create({
     category_video_container:{
       flex: 1,
       backgroundColor: 'white',
-      paddingTop: 20
+      paddingTop:  20,
+      paddingLeft: Platform.OS === "web" ? 50 : null
     },
     category_container:{
       height: 130,
@@ -208,24 +215,27 @@ const styles = StyleSheet.create({
     },
     video_view:
     {
-      width: width - 40,
-      height: 200,
+      width: Platform.OS === "web" ? width : width - 40,
+      height: Platform.OS === "web" ? 450 : 200,
       marginTop: 20,
       borderRadius:10,
       overflow:"hidden"
     },
     home_container:{
-      marginTop: 40
+      marginTop: Platform.OS === "web" ? 0 : 40
     },
     home_view:{
       paddingHorizontal: 20,
       marginTop: 20,
-      flexDirection: 'row',
+      flexDirection: Platform.OS === "web" ? 'column' : 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-between'
     },
     safeareastyle:{
       flex: 1
+    },
+    vehicle_text_container:{
+      paddingRight: Platform.OS === "web" ? 60 : 0
     },
     logostyle:{
       width:45,
@@ -240,10 +250,15 @@ const styles = StyleSheet.create({
     textinputstyle:{
       flex: 1,
       fontWeight: '700',
-      backgroundColor: 'white' 
+      backgroundColor: 'white',
+      textAlign: Platform.OS === "web" ? "center" : null 
     },
     scrollviewstyle:{
-      backgroundColor:'white'
+      backgroundColor:'white',
+      flex: 1
+    },
+    dataContainer: {
+      flexDirection: Platform.OS === "web" ? 'row' : null
     },
     textstyle:{
       fontSize: 24,
@@ -257,11 +272,12 @@ const styles = StyleSheet.create({
     },
     textstyle2:{
       fontWeight: '100',
+      fontSize: Platform.OS === "web" ? 18 : 14,
       marginTop: 10,
       color:theme.colors.black
     },
     video1:{
-      width:"100%",
+      width: Platform.OS === "web" ? "50%" : "100%",
       height:"100%"
     },
     touchableopacity1:{
