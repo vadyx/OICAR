@@ -28,7 +28,6 @@ export const registration = (username, firstName, lastName, email, password) => 
 
         if (!response.ok) {
             const responseError = await response.json();
-            console.log("Registration went wrong: " + responseError);
             let errorData;
             switch (responseError.Message) {
                 case 'UQ_USERNAME':

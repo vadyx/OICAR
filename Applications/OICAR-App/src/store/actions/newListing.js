@@ -80,25 +80,6 @@ export const confirmListing = () => {
 
         const newListingData = getState().newListing;
         const userID = getState().auth.userId;
-        // console.log("User: " + userID);
-        
-        // console.log("Title: " + newListingData.title + "(type: " + typeof newListingData.title + ")");
-        // console.log("Description: " + newListingData.description + "(type: " + typeof newListingData.description + ")");
-        // console.log("Price: " + newListingData.price + "(type: " + typeof newListingData.price + ")");
-        // console.log("PriceID: " + newListingData.pricePeriodID + "(type: " + typeof newListingData.pricePeriodID + ")");
-        // console.log("StartDate: " + newListingData.startDate + "(type: " + newListingData.startDate.constructor.name + ")");
-        // console.log("EndDate: " + newListingData.endDate + "(type: " + newListingData.endDate.constructor.name + ")");        
-	    // console.log("Cat: " + newListingData.categoryID + "(type: " + typeof newListingData.categoryID + ")");
-        // console.log("Manuf: " + newListingData.manufacturerID + "(type: " + typeof newListingData.manufacturerID + ")");
-        // console.log("Model: " + newListingData.modelID + "(type: " + typeof newListingData.modelID + ")");
-        // console.log("Subcat: " + newListingData.subcategoryID + "(type: " + typeof newListingData.subcategoryID + ")");
-        // console.log("Year: " + newListingData.year + "(type: " + typeof newListingData.year + ")");
-        // console.log("Fuel: " + newListingData.fuelTypeID + "(type: " + typeof newListingData.fuelTypeID + ")");
-	    // console.log("Drive: " + newListingData.wheelDriveID + "(type: " + typeof newListingData.wheelDriveID + ")");
-        // console.log("GearShift: " + newListingData.gearShiftID + "(type: " + typeof newListingData.gearShiftID + ")");
-        // console.log("KM: " + newListingData.traveledKM + "(type: " + typeof newListingData.traveledKM + ")");
-        // console.log("Power: " + newListingData.enginePower + "(type: " + typeof newListingData.enginePower + ")");
-        // console.log("Acc: " + newListingData.accessories + "(type: " + typeof newListingData.accessories + ")");
 
         const response = await fetch('http://192.168.1.3:12335/api/newListing',
             {
@@ -135,7 +116,6 @@ export const confirmListing = () => {
         );
 
         if (!response.ok) {
-            response.text().then(text => console.log(text));
             throw new Error("New listing not registered!");
         }
 
