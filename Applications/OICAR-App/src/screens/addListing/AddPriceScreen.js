@@ -45,7 +45,7 @@ const AddPriceScreen = props => {
   };
 
   const _onNextPressed = () => {
-    dispatch(newListingActions.setPrice);
+    dispatch(newListingActions.setPrice(price, selectedPricePeriod));
     props.navigation.navigate('AddDate');
   };
 

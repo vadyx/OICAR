@@ -74,7 +74,7 @@ const ImgPicker = props => {
                 break;
         }
 
-        if (picture !== undefined) {
+        if (picture !== undefined && picture.cancelled !== "true") {
             console.log("the picture was taken");
             console.log(picture.base64);
             props.onPictureSelected(props.id, picture.base64);

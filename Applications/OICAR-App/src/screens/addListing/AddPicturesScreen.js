@@ -6,6 +6,7 @@ import {
   Modal
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useDispatch } from 'react-redux';
 
 import NextScreenButton from '../../components/NextScreenButton';
 import BackButton from '../../components/BackButton';
@@ -13,13 +14,13 @@ import ExitButton from '../../components/ExitButton';
 import PictureBox from '../../components/AddPicturesBox';
 import ImagePicker from '../../components/ImagePicker';
 import ModalSuccess from '../../components/ModalSuccess';
+import * as newListingActions from '../../store/actions/newListing';
 import { fullSizeImageOptions } from '../../utils/imageOptions';
 import { theme } from '../../utils/theme';
 
 const MAX_IMAGES = 5;
 
 const _renderPictureBox = (item, index) => {
-  //console.log(item);
   return (
     <PictureBox
       key={index}
@@ -33,10 +34,15 @@ const AddPicturesScreen = props => {
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
 
-  const _onModalShow = () => {
+  const dispatch = useDispatch();
+
+  const _onNextPressed = async () => {
+    await dispatch(newListingActions.setImages(selectedImages));
+    await dispatch(newListingActions.confirmListing());
     setSuccessModalVisible(true);
-    setTimeout(() => {
+    setTimeout(async () => {
       setSuccessModalVisible(false);
+      await dispatch(newListingActions.newListingClose());
       props.navigation.navigate('Add');
     },
     3000);
@@ -78,7 +84,9 @@ const AddPicturesScreen = props => {
 
         <Text style={styles.labelstyle}>*Možete dodati do 5 slika!</Text>
 
-        <NextScreenButton style={styles.nsbstyle} navigate={_onModalShow}>
+        <NextScreenButton 
+          style={styles.nsbstyle} 
+          navigate={_onNextPressed}>
           <Text style={styles.nsbtextstyle}>Objavite oglas</Text>
         </NextScreenButton>
 

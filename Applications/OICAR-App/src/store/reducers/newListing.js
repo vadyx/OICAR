@@ -6,7 +6,9 @@ import {
     SET_BASIC_INFO, 
     SET_DESCRIPTION,
     SET_PRICE,
-    SET_DATES
+    SET_DATES,
+    SET_IMAGES,
+    CONFIRM_LISTING
 } from '../actions/newListing';
 
 const initialState = {
@@ -26,7 +28,8 @@ const initialState = {
     price: null,
     pricePeriodID: null,
     startDate: null,
-    endDate: null
+    endDate: null,
+    images: null
 };
 
 export default (state = initialState, action) => {
@@ -76,6 +79,13 @@ export default (state = initialState, action) => {
                 startDate: action.startDate,
                 endDate: action.endDate
             };
+        case SET_IMAGES:
+            return {
+                ...state,
+                images: action.images
+            };
+        case CONFIRM_LISTING:
+            return action.success;
         case NEW_LISTING_CLOSE:
             return initialState;
         default:

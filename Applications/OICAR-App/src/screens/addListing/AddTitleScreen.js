@@ -23,7 +23,7 @@ const AddTitleScreen = props => {
   const dispatch = useDispatch();
 
   const _onNextPressed = async () => {
-    dispatch(newListingActions.setTitle);
+    await dispatch(newListingActions.setTitle(title));
 
     try {
       if (vehicleData.years.length === 0) {

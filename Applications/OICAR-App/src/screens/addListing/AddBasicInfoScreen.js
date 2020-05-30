@@ -192,10 +192,11 @@ const AddBasicInfoScreen = props => {
   const _onInputChange = useCallback((id, value, isValid, error) => {
 
     const type = id === "enginePower" ? SET_ENGINE_POWER : SET_TRAVELED_KM;
+    const intValue = parseInt(value);
 
     dispatchInfoState({
       type: type,
-      value: value,
+      value: intValue,
       isValid: isValid,
       error: error
     });
