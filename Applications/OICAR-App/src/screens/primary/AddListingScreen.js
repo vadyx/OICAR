@@ -3,7 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { MaterialCommunityIcons,FontAwesome } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
