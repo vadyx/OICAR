@@ -2,7 +2,8 @@ import React, { memo } from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   ImageBackground,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 const Background = props => (
@@ -22,6 +23,8 @@ const styles = StyleSheet.create({
   background: {
     flex:1,
     width: '100%',
+    alignItems: Platform.OS === "web" ? "center" : null,
+    paddingTop
   },
   container: {
     paddingTop:130,

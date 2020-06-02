@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 
 import { theme } from '../utils/theme';
@@ -22,7 +22,7 @@ const Button = ({ mode, style, children, ...props }) => (
 const styles = StyleSheet.create({
   button: {
     borderRadius:30,
-    width: '50%',
+    width: Platform.OS === "web" ? "30%" : '50%',
     marginVertical: 10,
   },
   text: {

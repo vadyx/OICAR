@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     logostyle:{
       width:45,
       height:45,
-      marginTop:28,
+      marginTop: Platform.OS === "web" ? 0 : 28,
       marginLeft:10
     },
     iconstyle:{
