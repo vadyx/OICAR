@@ -17,7 +17,7 @@ const CategoryAdd = props => {
   }
  
   return (
-    <View style={styles.container1}>
+    <View style={{...styles.container1,...props.style}}>
       <View style={styles.category1}>
         <TouchableOpacity style={buttonStyle} onPress={() => props.onSelected(props.catID)}>
           <Text style={textStyle}>{props.name}</Text>

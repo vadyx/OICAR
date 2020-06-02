@@ -73,6 +73,7 @@ buttonContainer: {
     alignItems:"center",
     width:200,
     height:50,
+    elevation:5,
 },
 buttonText: {
     fontSize: 20,
