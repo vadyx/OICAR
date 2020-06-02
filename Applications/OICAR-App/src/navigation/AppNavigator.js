@@ -25,6 +25,14 @@ import {
   AddPicturesScreen
 } from '../screens';
 
+const SearchNavigator = createStackNavigator(
+  {
+    Search: SearchScreen
+  },
+  {
+    headerMode:"none",
+  }
+)
 
 const HomeTabNavigator = createBottomTabNavigator({
 
@@ -39,7 +47,7 @@ const HomeTabNavigator = createBottomTabNavigator({
   },
 
   Search: {
-    screen: SearchScreen,
+    screen: SearchNavigator,
     navigationOptions: {
       tabBarLabel: 'SEARCH',
       tabBarIcon: ({ tintColor }) => (
@@ -126,7 +134,7 @@ const AddNavigator = createStackNavigator(
   {
     headerMode:"none",
   }
-)
+);
 
 const MainNavigator = createStackNavigator({
   Home: HomeTabNavigator,
