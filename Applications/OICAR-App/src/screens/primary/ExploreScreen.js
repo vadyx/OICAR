@@ -126,34 +126,49 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
-                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                  <FeaturedVehicle width={152}
+                    height={210}
                     imageUri={require('../../assets/scooter.jpg')}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
                     price={20}
                     rating={4}
                     imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="tjedan"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Aprilia"
+                    model="1"
                   />
                   
-                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
-                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                  <FeaturedVehicle width={152}
+                    height={210}
                     imageUri={require('../../assets/audia3.jpg')}
-                    name="Audi A3"
+                    name="Audi A3 TOP"
                     type="Automobil"
                     price={42}
                     rating={3.5}
                     imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="dan"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Audi"
+                    model="A3"
                   />
 
-                  <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
-                    height={ Platform.OS === "web" ? height * 0.9 : height}
+                  <FeaturedVehicle width={152}
+                    height={210}
                     imageUri={require('../../assets/car3.jpg')}
                     name="Fiat Punto"
                     type="Automobil"
                     price={30}
                     rating={4.5}
                     imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="sat"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Fiat"
+                    model="Punto"
                   />
 
                 </View>

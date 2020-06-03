@@ -13,7 +13,11 @@ import BackButton from '../../components/BackButton';
 import { ScrollView } from 'react-native-gesture-handler';
 import FeaturedVehicle from '../../components/FeaturedVehicle';
 
-const { height, width } = Dimensions.get('window');
+const width = Math.round(Dimensions.get('window').width) -50;
+const height = 230;
+const imgsize = 140;
+const descbrandsize = "80%";
+const descpricesize = "20%";
 
 const SearchAllVehicles = props => {
 
@@ -37,16 +41,26 @@ const SearchAllVehicles = props => {
                         type="Motocikl"
                         price={20}
                         rating={4}
-                        imageHeight={110}
+                        imageHeight={imgsize}
+                        pricetime="dan"
+                        widthbrand={descbrandsize}
+                        widthprice={descpricesize}
+                        brand = "Aprilia"
+                        model="1"
                     />
-                    <FeaturedVehicle width={Platform.OS === "web" ? width/2.3 : width}
+                    <FeaturedVehicle width={width}
                     height={ Platform.OS === "web" ? height * 0.9 : height}
                     imageUri={require('../../assets/car3.jpg')}
                     name="Fiat Punto"
                     type="Automobil"
                     price={30}
                     rating={4.5}
-                    imageHeight={110}
+                    imageHeight={imgsize}
+                    pricetime="tjedan"
+                    widthbrand={descbrandsize}
+                    widthprice={descpricesize}
+                    brand="Fiat"
+                    model="Punto"
                     />
                     <FeaturedVehicle width={width}
                         height={height}
@@ -55,25 +69,36 @@ const SearchAllVehicles = props => {
                         type="Motocikl"
                         price={20}
                         rating={4}
-                        imageHeight={110}
+                        imageHeight={imgsize}
+                        widthbrand={descbrandsize}
+                        widthprice={descpricesize}
+                        brand="Aprilia"
+                        model="1"
+                        
                     />
                     <FeaturedVehicle width={width}
                         height={height}
                         imageUri={require('../../assets/truckcategory.jpg')}
-                        name="Aprilia Scooter 1"
+                        name="Volvo c3"
                         type="Motocikl"
                         price={20}
                         rating={4}
-                        imageHeight={110}
+                        imageHeight={imgsize}
+                        widthbrand={descbrandsize}
+                        widthprice={descpricesize}
+                        brand="Volvo"
+                        model="C3"
                     />
                     <FeaturedVehicle width={width}
                         height={height}
                         imageUri={require('../../assets/motorbikecategory.jpg')}
-                        name="Aprilia Scooter 1"
+                        name="Harley Davison"
                         type="Motocikl"
                         price={20}
                         rating={4}
-                        imageHeight={110}
+                        imageHeight={imgsize}
+                        widthbrand={descbrandsize}
+                        widthprice={descpricesize}
                     />
                     <FeaturedVehicle width={width}
                         height={height}
@@ -82,7 +107,11 @@ const SearchAllVehicles = props => {
                         type="Motocikl"
                         price={20}
                         rating={4}
-                        imageHeight={110}
+                        imageHeight={imgsize}
+                        widthbrand={descbrandsize}
+                        widthprice={descpricesize}
+                        brand = "Aprilia"
+                        model="1"
                     />
                 </View>
             </ScrollView>
@@ -164,10 +193,8 @@ const styles = StyleSheet.create({
     listads:{
         paddingHorizontal:18,
         marginTop: 20,
-        paddingTop:10,
-        flexDirection:'row',
-        flexWrap:'wrap',
-        justifyContent:'space-between'
+        paddingTop:20,
+        flexDirection:'column'
     }
 });
 

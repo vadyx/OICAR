@@ -56,7 +56,7 @@ const SearchContainer = props => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerrow}>
           <Image source={require('../../assets/car_search_icon.png')} style={styles.iconstyle} />
           <Text style={styles.headerstyle}>Pretraživanje vozila</Text>
