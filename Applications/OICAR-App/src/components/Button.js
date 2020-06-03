@@ -22,7 +22,8 @@ const Button = ({ mode, style, children, ...props }) => (
 const styles = StyleSheet.create({
   button: {
     borderRadius:30,
-    width: Platform.OS === "web" ? "30%" : '50%',
+    width: Platform.OS === "web" ? "100%" : '50%',
+    justifyContent:Platform.Os === "web" ? "center" : null,
     marginVertical: 10,
   },
   text: {

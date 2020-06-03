@@ -50,27 +50,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
+    alignItems:"center",
     backgroundColor: theme.colors.white
 },
 headerstyle: {
     fontSize: 40,
     marginTop:60,
     fontWeight: '700',
-    alignSelf: 'flex-start',
     marginLeft: 20,
     marginBottom:5
 },
 paragraphstyle:{
     fontSize: 14,
     width:"90%",
-    fontWeight: '100',
-    marginLeft: 20,
+    fontWeight: '100'
 },
 buttonContainer: {
     backgroundColor: theme.colors.primary,
     borderRadius: 30,
     paddingVertical: 10,
-    alignSelf:"center",
     alignItems:"center",
     width:200,
     height:50,

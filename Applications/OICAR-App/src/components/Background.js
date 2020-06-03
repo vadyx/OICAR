@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex:1,
     width: '100%',
     alignItems: Platform.OS === "web" ? "center" : null,
-    paddingTop
+    paddingTop:Platform.OS === "web" ? 100 : null
   },
   container: {
     paddingTop:130,

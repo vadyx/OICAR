@@ -36,7 +36,7 @@ const SearchContainer = props => {
   const _onNextPressed = async () => {
     dispatch(newListingActions.setCategory(selectedCategory));
     await dispatch(vehicleDataActions.loadManufacturers(selectedCategory));
-    props.navigation.navigate('');
+    props.navigation.navigate('Filter');
   }
 
   const _renderCategoryItem = (item) => {

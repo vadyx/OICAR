@@ -17,3 +17,5 @@ export { default as AddDescriptionScreen } from './addListing/AddDescriptionScre
 export { default as AddPriceScreen } from './addListing/AddPriceScreen';
 export { default as AddDateScreen } from './addListing/AddDateScreen';
 export { default as AddPicturesScreen } from './addListing/AddPicturesScreen';
+
+export { default as SearchAllVehicles } from './searchVehicles/SearchAllVehicles';
