@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Video } from 'expo-av';
 
 import CategoryExplore from '../../components/CategoryExplore';
-import FeaturedVehicle from '../../components/FeaturedVehicle';
+import ListingCard from '../../components/ListingCard';
 import Logo from "../../components/Logo";
 import * as vehicleDataActions from '../../store/actions/vehicleData';
 import { theme } from "../../utils/theme";
@@ -126,7 +126,7 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <FeaturedVehicle width={152}
+                  <ListingCard width={152}
                     height={210}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
@@ -140,7 +140,7 @@ const ExploreScreen = props => {
                     model="1"
                   />
                   
-                  <FeaturedVehicle width={152}
+                  <ListingCard width={152}
                     height={210}
                     name="Audi A3 TOP"
                     type="Automobil"
@@ -154,7 +154,7 @@ const ExploreScreen = props => {
                     model="A3"
                   />
 
-                  <FeaturedVehicle width={152}
+                  <ListingCard width={152}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"

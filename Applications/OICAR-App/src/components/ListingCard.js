@@ -8,7 +8,7 @@ import {
 import StarRating from 'react-native-star-rating'
 import { theme } from "../utils/theme";
 
-const FeaturedVehicle = props => {
+const ListingCard = props => {
 
     return (
         <View style={{  width: props.width, 
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FeaturedVehicle;
+export default ListingCard;

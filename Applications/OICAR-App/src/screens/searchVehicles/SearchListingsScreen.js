@@ -12,7 +12,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
 
 import BackButton from '../../components/BackButton';
-import FeaturedVehicle from '../../components/FeaturedVehicle';
+import ListingCard from '../../components/ListingCard';
 import * as listingsActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
 
@@ -24,7 +24,7 @@ const descpricesize = "20%";
 
 const _renderListing = itemData => {
     return (
-        <FeaturedVehicle 
+        <ListingCard 
             imageUri={`data:image/jpg;base64,${itemData.item.image}`}
             name={itemData.item.title}
             type="Auto"
