@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     color: Platform.OS === "web" ? '#6f122c' : theme.colors.tertiary,
     fontWeight: 'bold',
     paddingVertical: 14,
+    textAlign: Platform.OS === "web" ? "center" : null
   },
 });
 
