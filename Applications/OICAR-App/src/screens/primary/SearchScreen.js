@@ -9,7 +9,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import * as vehicleDataActions from '../../store/actions/vehicleData';
-import * as newListingActions from '../../store/actions/newListing';
+import * as listingsActions from '../../store/actions/listings';
 import CategoryAdd from '../../components/CategoryAdd'
 import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
@@ -34,9 +34,8 @@ const SearchContainer = props => {
   };
 
   const _onNextPressed = async () => {
-    dispatch(newListingActions.setCategory(selectedCategory));
-    await dispatch(vehicleDataActions.loadManufacturers(selectedCategory));
-    props.navigation.navigate('Filter');
+    await dispatch(listingsActions.setCategory(selectedCategory));
+    props.navigation.navigate('Listings');
   }
 
   const _renderCategoryItem = (item) => {

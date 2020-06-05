@@ -52,6 +52,7 @@ const AddTitleScreen = props => {
 
       props.navigation.navigate('AddBasicInfo');
     } catch (error) {
+      console.log(error);
       //error handling logic
     }
     

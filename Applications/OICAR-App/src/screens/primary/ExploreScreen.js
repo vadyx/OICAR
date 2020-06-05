@@ -128,7 +128,6 @@ const ExploreScreen = props => {
                 <View style={styles.home_view}>
                   <FeaturedVehicle width={152}
                     height={210}
-                    imageUri={require('../../assets/scooter.jpg')}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
                     price={20}
@@ -143,7 +142,6 @@ const ExploreScreen = props => {
                   
                   <FeaturedVehicle width={152}
                     height={210}
-                    imageUri={require('../../assets/audia3.jpg')}
                     name="Audi A3 TOP"
                     type="Automobil"
                     price={42}
@@ -158,7 +156,6 @@ const ExploreScreen = props => {
 
                   <FeaturedVehicle width={152}
                     height={210}
-                    imageUri={require('../../assets/car3.jpg')}
                     name="Fiat Punto"
                     type="Automobil"
                     price={30}

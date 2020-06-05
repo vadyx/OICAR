@@ -34,7 +34,7 @@ const FeaturedVehicle = props => {
                             height: props.imageHeight}}>
                 <Image
                     style={styles.imagestyle}
-                    source={props.imageUri} />
+                    source={{ uri: props.imageUri}} />
             </View>
             <View style={styles.description_container}>
                 <Text style={styles.texttype}>{props.type}</Text>

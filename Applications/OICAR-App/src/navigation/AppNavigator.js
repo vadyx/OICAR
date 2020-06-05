@@ -23,13 +23,13 @@ import {
   AddPriceScreen,
   AddDateScreen,
   AddPicturesScreen,
-  SearchAllVehicles
+  SearchListingsScreen
 } from '../screens';
 
 const SearchNavigator = createStackNavigator(
   {
     Search: SearchScreen,
-    Filter: SearchAllVehicles
+    Listings: SearchListingsScreen
   },
   {
     headerMode:"none",

@@ -10,11 +10,12 @@ import { theme } from "../utils/theme";
 const PictureBox = props => {
 
     return (
-            <View style={styles.imagecontainer}>
-                <Image source={{ uri: props.imageUri}}
-                    style={styles.imagestyle}
-                />
-            </View>
+        <View style={styles.imagecontainer}>
+            <Image 
+                source={{ uri: props.imageUri}}
+                style={styles.imagestyle}
+            />
+        </View>
     );
 
 }

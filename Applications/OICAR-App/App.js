@@ -8,6 +8,7 @@ import authReducer from './src/store/reducers/auth';
 import profileReducer from './src/store/reducers/profile';
 import vehicleDataReducer from './src/store/reducers/vehicleData';
 import newListingReducer from './src/store/reducers/newListing';
+import listingsReducer from './src/store/reducers/listings';
 import AppNavigator from './src/navigation/AppNavigator';
 import { theme } from './src/utils/theme';
 
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   vehicleData: vehicleDataReducer,
-  newListing: newListingReducer
+  newListing: newListingReducer,
+  listings: listingsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
