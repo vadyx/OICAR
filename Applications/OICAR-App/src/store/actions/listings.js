@@ -49,3 +49,20 @@ export const loadCategoryListings = () => {
         });
     };
 };
+
+export const load10MoreListings = () => {
+    return async (dispatch, getState) => {
+
+        const availableListings = getState().listings.listings;
+        const currentShown = getState().listings.shownListings;
+
+        if (availableListings.length > 0 && availableListings.length < 11) {
+            currentShown.push(...availableListings);
+            availableListings.length = 0;
+        } else {
+            const nextListings = availableListings.slice(0, 10);
+            currentShown.push(...nextListings);
+            availableListings.splice(0, 10);
+        }
+    };
+};

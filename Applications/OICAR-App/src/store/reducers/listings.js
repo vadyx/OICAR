@@ -3,7 +3,8 @@ import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY } from "../actions/listings";
 const initialState = {
     categoryID: null,
     listings: [],
-    shownListings: []
+    shownListings: [],
+    isMore: false
 };
 
 export default (state = initialState, action) => {

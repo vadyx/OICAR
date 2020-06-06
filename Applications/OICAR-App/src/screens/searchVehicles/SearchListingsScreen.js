@@ -54,8 +54,9 @@ const _renderListHeader = () => {
 const SearchListingsScreen = props => {
 
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const listings = useSelector(state => state.listings.shownListings);
+    const listings = useSelector(state => state.listings);
     const dispatch = useDispatch();
 
     const _loadListings = useCallback(async () => {
@@ -63,6 +64,28 @@ const SearchListingsScreen = props => {
         await dispatch(listingsActions.loadCategoryListings());
         setIsRefreshing(false);
     }, [dispatch, setIsRefreshing]);
+
+    const _loadMoreListings = useCallback(async () => {
+        setIsLoadingMore(true);
+        await dispatch(listingsActions.load10MoreListings());
+        setIsLoadingMore(false);
+    });
+
+    const _renderListFooter = () => {
+        if (isLoadingMore && listings.listings.length > 0) {
+            return (
+                // loader component
+                <View></View>
+            );
+        } else if (listings.listings.length === 0) {
+            return (
+                // button
+                <View></View>
+            );
+        }
+
+        return null;
+    };
 
     useEffect(() => {
         _loadListings();
@@ -75,100 +98,16 @@ const SearchListingsScreen = props => {
                     <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
                     <Text style={styles.headertext}>Automobili</Text>
                 </View>
-                {/* <ScrollView style={styles.scv}>
-                    <View style={styles.sortfilter}>
-                        <TouchableOpacity style={styles.tosort}><Text style={styles.totext}>Sortiraj</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.tofilter}><Text style={styles.totext}>Filtriraj</Text></TouchableOpacity>
-                    </View>
-                    <View style={styles.listads}>
-                        <FeaturedVehicle width={width}
-                            height={height}
-                            imageUri={require('../../assets/scooter.jpg')}
-                            name="Aprilia Scooter 1"
-                            type="Motocikl"
-                            price={20}
-                            rating={4}
-                            imageHeight={imgsize}
-                            pricetime="dan"
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                            brand = "Aprilia"
-                            model="1"
-                        />
-                        <FeaturedVehicle width={width}
-                            height={ Platform.OS === "web" ? height * 0.9 : height}
-                            imageUri={require('../../assets/car3.jpg')}
-                            name="Fiat Punto"
-                            type="Automobil"
-                            price={30}
-                            rating={4.5}
-                            imageHeight={imgsize}
-                            pricetime="tjedan"
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                            brand="Fiat"
-                            model="Punto"
-                        />
-                        <FeaturedVehicle width={width}
-                            height={height}
-                            imageUri={require('../../assets/scooter.jpg')}
-                            name="Aprilia Scooter 1"
-                            type="Motocikl"
-                            price={20}
-                            rating={4}
-                            imageHeight={imgsize}
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                            brand="Aprilia"
-                            model="1"
-                            
-                        />
-                        <FeaturedVehicle width={width}
-                            height={height}
-                            imageUri={require('../../assets/truckcategory.jpg')}
-                            name="Volvo c3"
-                            type="Motocikl"
-                            price={20}
-                            rating={4}
-                            imageHeight={imgsize}
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                            brand="Volvo"
-                            model="C3"
-                        />
-                        <FeaturedVehicle width={width}
-                            height={height}
-                            imageUri={require('../../assets/motorbikecategory.jpg')}
-                            name="Harley Davison"
-                            type="Motocikl"
-                            price={20}
-                            rating={4}
-                            imageHeight={imgsize}
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                        />
-                        <FeaturedVehicle width={width}
-                            height={height}
-                            imageUri={require('../../assets/scooter.jpg')}
-                            name="Aprilia Scooter 1"
-                            type="Motocikl"
-                            price={20}
-                            rating={4}
-                            imageHeight={imgsize}
-                            widthbrand={descbrandsize}
-                            widthprice={descpricesize}
-                            brand = "Aprilia"
-                            model="1"
-                        />
-                    </View>
-                </ScrollView> */}
                 <FlatList
-                    data={listings} 
+                    data={listings.shownListings} 
                     keyExtractor={item => item.id.toString()}
+                    ListHeaderComponent={_renderListHeader}
+                    ListFooterComponent={_renderListFooter}
                     onRefresh={_loadListings}
                     refreshing={isRefreshing}
                     renderItem={itemData => _renderListing(itemData)}
-                    ListHeaderComponent={_renderListHeader}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={_loadMoreListings}
                 />
             </View>
         </SafeAreaView>

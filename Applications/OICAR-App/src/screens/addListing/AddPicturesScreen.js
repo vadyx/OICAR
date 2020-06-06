@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  Modal
+  StyleSheet
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useDispatch } from 'react-redux';
