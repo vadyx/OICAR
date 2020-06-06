@@ -12,6 +12,8 @@ using System.Web.Http.Description;
 using WebServis.Models.Category;
 using WebServis.Models.Listings;
 using WebServis.Models.Registration;
+using WebServis.Models.ResponseModels;
+using WebServis.Models.Vehicle;
 using WebServis.Models.ViewModels;
 
 namespace WebServis.Controllers.Listings
@@ -26,6 +28,14 @@ namespace WebServis.Controllers.Listings
         private RegisteredUserModel db_registeredUserModel = new RegisteredUserModel();
         private VehicleManufacturerModel db_vehicleManufacturerModel = new VehicleManufacturerModel();
         private VehicleModelModel db_vehicleModelModel = new VehicleModelModel();
+        private CategoryModel db_category = new CategoryModel();
+        private Vehicle_SubCategories_Model db_subCategory_Vehicle = new Vehicle_SubCategories_Model();
+        private FuelTypeModel db_fuelType = new FuelTypeModel();
+        private DriveTypeModel db_driveType = new DriveTypeModel();
+        private GearShiftTypeModel db_gearShiftType = new GearShiftTypeModel();
+        private VehicleAccessoriesModel db_vehicleAccessories = new VehicleAccessoriesModel();
+        private RegisteredUserModel db_user = new RegisteredUserModel();
+        private SubCategoryModel db_subCategory = new SubCategoryModel();
 
         // GET: api/Listings
         public IQueryable<Listing> GetListing()
@@ -34,22 +44,22 @@ namespace WebServis.Controllers.Listings
         }
 
         [Route("api/shortListings/{categoryID}")]
-        [ResponseType(typeof(ListingResponseModel))]
-        public IHttpActionResult GetListing(int categoryID)
+        [ResponseType(typeof(ShortListingResponseModel))]
+        public IHttpActionResult GetListings(int categoryID)
         {
-            List<ListingResponseModel> listingResponseModels;
+            List<ShortListingResponseModel> listingResponseModels;
             try
             {
-                listingResponseModels = new List<ListingResponseModel>();
+                listingResponseModels = new List<ShortListingResponseModel>();
                 foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
                 {
                     bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
                     listingResponseModels.Add(
-                        new ListingResponseModel
+                        new ShortListingResponseModel
                         {
                             IDListing = listing.IDListing,
                             Title = listing.Title,
-                            ListingDescription = listing.ListingDescription == null ? "" : listing.ListingDescription,
+                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
                             Price = listing.Price,
                             PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
                             Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
@@ -68,7 +78,126 @@ namespace WebServis.Controllers.Listings
             return Ok(listingResponseModels);
         }
 
-         //PUT: api/Listings/5
+        [Route("api/getListing/{listingID}")]
+        [ResponseType(typeof(ShortListingResponseModel))]
+        public IHttpActionResult GetListing(int listingID)
+        {
+            ListingResponseModel listingResponseModel;
+            try
+            {
+                Listing listing = db.Listing.Where(l => l.IDListing == listingID).FirstOrDefault();
+                
+                bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                List<String> images = new List<String>();
+                if (!listingHasNoImage)
+                {
+                    foreach (var vehicleImage in db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).ToList())
+                    {
+                        images.Add(Convert.ToBase64String(vehicleImage.VehicleImageString));
+                    }
+                   
+                }
+
+                List<String> accessories = new List<String>();
+                foreach(var accessory in db_vehicleAccesories_vehicle.VehicleAccessories_Vehicle.Where(access => access.VehicleID == listing.VehicleID))
+                {
+                    accessories.Add(db_vehicleAccessories.VehicleAccessories.Find(accessory.VehicleAccessoriesID).VehicleAccessories1);
+                }
+
+                RegisteredUser user = db_user.RegisteredUsers.Find(listing.UserID);
+
+                int? subCategoryID = db_subCategory_Vehicle.Vehicle_SubCategories.Where(subCat => subCat.VehicleID == listing.Vehicle.IDVehicle).FirstOrDefault().SubCategoryID;
+                string subCategory = "";
+                if (subCategoryID != null)
+                {
+                    subCategory = db_subCategory.SubCategory.Find(subCategoryID).SubCategory1;
+                }
+
+                listingResponseModel =
+                    new ListingResponseModel
+                    {
+                        IDListing = listing.IDListing,
+                        Title = listing.Title,
+                        ListingDescription = listing.ListingDescription,
+                        Price = listing.Price,
+                        PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                        AvailableFromDate = listing.AvailableFromDate,
+                        AvailableToDate = listing.AvailableToDate,
+                        LocationCoordinateX = listing.LocationCoordinateX,
+                        LocationCoordinateY = listing.LocationCoordinateY,
+                        Images = listingHasNoImage ? new string[0] : images.ToArray(),
+                        Vehicle = new VehicleResponseModel
+                        {
+                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
+                            SubCategory = subCategory,
+                            ManufacturingYear = listing.Vehicle.ManufacturingYear,
+                            FuelType = listing.Vehicle.FuelTypeID == null ? "" : db_fuelType.FuelType.Where(fuelType => fuelType.IDFuelType == listing.Vehicle.FuelTypeID).SingleOrDefault().FuelType1,
+                            DriveType = listing.Vehicle.DriveTypeID == null ? "" : db_driveType.DriveType.Where(driveType => driveType.IDDriveType == listing.Vehicle.DriveTypeID).SingleOrDefault().DriveType1,
+                            GearShiftType = listing.Vehicle.GearShiftTypeID == null ? "" : db_gearShiftType.GearShiftType.Where(gearShiftType => gearShiftType.IDGearShiftType == listing.Vehicle.GearShiftTypeID).SingleOrDefault().GearShiftType1,
+                            Kilometers = listing.Vehicle.Kilometers,
+                            EnginePower = listing.Vehicle.EnginePower,
+                            Accessories = accessories.ToArray()
+                        },
+                        User = new ListingUserResponseModel
+                        {
+                            IDUser = listing.UserID,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Email = user.Email,
+                            Rating = user.Rating,
+                            RegistrationDate = user.RegistrationDate,
+                            ProfileImage = user.ProfileImage
+                        }
+                    };
+                
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+
+            return Ok(listingResponseModel);
+        }
+
+        [Route("api/userListings/{userID}")]
+        [ResponseType(typeof(ShortListingResponseModel))]
+        public IHttpActionResult GetListingsForUser(int userID)
+        {
+            List<ShortListingResponseModel> listingResponseModels;
+            try
+            {
+                listingResponseModels = new List<ShortListingResponseModel>();
+                foreach (Listing listing in db.Listing.Where(l => l.UserID == userID))
+                {
+                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                    listingResponseModels.Add(
+                        new ShortListingResponseModel
+                        {
+                            IDListing = listing.IDListing,
+                            Title = listing.Title,
+                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                            Price = listing.Price,
+                            PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
+                        });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+
+            return Ok(listingResponseModels);
+        }
+
+        //PUT: api/Listings/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutListing(int id, Listing listing)
         {
