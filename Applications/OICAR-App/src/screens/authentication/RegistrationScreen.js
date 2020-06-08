@@ -1,5 +1,5 @@
 import React, { memo, useReducer, useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Background from '../../components/Background';
@@ -14,6 +14,7 @@ import { theme } from '../../utils/theme';
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
+
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
@@ -62,6 +63,8 @@ const RegisterScreen = props => {
   const [showErrors, setShowErrors] = useState(false);
   const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
+
+  const notOnBrowser = Platform.OS === "web" ? false : true;
 
   const dispatch = useDispatch();
 
@@ -249,12 +252,13 @@ const RegisterScreen = props => {
           <Text style={styles.link}> Prijava</Text>
         </TouchableOpacity>
       </View>
-
-      <Loader
-          modalVisible={loadVisible}
-          animationType="fade"
-      />
-
+      {
+        loadVisible && notOnBrowser &&
+        <Loader
+            modalVisible={loadVisible}
+            animationType="fade"
+        />
+      }
     </Background>
   );
 };

@@ -1,5 +1,5 @@
 import React, { memo, useState, useReducer, useEffect, useCallback } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Background from '../../components/Background';
@@ -47,6 +47,8 @@ const LoginScreen = props => {
   const [showErrors, setShowErrors] = useState(false);
   const [loadVisible,setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
+
+  const notOnBrowser = Platform.OS === "web" ? false : true;
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -121,8 +123,9 @@ const LoginScreen = props => {
     <Background>
       <BackButton goBack={() => props.navigation.goBack()} />
 
-      <Logo />
-
+      <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
+        <Logo />
+      </View>
       <Header>Dobrodošli natrag.</Header>
 
       <Input style={styles.input}
@@ -154,14 +157,19 @@ const LoginScreen = props => {
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={_onLoginPressed} style={styles.button}>
-        Prijava
-      </Button>
+      <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
+        <Button mode="contained" onPress={_onLoginPressed} style={styles.button}>
+          Prijava
+        </Button>
+      </View>
 
-      <Loader
-        modalVisible={loadVisible}
-        animationType="fade"
-      />
+      { 
+        loadVisible && notOnBrowser &&
+        <Loader
+          modalVisible={loadVisible}
+          animationType="fade"
+        />
+      }
 
       <View style={styles.row}>
         <Text style={styles.label}>Još nemate račun? </Text>
@@ -179,14 +187,14 @@ const styles = StyleSheet.create({
   },
 
   forgotPassword: {
-    width: '80%',
+    width: Platform.OS === "web" ? "100%" : '80%',
     alignItems: 'flex-end',
     marginBottom: 24,
   },
 
   row: {
     flexDirection: 'row',
-    marginTop: 4,
+    marginTop: 4
   },
 
   label: {
