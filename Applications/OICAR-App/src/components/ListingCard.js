@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
     View,
+    TouchableOpacity,
     Text,
     StyleSheet,
     Image
@@ -11,7 +12,9 @@ import { theme } from "../utils/theme";
 const ListingCard = props => {
 
     return (
-        <View style={{  width: props.width, 
+        <TouchableOpacity
+                    style={{
+                        width: props.width,
                         height: props.height, 
                         borderWidth: 0.8,
                         borderRadius:10,
@@ -28,6 +31,7 @@ const ListingCard = props => {
                         shadowOpacity: 0.34,
                         shadowRadius: 6.27,
                         elevation: 10,
+                        marginHorizontal:props.marginHorizontal
                         }}>
 
             <View style={{  width: "100%",
@@ -62,7 +66,7 @@ const ListingCard = props => {
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
     
 }

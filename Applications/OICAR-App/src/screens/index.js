@@ -19,3 +19,4 @@ export { default as AddDateScreen } from './addListing/AddDateScreen';
 export { default as AddPicturesScreen } from './addListing/AddPicturesScreen';
 
 export { default as SearchListingsScreen } from './searchVehicles/SearchListingsScreen';
+export { default as Vehicle } from './searchVehicles/Vehicle';

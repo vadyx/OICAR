@@ -15,16 +15,19 @@ import BackButton from '../../components/BackButton';
 import ListingCard from '../../components/ListingCard';
 import * as listingsActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
+import LottieView from 'lottie-react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { ThemeColors } from 'react-navigation';
 
 const width = Math.round(Dimensions.get('window').width) -50;
 const height = 230;
 const imgsize = 140;
-const descbrandsize = "80%";
-const descpricesize = "20%";
+const descbrandsize = "70%";
+const descpricesize = "30%";
 
 const _renderListing = itemData => {
     return (
-        <ListingCard 
+        <ListingCard
             imageUri={`data:image/jpg;base64,${itemData.item.image}`}
             name={itemData.item.title}
             type="Auto"
@@ -38,6 +41,7 @@ const _renderListing = itemData => {
             imageHeight={imgsize}
             widthbrand={descbrandsize}
             widthprice={descpricesize}
+            marginHorizontal={20}
         />
     );
 };
@@ -74,13 +78,24 @@ const SearchListingsScreen = props => {
     const _renderListFooter = () => {
         if (isLoadingMore && listings.listings.length > 0) {
             return (
-                // loader component
-                <View></View>
+                <View style={styles.footerloader}>
+                    <LottieView 
+                    style={styles.lottiestyle}
+                    autoPlay 
+                    loop={false}
+                    source={require('../../assets/list_loader.json')}/>
+                </View>
             );
         } else if (listings.listings.length === 0) {
             return (
-                // button
-                <View></View>
+                <View style={styles.footerbuttoncontainer}>
+                    <TouchableOpacity style={styles.footerbutton} >
+                        <View style={styles.footerbuttoncontent}>
+                        <Text style={styles.footerbuttontext}>Više oglasa</Text>
+                        <AntDesign name="arrowdown" size={18} color={theme.colors.white} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             );
         }
 
@@ -103,6 +118,7 @@ const SearchListingsScreen = props => {
                     keyExtractor={item => item.id.toString()}
                     ListHeaderComponent={_renderListHeader}
                     ListFooterComponent={_renderListFooter}
+                    showsVerticalScrollIndicator={false}
                     onRefresh={_loadListings}
                     refreshing={isRefreshing}
                     renderItem={itemData => _renderListing(itemData)}
@@ -150,10 +166,11 @@ const styles = StyleSheet.create({
         fontSize:20,
     },
     sortfilter:{
-        marginTop:25,
+        marginTop:23,
+        marginBottom:25,
         alignSelf:"center",
         flexDirection:"row",
-        height:40,
+        height:42,
         width:"80%",
         borderRadius:30,
         borderColor:theme.colors.lightplusgrey,
@@ -189,6 +206,33 @@ const styles = StyleSheet.create({
         marginTop: 20,
         paddingTop:20,
         flexDirection:'column'
+    },
+    lottiestyle:{
+        width:50,
+        height:50
+    },
+    footerbuttoncontainer:{
+        alignItems:"center",
+        marginBottom:10
+    },
+    footerloader:{
+        alignItems:"center",
+        marginBottom:10
+
+    },
+    footerbutton:{
+        borderWidth:1,
+        borderRadius:10,
+        borderColor:theme.colors.primary,
+        backgroundColor:theme.colors.primary
+    },
+    footerbuttoncontent:{
+        margin:5,
+        padding:5,
+        alignItems:"center"
+    },
+    footerbuttontext:{
+        color:theme.colors.white
     }
 });
 
