@@ -24,14 +24,14 @@ import {
   AddDateScreen,
   AddPicturesScreen,
   SearchListingsScreen,
-  Vehicle
+  SearchListingDetailsScreen
 } from '../screens';
 
 const SearchNavigator = createStackNavigator(
   {
     Search: SearchScreen,
     Listings: SearchListingsScreen,
-    Vehicle: Vehicle
+    ListingDetails: SearchListingDetailsScreen
   },
   {
     headerMode:"none",

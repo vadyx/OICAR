@@ -17,34 +17,12 @@ import * as listingsActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
 import LottieView from 'lottie-react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { ThemeColors } from 'react-navigation';
 
 const width = Math.round(Dimensions.get('window').width) -50;
 const height = 230;
 const imgsize = 140;
 const descbrandsize = "70%";
 const descpricesize = "30%";
-
-const _renderListing = itemData => {
-    return (
-        <ListingCard
-            imageUri={`data:image/jpg;base64,${itemData.item.image}`}
-            name={itemData.item.title}
-            type="Auto"
-            price={itemData.item.price}
-            pricetime={itemData.item.pricePeriod}
-            rating={itemData.item.rating}
-            brand = {itemData.item.manufacturer}
-            model={itemData.item.model}
-            width={width}
-            height={height}
-            imageHeight={imgsize}
-            widthbrand={descbrandsize}
-            widthprice={descpricesize}
-            marginHorizontal={20}
-        />
-    );
-};
 
 const _renderListHeader = () => {
     return (
@@ -63,36 +41,75 @@ const SearchListingsScreen = props => {
     const listings = useSelector(state => state.listings);
     const dispatch = useDispatch();
 
+    const _onListingPressed = async (id) => {
+        //await dispatch(listingActions.loadSelectedListing(id));
+        props.navigation.navigate('ListingDetails');
+    }
+
     const _loadListings = useCallback(async () => {
         setIsRefreshing(true);
         await dispatch(listingsActions.loadCategoryListings());
         setIsRefreshing(false);
     }, [dispatch, setIsRefreshing]);
 
-    const _loadMoreListings = useCallback(async () => {
+    const _loadMoreListings = async () => {
         setIsLoadingMore(true);
-        await dispatch(listingsActions.load10MoreListings());
-        setIsLoadingMore(false);
-    });
+        await dispatch(listingsActions.load10MoreListings())
+        .then(setIsLoadingMore(false));
+    };
+
+    const _renderListing = itemData => {
+        return (
+            <ListingCard
+                imageUri={`data:image/jpg;base64,${itemData.item.image}`}
+                name={itemData.item.title}
+                type="Auto"
+                price={itemData.item.price}
+                pricetime={itemData.item.pricePeriod}
+                rating={itemData.item.rating}
+                brand = {itemData.item.manufacturer}
+                model={itemData.item.model}
+                onPress={() => _onListingPressed(itemData.item.id)}
+                width={width}
+                height={height}
+                imageHeight={imgsize}
+                widthbrand={descbrandsize}
+                widthprice={descpricesize}
+                marginHorizontal={20}
+            />
+        );
+    };
 
     const _renderListFooter = () => {
         if (isLoadingMore && listings.listings.length > 0) {
             return (
                 <View style={styles.footerloader}>
                     <LottieView 
-                    style={styles.lottiestyle}
-                    autoPlay 
-                    loop={false}
-                    source={require('../../assets/list_loader.json')}/>
+                        style={styles.lottiestyle}
+                        autoPlay 
+                        loop={false}
+                        source={require('../../assets/list_loader.json')}
+                    />
                 </View>
             );
-        } else if (listings.listings.length === 0) {
+        } else if (/*listings.isMore &&*/ listings.listings.length === 0) {
+            return (
+                <View style={styles.footerloader}>
+                    <LottieView 
+                        style={styles.lottiestyle}
+                        autoPlay 
+                        loop={false}
+                        source={require('../../assets/list_loader.json')}
+                    />
+                </View>
+            );
+
             return (
                 <View style={styles.footerbuttoncontainer}>
                     <TouchableOpacity style={styles.footerbutton} >
                         <View style={styles.footerbuttoncontent}>
-                        <Text style={styles.footerbuttontext}>Više oglasa</Text>
-                        <AntDesign name="arrowdown" size={18} color={theme.colors.white} />
+                            <Text style={styles.footerbuttontext}>Više oglasa</Text>
+                            <AntDesign name="arrowdown" size={18} color={theme.colors.white} />
                         </View>
                     </TouchableOpacity>
                 </View>

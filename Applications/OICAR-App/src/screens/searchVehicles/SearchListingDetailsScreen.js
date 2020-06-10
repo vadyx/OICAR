@@ -18,7 +18,8 @@ const images = [
     require('../../assets/car3.jpg'),
     require('../../assets/scooter.jpg'),
 ];
-const Vehicles = props =>{
+
+const SearchListingDetailsScreen = props =>{
     return(
         <SafeAreaView style={styles.saw}>
             <View style={styles.container}>
@@ -310,4 +311,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Vehicles;
+export default SearchListingDetailsScreen;

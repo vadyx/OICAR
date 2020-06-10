@@ -1,7 +1,11 @@
 import ShortListing from '../../models/shortListing';
+import FullListing from '../../models/fullListing';
+import Vehicle from '../../models/vehicle';
+import User from '../../models/user';
 
-export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
 export const SET_CATEGORY = "SET_CATEGORY";
+export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
+export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
 
 export const setCategory = categoryID => {
     return {
@@ -15,7 +19,7 @@ export const loadCategoryListings = () => {
 
         const categoryID = getState().listings.categoryID;
 
-        const response = await fetch(`http://192.168.1.6:12335/api/shortListings/${categoryID}`);
+        const response = await fetch(`http://192.168.1.5:12335/api/shortListings/${categoryID}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -64,5 +68,43 @@ export const load10MoreListings = () => {
             currentShown.push(...nextListings);
             availableListings.splice(0, 10);
         }
+    };
+};
+
+export const loadSelectedListing = id => {
+    return async (dispatch) => {
+
+        const response = await fetch(`http://192.168.1.5:12335/api/getListing/${id}`);
+
+        if (!response.ok) {
+            throw new Error("Listings not loaded");
+        }
+
+        const resData = await response.json();
+
+        const loadedListing = new FullListing(
+            resData.IDListing,
+            resData.Title,
+            resData.ListingDescription,
+            resData.Price,
+            resData.PriceBy,
+            resData.AvailableFromDate,
+            resData.AvailableToDate,
+            resData.LocationCoordinateX,
+            resData.locationCoordinateY,
+            resData.Images,
+            new Vehicle(
+
+            ),
+            new User(
+
+            ),
+        );
+
+        dispatch({
+            type: LOAD_CATEGORY_LISTINGS,
+            listings: loadedListings,
+            shownListings: listingsToShow
+        });
     };
 };

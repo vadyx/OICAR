@@ -4,6 +4,7 @@ const initialState = {
     categoryID: null,
     listings: [],
     shownListings: [],
+    selectedListingL: null,
     isMore: false
 };
 

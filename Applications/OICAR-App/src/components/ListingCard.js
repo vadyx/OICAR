@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
     View,
     TouchableOpacity,
@@ -13,26 +13,27 @@ const ListingCard = props => {
 
     return (
         <TouchableOpacity
-                    style={{
-                        width: props.width,
-                        height: props.height, 
-                        borderWidth: 0.8,
-                        borderRadius:10,
-                        backgroundColor:theme.colors.white,
-                        overflow:"hidden",
-                        borderColor: theme.colors.quaternary, 
-                        paddingBottom:5,
-                        marginBottom:20,
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 5,
-                        },
-                        shadowOpacity: 0.34,
-                        shadowRadius: 6.27,
-                        elevation: 10,
-                        marginHorizontal:props.marginHorizontal
-                        }}>
+            onPress={props.onPress}
+            style={{
+                width: props.width,
+                height: props.height, 
+                borderWidth: 0.8,
+                borderRadius:10,
+                backgroundColor:theme.colors.white,
+                overflow:"hidden",
+                borderColor: theme.colors.quaternary, 
+                paddingBottom:5,
+                marginBottom:20,
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 5,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+                elevation: 10,
+                marginHorizontal:props.marginHorizontal
+            }}>
 
             <View style={{  width: "100%",
                             height: props.imageHeight}}>

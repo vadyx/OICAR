@@ -4,7 +4,7 @@ export const UPLOAD_DRIVER_LICENSE = "UPLOAD_DRIVER_LICENSE";
 
 export const updateProfilePicture = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.1.6:12335/api/user/setProfileImage/${id}`,
+        const response = await fetch(`http://192.168.1.5:12335/api/user/setProfileImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
@@ -27,7 +27,7 @@ export const updateProfilePicture = (id, picture) => {
 
 export const uploadID = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.1.6:12335/api/user/setPersonalIDImage/${id}`,
+        const response = await fetch(`http://192.168.1.5:12335/api/user/setPersonalIDImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
@@ -51,7 +51,7 @@ export const uploadID = (id, picture) => {
 
 export const uploadDriverLicense = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.1.6:12335/api/user/setDriverLicenseImage/${id}`,
+        const response = await fetch(`http://192.168.1.5:12335/api/user/setDriverLicenseImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
