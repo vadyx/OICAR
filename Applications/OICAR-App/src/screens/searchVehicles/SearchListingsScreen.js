@@ -42,7 +42,7 @@ const SearchListingsScreen = props => {
     const dispatch = useDispatch();
 
     const _onListingPressed = async (id) => {
-        //await dispatch(listingActions.loadSelectedListing(id));
+        await dispatch(listingsActions.loadSelectedListing(id));
         props.navigation.navigate('ListingDetails');
     }
 
@@ -92,7 +92,7 @@ const SearchListingsScreen = props => {
                     />
                 </View>
             );
-        } else if (/*listings.isMore &&*/ listings.listings.length === 0) {
+        } else if (listings.isMore && listings.listings.length === 0) {
             return (
                 <View style={styles.footerloader}>
                     <LottieView 

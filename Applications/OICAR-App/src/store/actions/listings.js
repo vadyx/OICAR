@@ -82,6 +82,11 @@ export const loadSelectedListing = id => {
 
         const resData = await response.json();
 
+        const resImages = [];
+        for (const index in resData.Images) {
+            resImages.push(`data:image/jpg;base64,${resData.Images[index]}`);
+        }
+
         const loadedListing = new FullListing(
             resData.IDListing,
             resData.Title,
@@ -92,19 +97,34 @@ export const loadSelectedListing = id => {
             resData.AvailableToDate,
             resData.LocationCoordinateX,
             resData.locationCoordinateY,
-            resData.Images,
+            resImages,
             new Vehicle(
-
+                resData.Vehicle.Category,
+                resData.Vehicle.SubCategory,
+                resData.Vehicle.VehicleManufacturer,
+                resData.Vehicle.VehicleModel,
+                resData.Vehicle.ManufacturingYear,
+                resData.Vehicle.FuelType,
+                resData.Vehicle.DriveType,
+                resData.Vehicle.GearShiftType,
+                resData.Vehicle.Kilometers,
+                resData.Vehicle.EnginePower,
+                resData.Vehicle.Accessories,
             ),
             new User(
-
-            ),
+                resData.User.IDUser,
+                resData.User.FirstName,
+                resData.User.LastName,
+                resData.User.Email,
+                resData.User.Rating,
+                resData.User.RegistrationDate,
+                resData.User.ProfileImage,
+            )
         );
-
+        
         dispatch({
-            type: LOAD_CATEGORY_LISTINGS,
-            listings: loadedListings,
-            shownListings: listingsToShow
+            type: LOAD_SELECTED_LISTING,
+            selectedListing: loadedListing
         });
     };
 };

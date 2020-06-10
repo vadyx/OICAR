@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,10 +8,12 @@ import {
   ScrollView,
   Image
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { SliderBox } from "react-native-image-slider-box";
-import { theme } from '../../utils/theme';
+
 import BackButton from '../../components/BackButton';
+import { theme } from '../../utils/theme';
 
 const images = [
     require('../../assets/audia3.jpg'),
@@ -19,33 +21,36 @@ const images = [
     require('../../assets/scooter.jpg'),
 ];
 
-const SearchListingDetailsScreen = props =>{
-    return(
+const SearchListingDetailsScreen = props => {
+
+    const listing = useSelector(state => state.listings.selectedListing);
+
+    return (
         <SafeAreaView style={styles.saw}>
             <View style={styles.container}>
 
                 <View style={styles.headerstyle}>
                     <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-                    <Text style={styles.headertext}>Naziv oglasa</Text>
+                    <Text style={styles.headertext}>{listing.title}</Text>
                 </View>
                 <ScrollView>
                     <SliderBox
-                        images={images}
+                        images={listing.images}
                         dotColor={theme.colors.primary}
                         height={250}
                         imageLoadingColor={theme.colors.primary}    
                     />
                     <View style={styles.maininfo}>
                         <View style={styles.branadmodelbox}>
-                            <Text style={styles.textbox}>Audi</Text>
-                            <Text style={styles.textbox2}>A3</Text>
+                            <Text style={styles.textbox}>{listing.vehicle.manufacturer}</Text>
+                            <Text style={styles.textbox2}>{listing.vehicle.model}</Text>
                         </View>
                         <View style={styles.branadmodelbox}>
                             <Text style={styles.textbox}>Tip vozila</Text>
                         </View>
                         <View style={styles.branadmodelbox}>
-                            <Text style={styles.textboxprice1}>30 kn</Text>
-                            <Text style={styles.texboxprice2}>/tjedan</Text>
+                            <Text style={styles.textboxprice1}>{listing.price}</Text>
+                            <Text style={styles.texboxprice2}>/ {listing.pricePeriod}</Text>
                         </View>
                     </View>
                     <View style={styles.reservationcontainer}>
@@ -58,58 +63,53 @@ const SearchListingDetailsScreen = props =>{
                         <View style={styles.infocontent}>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Snaga Motora:</Text>
-                                <Text style={styles.textinfoboxresult}>200</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.enginePower}</Text>
                             </View>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Broj prijeđenih kilometara:</Text>
-                                <Text style={styles.textinfoboxresult}>20000</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.kms}</Text>
                             </View>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Godište:</Text>
-                                <Text style={styles.textinfoboxresult}>2016</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.year}</Text>
                             </View>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Gorivo:</Text>
-                                <Text style={styles.textinfoboxresult}>Dizel</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.fuel}</Text>
                             </View>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Tip prijenosa:</Text>
-                                <Text style={styles.textinfoboxresult}>Automatik</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.gearShift}</Text>
                             </View>
                         </View>
                         <Text style={styles.headerinfo}>Dodatne informacije:</Text>
                         <View style={styles.infocontent}>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Pogon:</Text>
-                                <Text style={styles.textinfoboxresult}>4X4</Text>
+                                <Text style={styles.textinfoboxresult}>{listing.vehicle.drive === "" ? "Nedefinirano" : listing.vehicle.drive}</Text>
                             </View>
                             <View style={styles.infoitems}>
                                 <Text style={styles.textinfobox}>Dodatna oprema:</Text>
                                 <View>
-                                    <Text style={styles.textinfoboxextra}>Sjedalica</Text>
-                                    <Text style={styles.textinfoboxextra}>Zimske gume</Text>
-                                    <Text style={styles.textinfoboxextra}>...</Text>
-                                    <Text style={styles.textinfoboxextra}>...</Text>
-                                    <Text style={styles.textinfoboxextra}>...</Text>
-                                    <Text style={styles.textinfoboxextra}>...</Text>
+                                    {listing.vehicle.accessories.length > 0 ? (
+                                        listing.vehicle.accessories.map((item, i) => 
+                                            <Text key={i} style={styles.textinfoboxextra}>
+                                                {item}
+                                            </Text>
+                                        )
+                                    ) : (
+                                        <Text style={styles.textinfoboxextra}>
+                                            Nedefinirano
+                                        </Text>
+                                    )}
                                 </View>
                             </View>
                         </View>
                         <Text style={styles.headerinfo}>Detaljan opis:</Text>
                         <View style={styles.infocontent}>
                             <View style={styles.infoitems}>
-                                <Text style={styles.textinfobox}>. It was popularised in the 1960s with the release of 
-                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
-                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                Why do we use it?It is a long established fact that a reader will be 
-                                distracted by the readable content of a page when looking at its layout.
-                                The point of using Lorem Ipsum is that it has a more-or-less normal 
-                                distribution of letters, as opposed to using 'Content here, content here', 
-                                making it look like readable English. Many desktop publishing packages 
-                                and web page editors now use Lorem Ipsum as their default model text,
-                                and a search for 'lorem ipsum' will uncover many web sites still in their 
-                                infancy. Various versions have evolved over the years, sometimes by accident,
-                                sometimes on purpose (injected humour and the like).
+                                <Text style={styles.textinfobox}>
+                                    {listing.description}
                                 </Text>
                             </View>
                         </View>
