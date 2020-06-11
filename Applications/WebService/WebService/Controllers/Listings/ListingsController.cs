@@ -73,8 +73,8 @@ namespace WebServis.Controllers.Listings
             {
                 return BadRequest(e.Message);
             }
-           
 
+            listingResponseModels.Reverse();
             return Ok(listingResponseModels);
         }
 
