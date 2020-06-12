@@ -16,7 +16,7 @@ import * as newListingActions from '../../store/actions/newListing';
 import { theme } from '../../utils/theme';
 
 const currentDate = moment().toDate();
-const nextDayDate = moment(currentDate).add(1, 'days').toDate();
+let nextDayDate = moment(currentDate).add(1, 'days').toDate();
 
 const AddDateScreen = props => {
   
@@ -70,7 +70,8 @@ const AddDateScreen = props => {
           onDateChanged={_onDateChanged}
         />
 
-      <NextScreenButton 
+      <NextScreenButton
+        disabled={startDate > endDate}
         navigate={_onNextPressed} 
       />
       

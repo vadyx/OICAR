@@ -34,11 +34,11 @@ const _renderListHeader = () => {
 };
 
 const SearchListingsScreen = props => {
+    
+    const listings = useSelector(state => state.listings);
 
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const listings = useSelector(state => state.listings);
     const dispatch = useDispatch();
 
     const _onListingPressed = async (id) => {
@@ -53,9 +53,7 @@ const SearchListingsScreen = props => {
     }, [dispatch, setIsRefreshing]);
 
     const _loadMoreListings = async () => {
-        setIsLoadingMore(true);
-        await dispatch(listingsActions.load10MoreListings())
-        .then(setIsLoadingMore(false));
+        await dispatch(listingsActions.load10MoreListings());
     };
 
     const _renderListing = itemData => {
@@ -81,42 +79,33 @@ const SearchListingsScreen = props => {
     };
 
     const _renderListFooter = () => {
-        if (isLoadingMore && listings.listings.length > 0) {
-            return (
-                <View style={styles.footerloader}>
-                    <LottieView 
-                        style={styles.lottiestyle}
-                        autoPlay 
-                        loop={false}
-                        source={require('../../assets/list_loader.json')}
-                    />
-                </View>
-            );
-        } else if (listings.isMore && listings.listings.length === 0) {
-            return (
-                <View style={styles.footerloader}>
-                    <LottieView 
-                        style={styles.lottiestyle}
-                        autoPlay 
-                        loop={false}
-                        source={require('../../assets/list_loader.json')}
-                    />
-                </View>
-            );
-
-            return (
-                <View style={styles.footerbuttoncontainer}>
-                    <TouchableOpacity style={styles.footerbutton} >
-                        <View style={styles.footerbuttoncontent}>
-                            <Text style={styles.footerbuttontext}>Više oglasa</Text>
-                            <AntDesign name="arrowdown" size={18} color={theme.colors.white} />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            );
+        if (listings.listings.length === 0) {
+            if (listings.isMore) {
+                return (
+                    <View style={styles.footerbuttoncontainer}>
+                        <TouchableOpacity style={styles.footerbutton} >
+                            <View style={styles.footerbuttoncontent}>
+                                <Text style={styles.footerbuttontext}>Više oglasa</Text>
+                                <AntDesign name="arrowdown" size={18} color={theme.colors.white} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                );
+            } else {
+                return null;
+            }
         }
 
-        return null;
+        return (
+            <View style={styles.footerloader}>
+                <LottieView 
+                    style={styles.lottiestyle}
+                    autoPlay 
+                    loop={true}
+                    source={require('../../assets/list_loader.json')}
+                />
+            </View>
+        );
     };
 
     useEffect(() => {
