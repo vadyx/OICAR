@@ -3,16 +3,23 @@ import FullListing from '../../models/fullListing';
 import Vehicle from '../../models/vehicle';
 import User from '../../models/user';
 
+export const CLEAR_LIST = "CLEAR_LIST";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
 export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
+
+export const clearPreviousList = () => {
+    return {
+        type: CLEAR_LIST
+    };
+};
 
 export const setCategory = categoryID => {
     return {
         type: SET_CATEGORY,
         categoryID: categoryID
     };
-}
+};
 
 export const loadCategoryListings = () => {
     return async (dispatch, getState) => {

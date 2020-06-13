@@ -34,6 +34,7 @@ const SearchContainer = props => {
   };
 
   const _onNextPressed = async () => {
+    await dispatch(listingsActions.clearPreviousList());
     await dispatch(listingsActions.setCategory(selectedCategory));
     props.navigation.navigate('Listings');
   }

@@ -1,4 +1,4 @@
-import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING } from "../actions/listings";
+import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING, CLEAR_LIST } from "../actions/listings";
 
 const initialState = {
     categoryID: null,
@@ -10,6 +10,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch(action.type) {
+        case CLEAR_LIST:
+            return initialState;
         case SET_CATEGORY:
             return {
                 ...state,

@@ -37,6 +37,11 @@ const AddBrandScreen = props => {
   
   const dispatch = useDispatch();
 
+  const _onManufacturerChanged = value => {
+    setSelectedManufacturer(value);
+    setSelectedModel(null);
+  }
+
   const _onNextPressed = async () => {
     dispatch(newListingActions.setManufacturerAndModel(selectedManufacturer, selectedModel));
     props.navigation.navigate('AddTitle');
@@ -85,7 +90,7 @@ const AddBrandScreen = props => {
               value: null,
               color:theme.colors.lightgrey
             }}
-            onValueChange={(value) => setSelectedManufacturer(value)}
+            onValueChange={(value) => _onManufacturerChanged(value)}
             items={manufacturer_dropdown_data}
             style={{
               placeholder: {
@@ -110,6 +115,7 @@ const AddBrandScreen = props => {
               value: null,
               color: theme.colors.lightgrey
             }}
+            value={selectedModel}
             onValueChange={(value) => setSelectedModel(value)}
             items={model_dropdown_data}
             disabled={selectedManufacturer === null}

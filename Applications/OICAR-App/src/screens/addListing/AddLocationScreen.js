@@ -21,14 +21,12 @@ import { Button } from 'react-native-paper';
 const AddLocationScreen = props => {
 
     const _onNextPressed = () => {
-
-        props.navigation.navigate('AddPictures');
-        };
+      props.navigation.navigate('AddPictures');
+    };
 
     const _onPressed = () => {
-
-        props.navigation.navigate('AddMap');
-        };
+      props.navigation.navigate('AddMap');
+    };
 
   return (
     <View style={styles.container}>
@@ -49,9 +47,10 @@ const AddLocationScreen = props => {
         </NextScreenButton>
 
 
-      <NextScreenButton 
-        disabled
-        navigate={_onNextPressed} />
+        <NextScreenButton 
+          disabled
+          navigate={_onNextPressed} 
+        />
 
     </View>
   );
