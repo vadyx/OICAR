@@ -32,12 +32,14 @@ const AddListingScreen = props => {
     <View style={styles.container}>
     <Text style={styles.headerstyle}>Želite iznajmiti svoje vozilo?</Text>
     <Text style={styles.paragraphstyle}>Kliknite na gumb te kroz nekoliko kratkih koraka iznajmite svoje vozilo već sada</Text>
-    <FontAwesome name="hand-o-down" size={180} color={theme.colors.lightgrey} style={styles.iconstyle1} />
+    <View style={styles.lblstyle}>
+    <FontAwesome name="hand-o-down" size={200} color={theme.colors.lightgrey} style={styles.iconstyle1} />
     <TouchableOpacity
       style={styles.buttonContainer}
       onPress={() => props.navigation.navigate('AddCategory')}>
       <Text style={styles.buttonText}>Iznajmi vozilo</Text>
     </TouchableOpacity>
+    </View>
   </View>
   );
 }
@@ -51,7 +53,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems:"center",
-    backgroundColor: theme.colors.white
+    backgroundColor: theme.colors.white,
+    paddingTop:20
 },
 headerstyle: {
     fontSize: 40,
@@ -82,6 +85,12 @@ buttonText: {
 iconstyle1:{
     marginHorizontal:60,
     marginVertical:40
+},
+lblstyle:{
+  flex:1,
+  marginTop:-60,
+  justifyContent:"center",
+  alignItems:"center"
 }
 });
 

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   
   iconstyle:{
     alignSelf:"center",
-    width:140,
+    width:"40%",
     height:140
   },
   container: {
@@ -89,9 +89,10 @@ const styles = StyleSheet.create({
     marginTop:30
   },
   headerstyle: {
+    textAlign:"center",
       fontSize: 30,
       fontWeight: '700',
-      width:185,
+      width:"55%",
       marginLeft: 10,
       marginTop:10,
       marginBottom:5

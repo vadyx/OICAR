@@ -120,7 +120,7 @@ const LoginScreen = props => {
   }, [isLoggedIn]);
 
   return (
-    <Background>
+    <Background style={styles.container}>
       <BackButton goBack={() => props.navigation.goBack()} />
 
       <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
@@ -182,6 +182,9 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  container:{
+    justifyContent:"center"
+  },
   button:{
     width:"40%"
   },

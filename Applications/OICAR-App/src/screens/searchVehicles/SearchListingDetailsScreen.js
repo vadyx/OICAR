@@ -49,7 +49,7 @@ const SearchListingDetailsScreen = props => {
                             <Text style={styles.textbox}>Tip vozila</Text>
                         </View>
                         <View style={styles.branadmodelbox}>
-                            <Text style={styles.textboxprice1}>{listing.price}</Text>
+                            <Text style={styles.textboxprice1}>{listing.price} kn</Text>
                             <Text style={styles.texboxprice2}>/ {listing.pricePeriod}</Text>
                         </View>
                     </View>
@@ -171,6 +171,9 @@ const styles = StyleSheet.create({
         flexDirection:"row"
     },
     branadmodelbox:{
+        backgroundColor:theme.colors.white,
+        borderRadius:20,
+        borderWidth:0.1,
         marginHorizontal:10,
         width:"28%",
         padding:10,
@@ -227,6 +230,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
+        backgroundColor:theme.colors.white,
+        borderWidth:0.1
     },
     infocontentmap:{
         marginLeft:15,
@@ -306,7 +311,8 @@ const styles = StyleSheet.create({
         alignSelf:"center",
         margin:10,
         width:250,
-        height:200
+        height:200,
+        borderRadius:20
     }
 
 });

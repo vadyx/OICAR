@@ -168,8 +168,7 @@ const styles = StyleSheet.create({
   },
   
   input: {
-    backgroundColor: theme.colors.surface,
-    height: 42
+    backgroundColor: theme.colors.surface
   },
 
   error: {

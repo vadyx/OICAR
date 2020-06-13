@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
         marginTop:30
     },
     notloggedinstyle:{
-        marginTop:26
+        marginTop:0
     },
     imagepickertextsuccess:{
         color:theme.colors.success,

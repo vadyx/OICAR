@@ -34,7 +34,7 @@ const NotLoggedInView = ({children,...props}) => {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        paddingTop: 80,
+        justifyContent:"center",
         backgroundColor:theme.colors.white,
     },
     submit:{

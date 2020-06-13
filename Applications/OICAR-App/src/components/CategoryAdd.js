@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   tostyle:{
     borderRadius:5,
     shadowColor: "#000",
+    borderWidth:0.1,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
     shadowRadius: 1.00,
     elevation: 1,
     height:50,
-    alignItems:"center"
+    alignItems:"center",
+    backgroundColor:theme.colors.white
   },
   txtstyle:{
     marginVertical:10,

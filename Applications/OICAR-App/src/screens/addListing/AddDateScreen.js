@@ -45,7 +45,7 @@ const AddDateScreen = props => {
 
   const _onNextPressed = () => {
     dispatch(newListingActions.setDates(startDate, endDate));
-    props.navigation.navigate('AddPictures');
+    props.navigation.navigate('AddLocation');
   };
 
   return (
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     marginTop:getStatusBarHeight(),
-    justifyContent:"flex-start",
+    justifyContent:"center",
     alignItems:"center",
     backgroundColor:theme.colors.white
   },
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize:32,
     fontWeight:"700",
     paddingBottom:60,
-    marginTop:100
+    marginTop:-80
 
   },
   backandexit:{

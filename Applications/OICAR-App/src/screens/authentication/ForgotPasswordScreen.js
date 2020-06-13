@@ -1,5 +1,5 @@
 import React, { memo, useState} from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { emailValidator } from '../../utils/validation';
 
@@ -27,10 +27,10 @@ const ForgotPasswordScreen = props => {
   };
 
   return (
-    <Background>
+    <View style={styles.container}>
       <BackButton goBack={() => props.navigation.goBack()} />
 
-      <Logo />
+      <Logo style={styles.logo} />
 
       <Header>Oporavak računa</Header>
 
@@ -58,12 +58,16 @@ const ForgotPasswordScreen = props => {
       >
         <Text style={styles.label}>← Povratak na prijavu</Text>
       </TouchableOpacity>
-    </Background>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
+  container:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  },
   back: {
     width: '90%',
     marginTop: 12,
@@ -71,12 +75,17 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 12,
-    width:'83%'
+    width:'85%',
   },
 
   label: {
     color: theme.colors.secondary
+  },
+  logo:{
+    width:200,
+    height:200
   }
+  
 
 });
 

@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 24,
+    width:"60%"
   },
 
   row: {
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
-  }
+  },
 });
 
 export default memo(RegisterScreen);

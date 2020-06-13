@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 const width = Math.round(Dimensions.get('window').width) -50;
-const height = 230;
+const height = 235;
 const imgsize = 140;
 const descbrandsize = "70%";
 const descpricesize = "30%";
@@ -100,8 +100,8 @@ const SearchListingsScreen = props => {
             <View style={styles.footerloader}>
                 <LottieView 
                     style={styles.lottiestyle}
-                    autoPlay 
                     loop={true}
+                    autoPlay
                     source={require('../../assets/list_loader.json')}
                 />
             </View>

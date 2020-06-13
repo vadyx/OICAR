@@ -126,7 +126,7 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <ListingCard width={152}
+                  <ListingCard width={168}
                     height={210}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
@@ -140,7 +140,7 @@ const ExploreScreen = props => {
                     model="1"
                   />
                   
-                  <ListingCard width={152}
+                  <ListingCard width={168}
                     height={210}
                     name="Audi A3 TOP"
                     type="Automobil"
@@ -154,7 +154,46 @@ const ExploreScreen = props => {
                     model="A3"
                   />
 
-                  <ListingCard width={152}
+                  <ListingCard width={168}
+                    height={210}
+                    name="Fiat Punto"
+                    type="Automobil"
+                    price={30}
+                    rating={4.5}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="sat"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Fiat"
+                    model="Punto"
+                  />
+                  <ListingCard width={168}
+                    height={210}
+                    name="Fiat Punto"
+                    type="Automobil"
+                    price={30}
+                    rating={4.5}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="sat"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Fiat"
+                    model="Punto"
+                  />
+                  <ListingCard width={168}
+                    height={210}
+                    name="Fiat Punto"
+                    type="Automobil"
+                    price={30}
+                    rating={4.5}
+                    imageHeight={Platform.OS === "web" ? 200 : 110}
+                    pricetime="sat"
+                    widthbrand="50%"
+                    widthprice="50%"
+                    brand = "Fiat"
+                    model="Punto"
+                  />
+                  <ListingCard width={168}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"

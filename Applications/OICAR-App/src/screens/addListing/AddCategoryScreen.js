@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems:"center",
+    justifyContent:"center",
     backgroundColor: theme.colors.white
   },
   headerstyle: {
-    fontSize: 32,
-    marginTop:80,
+    fontSize: 34,
     fontWeight: '700',
   },
   buttonText: {

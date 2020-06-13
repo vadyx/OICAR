@@ -51,7 +51,6 @@ const AddPriceScreen = props => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollview}>
         <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
         <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
 
@@ -83,7 +82,6 @@ const AddPriceScreen = props => {
           </View>
         </View>
 
-      </ScrollView>
 
       <NextScreenButton 
         disabled={price === null}
@@ -96,15 +94,14 @@ const AddPriceScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent:"center",
+    alignItems:"center",
     marginTop:getStatusBarHeight(),
     backgroundColor: theme.colors.white
   },
-  scrollview:{
-      flex:1
-  },
   contentstyle:{
     width:"80%",
-    marginTop:130,
+    marginTop:-80,
     alignSelf:"center"
   },
   headerstyle: {
@@ -116,7 +113,7 @@ const styles = StyleSheet.create({
   input:{
       alignSelf:"center",
       width:"40%",
-      height:50
+    
   },
   backandexit:{
     marginTop:-getStatusBarHeight()

@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   text: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '900',
+    fontSize: 15,
     lineHeight: 26,
   },
 });

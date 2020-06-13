@@ -1,16 +1,17 @@
 import React, { memo } from 'react';
 import {
-  StyleSheet
+  StyleSheet, View
 } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
+import { theme } from '../../utils/theme';
 
 const AuthScreen = props => (
-  <Background style={styles.container}>
-    <Logo/>
-    <Header>OICAR</Header>
+  <View style={styles.container}>
+    <Logo style={styles.logo}/>
+    <Header style={styles.header}>OICAR</Header>
 
     <Button mode="contained" onPress={() => props.navigation.navigate('Login')}>
       Prijava
@@ -21,15 +22,24 @@ const AuthScreen = props => (
     >
       Registracija
     </Button>
-  </Background>
+  </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:130,
+    flex:1,
+    backgroundColor:theme.colors.white,
     alignItems: 'center',
     justifyContent: 'center',
     
+  },
+  header:{
+    fontSize:40,
+    fontWeight:"500"
+  },
+  logo:{
+    width:200,
+    height:200
   }
 });
 

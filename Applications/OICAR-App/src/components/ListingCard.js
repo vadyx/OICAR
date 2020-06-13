@@ -76,9 +76,8 @@ const styles = StyleSheet.create({
 
     description_container:{
         alignItems: 'flex-start',
-        justifyContent: 'space-evenly',
         paddingLeft: 10,
-        paddingTop:2,
+        paddingTop:2
     },
     imagestyle:{
         flex: 1,
