@@ -62,7 +62,7 @@ const AddPicturesScreen = props => {
 
   return (
     <View style={styles.container}>
-        <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+        <BackButton style={styles.backandexit} goBack={() => props.navigation.navigate('AddLocation')} />
         <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
         <Text style={styles.headerstyle}>Slike vozila</Text>
         <View style={styles.pictureboxcontainer}>

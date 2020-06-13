@@ -25,6 +25,11 @@ const AddLocationScreen = props => {
         props.navigation.navigate('AddPictures');
         };
 
+    const _onPressed = () => {
+
+        props.navigation.navigate('AddMap');
+        };
+
   return (
     <View style={styles.container}>
         <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
@@ -39,7 +44,7 @@ const AddLocationScreen = props => {
         */}
         <NextScreenButton 
           style={styles.nsbstyle} 
-          navigate={_onNextPressed}>
+          navigate={_onPressed}>
           <Text style={styles.nsbtextstyle}>Odaberite na mapi</Text>
         </NextScreenButton>
 

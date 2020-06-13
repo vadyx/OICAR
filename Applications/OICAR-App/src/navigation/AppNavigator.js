@@ -23,6 +23,7 @@ import {
   AddPriceScreen,
   AddDateScreen,
   AddLocationScreen,
+  AddMapScreen,
   AddPicturesScreen,
   SearchListingsScreen,
   SearchListingDetailsScreen
@@ -134,6 +135,7 @@ const AddNavigator = createStackNavigator(
     AddPrice: AddPriceScreen,
     AddDate: AddDateScreen,
     AddLocation: AddLocationScreen,
+    AddMap:AddMapScreen,
     AddPictures: AddPicturesScreen    
   },
 
