@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,17 +13,30 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { SliderBox } from "react-native-image-slider-box";
 
 import BackButton from '../../components/BackButton';
+import * as maps from '../../utils/mapsApi';
 import { theme } from '../../utils/theme';
-
-const images = [
-    require('../../assets/audia3.jpg'),
-    require('../../assets/car3.jpg'),
-    require('../../assets/scooter.jpg'),
-];
 
 const SearchListingDetailsScreen = props => {
 
     const listing = useSelector(state => state.listings.selectedListing);
+
+    const [mapPreview, setMapPreview] = useState(null);
+    const [address, setAddress] = useState(null);
+
+    const _loadMapPreview = useCallback(async () => {
+        const imagePreviewUrl = await maps.fetchStaticMap(listing.coordinates.lat, listing.coordinates.lng);
+        setMapPreview(imagePreviewUrl);
+    }, [setMapPreview]);
+    
+    const _fetchAddress = useCallback(async () => {
+        const formattedAddr = await maps.fetchGeolocation(listing.coordinates.lat, listing.coordinates.lng);
+        setAddress(formattedAddr);
+    }, [setAddress]);
+
+    useEffect(() => {
+        _loadMapPreview();
+        _fetchAddress();
+    }, [_loadMapPreview, _fetchAddress]);
 
     return (
         <SafeAreaView style={styles.saw}>
@@ -46,7 +59,7 @@ const SearchListingDetailsScreen = props => {
                             <Text style={styles.textbox2}>{listing.vehicle.model}</Text>
                         </View>
                         <View style={styles.branadmodelbox}>
-                            <Text style={styles.textbox}>Tip vozila</Text>
+                            <Text style={styles.textbox}>{listing.vehicle.subcategory}</Text>
                         </View>
                         <View style={styles.branadmodelbox}>
                             <Text style={styles.textboxprice1}>{listing.price} kn</Text>
@@ -116,13 +129,21 @@ const SearchListingDetailsScreen = props => {
                         <Text style={styles.headerinfo}>Lokacija:</Text>
                         <View style={styles.infocontentmap}>
                             <View style={styles.infoitemsmap}>
+                            {address !== null &&
                                 <View>
-                                    <Text style={styles.textinfoboxresultmap}>Ilica 242</Text>
-                                    <Text style={styles.textinfoboxresultmap}>10000, Zagreb</Text>
-                                    <Text style={styles.textinfoboxresultmap}>Hrvatska</Text>
+                                    <Text style={styles.textinfoboxresultmap}>{address.street}</Text>
+                                    <Text style={styles.textinfoboxresultmap}>{address.city}</Text>
+                                    <Text style={styles.textinfoboxresultmap}>{address.country}</Text>
                                 </View>
+                            }
                             </View>
-                            <Image style={styles.map} source={require('../../assets/map.png')}></Image>
+
+                            {mapPreview !== null && 
+                                <Image 
+                                    style={styles.map} 
+                                    source={{ uri: mapPreview }} 
+                                />
+                            }
                         </View>
                     </View>
                 </ScrollView>

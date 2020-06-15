@@ -7,8 +7,10 @@ class FullListing {
         this.pricePeriod = pricePeriod,
         this.startDate = startDate,
         this.endDate = endDate,
-        this.coordX = coordX,
-        this.coordY = coordY,
+        this.coordinates = {
+            lat: coordX,
+            lng: coordY
+        }
         this.images = images,
         this.vehicle = vehicle,
         this.user = user

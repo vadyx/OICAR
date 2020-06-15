@@ -103,7 +103,7 @@ export const loadSelectedListing = id => {
             resData.AvailableFromDate,
             resData.AvailableToDate,
             resData.LocationCoordinateX,
-            resData.locationCoordinateY,
+            resData.LocationCoordinateY,
             resImages,
             new Vehicle(
                 resData.Vehicle.Category,
@@ -128,7 +128,7 @@ export const loadSelectedListing = id => {
                 resData.User.ProfileImage,
             )
         );
-        
+
         dispatch({
             type: LOAD_SELECTED_LISTING,
             selectedListing: loadedListing

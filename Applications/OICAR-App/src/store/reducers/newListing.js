@@ -8,7 +8,8 @@ import {
     SET_PRICE,
     SET_DATES,
     SET_IMAGES,
-    CONFIRM_LISTING
+    CONFIRM_LISTING,
+    SET_COORDINATES
 } from '../actions/newListing';
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
     pricePeriodID: null,
     startDate: null,
     endDate: null,
+    coordinates: null,
     images: null
 };
 
@@ -78,6 +80,11 @@ export default (state = initialState, action) => {
                 ...state,
                 startDate: action.startDate,
                 endDate: action.endDate
+            };
+        case SET_COORDINATES:
+            return {
+                ...state,
+                coordinates: action.coordinates
             };
         case SET_IMAGES:
             return {

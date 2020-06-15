@@ -1,54 +1,117 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
-  Picker,
   StyleSheet,
   Image
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useSelector, useDispatch } from 'react-redux';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import { useSelector } from 'react-redux';
 
 import BackButton from '../../components/BackButton';
 import ExitButton from '../../components/ExitButton';
-import Input from '../../components/Input';
 import NextScreenButton from '../../components/NextScreenButton';
-import * as newListingActions from '../../store/actions/newListing';
 import { theme } from '../../utils/theme';
-import { Button } from 'react-native-paper';
+import * as maps from '../../utils/mapsApi';
+import ENV from '../../../env';
 
 const AddLocationScreen = props => {
 
-    const _onNextPressed = () => {
-      props.navigation.navigate('AddPictures');
-    };
+  const selectedLocation = useSelector(state => state.newListing.coordinates);;
+  
+  const [mapPreview, setMapPreview] = useState(null);
+  const [address, setAddress] = useState(null);
 
-    const _onPressed = () => {
-      props.navigation.navigate('AddMap');
-    };
+  const _verifyPermissions = async () => {
+    const result = await Permissions.askAsync(Permissions.LOCATION);
+    return result.status === "granted";
+  };
+
+  let userLocation;
+  const _onOpeningMap =  async () => {
+    const hasPermission = await _verifyPermissions();
+
+    if (hasPermission) {
+      try {
+        const currentPos = await Location.getCurrentPositionAsync({
+          timeout: 5000,
+          enableHighAccuracy: true
+        });
+  
+        userLocation = {
+          lat: currentPos.coords.latitude,
+          lng: currentPos.coords.longitude,
+        };
+
+      } catch (error) {
+        // error handling
+      }
+    }
+
+    props.navigation.navigate('AddMap', { startingLocation: userLocation} );
+  };
+
+  const _loadMapPreview = useCallback(async () => {
+    if (selectedLocation !== null) {
+      const imagePreviewUrl = await maps.fetchStaticMap(selectedLocation.lat, selectedLocation.lng);
+      setMapPreview(imagePreviewUrl);
+    }
+  }, [setMapPreview]);
+
+  const _fetchAddress = useCallback(async () => {
+    if (selectedLocation !== null) {
+      const formattedAddr = await maps.fetchGeolocation(selectedLocation.lat, selectedLocation.lng);
+      setAddress(formattedAddr);
+    }
+  }, [setAddress]);
+
+  const _onNextPressed = () => {
+    props.navigation.navigate('AddPictures');
+  };
+
+  useEffect(() => {
+      _loadMapPreview();
+      _fetchAddress();
+  }, [_loadMapPreview, _fetchAddress]);
 
   return (
     <View style={styles.container}>
         <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
         <ExitButton style={styles.backandexit} goBack={() => props.navigation.navigate('Add')} />
         <Text style={styles.headerstyle}>Lokacija vozila</Text>
-        <Image source={require('../../assets/mapimg.png')} style={styles.img}></Image>
-        {/*<View style={styles.descriptionbox}>
-            <Text style={styles.descriptiontext}>Ilica 242</Text>
-            <Text style={styles.descriptiontext}>10000, Zagreb</Text>
-            <Text style={styles.descriptiontext}>Hrvatska</Text>
-        </View>
-        */}
+        {mapPreview !== null ? 
+          (
+            <Image
+              style={styles.img}
+              source={{ uri: mapPreview }}
+            />
+          ) : (
+            <Image 
+              style={styles.img} 
+              source={require('../../assets/mapimg.png')} 
+            />
+          )
+        }
+        
+        {address !== null && 
+          <View style={styles.descriptionbox}>
+            <Text style={styles.descriptiontext}>{address.street}</Text>
+            <Text style={styles.descriptiontext}>{address.city}</Text>
+            <Text style={styles.descriptiontext}>{address.country}</Text>
+          </View>
+        }
+
         <NextScreenButton 
           style={styles.nsbstyle} 
-          navigate={_onPressed}>
+          navigate={_onOpeningMap}>
           <Text style={styles.nsbtextstyle}>Odaberite na mapi</Text>
         </NextScreenButton>
 
 
         <NextScreenButton 
-          disabled
+          disabled={mapPreview === null || address === null}
           navigate={_onNextPressed} 
         />
 

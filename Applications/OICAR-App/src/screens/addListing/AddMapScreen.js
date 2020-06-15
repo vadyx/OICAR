@@ -1,72 +1,110 @@
-import React,{useState} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
-  Picker,
   StyleSheet,
   Image
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
+import MapView, { Marker } from 'react-native-maps';
 
 import BackButton from '../../components/BackButton';
-import ExitButton from '../../components/ExitButton';
-import Input from '../../components/Input';
 import NextScreenButton from '../../components/NextScreenButton';
 import * as newListingActions from '../../store/actions/newListing';
 import { theme } from '../../utils/theme';
 
+const defaultLocation = {
+  lat: 45.813170,
+  lng: 15.977279
+};
 
 const AddMapScreen = props => {
+  
+  const startingLocation = props.navigation.getParam('startingLocation');
+  
+  const [selectedLocation, setSelectedLocation] = useState(startingLocation);
 
-  const _onNextPressed = () => {
+  const dispatch = useDispatch();
+
+  const mapRegion = {
+    latitude: startingLocation ? startingLocation.lat : defaultLocation.lat,
+    longitude: startingLocation ? startingLocation.lng : defaultLocation.lng,
+    latitudeDelta: 0.0230,
+    longitudeDelta: 0.0105
+  };
+
+  let markerCoordinates;
+  if (selectedLocation) {
+    markerCoordinates = {
+      latitude: selectedLocation.lat,
+      longitude: selectedLocation.lng
+    };
+  }
+
+  const _onSelectedLocation = event => {
+    setSelectedLocation({
+      lat: event.nativeEvent.coordinate.latitude,
+      lng: event.nativeEvent.coordinate.longitude
+    });
+  };
+
+  const _onNextPressed = async () => {
+    await dispatch(newListingActions.setCoordinates(selectedLocation));
     props.navigation.navigate('AddLocation');
   };
 
   return (
     <View style={styles.container}>
         
-        <View style={{}}>
-        <Image source={require('../../assets/googlemap.png')} style={styles.map}/>
-        </View>
-        <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-        <NextScreenButton 
-          style={styles.nsbstyle} 
-          disabled
-          navigate={_onNextPressed}>
-          <Text style={styles.nsbtextstyle}>Potvrdi</Text>
-        </NextScreenButton>
+      <MapView
+        style={styles.map}
+        initialRegion={mapRegion}
+        onPress={_onSelectedLocation}>
+        {markerCoordinates &&
+          <Marker
+          title='Odabrana lokacija'
+          coordinate={markerCoordinates}>
+          </Marker>
+        }
+      </MapView>
+
+      <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+      
+      <NextScreenButton 
+        style={styles.nsbstyle} 
+        navigate={_onNextPressed}>
+        <Text style={styles.nsbtextstyle}>Potvrdi</Text>
+      </NextScreenButton> 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        marginTop:getStatusBarHeight(),
-        backgroundColor:theme.colors.white
+  container:{
+      flex:1,
+      marginTop:getStatusBarHeight(),
+      backgroundColor:theme.colors.white
+  },
+  backandexit:{
+      marginTop:-getStatusBarHeight()
+  },
+  map:{
+    flex: 1
+  },
+  nsbstyle:{
+      height:50,
+      width:150,
+      position:"absolute",
+      paddingLeft:20,
+      flexDirection:"row"
     },
-    backandexit:{
-        marginTop:-getStatusBarHeight()
-    },
-    map:{
-     width:"100%",
-     height:"100%"
-    },
-    nsbstyle:{
-        height:50,
-        width:150,
-        position:"absolute",
-        paddingLeft:20,
-        flexDirection:"row"
-      },
-      nsbtextstyle:{
-        fontSize:20,
-        paddingBottom:5,
-        fontWeight:"600",
-        color:theme.colors.white
-      },
+  nsbtextstyle:{
+    fontSize:20,
+    paddingBottom:5,
+    fontWeight:"600",
+    color:theme.colors.white
+  },
 });
 
 export default AddMapScreen;

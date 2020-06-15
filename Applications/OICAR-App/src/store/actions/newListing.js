@@ -5,6 +5,7 @@ export const SET_BASIC_INFO = "SET_BASIC_INFO";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SET_PRICE = "SET_PRICE";
 export const SET_DATES = "SET_DATES";
+export const SET_COORDINATES = "SET_COORDINATES";
 export const SET_IMAGES = "SET_IMAGES";
 export const CONFIRM_LISTING = "CONFIRM_LISTING";
 export const NEW_LISTING_CLOSE = "NEW_LISTING_CLOSE";
@@ -68,6 +69,13 @@ export const setDates = (startDate, endDate) => {
     };
 };
 
+export const setCoordinates = (coordinates) => {
+    return {
+        type: SET_COORDINATES,
+        coordinates: coordinates
+    };
+};
+
 export const setImages = images => {
     return {
         type: SET_IMAGES,
@@ -94,8 +102,8 @@ export const confirmListing = () => {
                     PriceByID: newListingData.pricePeriodID,
                     AvailableFromDate: newListingData.startDate,
                     AvailableToDate: newListingData.endDate,
-                    LocationCoordinateX: null,
-                    LocationCoordinateY: null,
+                    LocationCoordinateX: newListingData.coordinates.lat,
+                    LocationCoordinateY: newListingData.coordinates.lng,
                     UserID: userID,
                     Images: newListingData.images,
                     Vehicle: {
