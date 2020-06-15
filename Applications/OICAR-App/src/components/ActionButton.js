@@ -49,6 +49,7 @@ const ActionButton = props => {
       actions={actions}
       color={theme.colors.lightgrey}
       overlayColor={"rgba(250,250,250,0.7)"}
+      buttonSize={56}
       onPressItem={name => {
         console.log(`selected button: ${name}`);
       }}/>
@@ -56,7 +57,6 @@ const ActionButton = props => {
 }
 
 const styles = StyleSheet.create({
-
 });
 
 export default ActionButton;

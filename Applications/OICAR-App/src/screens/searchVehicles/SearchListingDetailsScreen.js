@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -36,7 +37,7 @@ const SearchListingDetailsScreen = props => {
                 <ScrollView>
                     <SliderBox
                         images={listing.images}
-                        dotColor={theme.colors.primary}
+                        dotColor={theme.colors.darkgray}
                         height={250}
                         imageLoadingColor={theme.colors.primary}    
                     />
@@ -89,16 +90,16 @@ const SearchListingDetailsScreen = props => {
                                 <Text style={styles.textinfoboxresult}>{listing.vehicle.drive === "" ? "Nedefinirano" : listing.vehicle.drive}</Text>
                             </View>
                             <View style={styles.infoitems}>
-                                <Text style={styles.textinfobox}>Dodatna oprema:</Text>
+                                <Text style={styles.textinfobox}>Dodatna oprema</Text>
                                 <View>
                                     {listing.vehicle.accessories.length > 0 ? (
                                         listing.vehicle.accessories.map((item, i) => 
-                                            <Text key={i} style={styles.textinfoboxextra}>
-                                                {item}
+                                            <Text key={i} style={styles.textinfoboxresult}>
+                                                 -  {item}
                                             </Text>
                                         )
                                     ) : (
-                                        <Text style={styles.textinfoboxextra}>
+                                        <Text style={styles.textinfoboxresult}>
                                             Nedefinirano
                                         </Text>
                                     )}
@@ -116,13 +117,13 @@ const SearchListingDetailsScreen = props => {
                         <Text style={styles.headerinfo}>Lokacija:</Text>
                         <View style={styles.infocontentmap}>
                             <View style={styles.infoitemsmap}>
-                                <View>
+                                <Image style={styles.map} source={require('../../assets/map.png')}></Image>
+                                <View style={styles.locationtext}>
                                     <Text style={styles.textinfoboxresultmap}>Ilica 242</Text>
                                     <Text style={styles.textinfoboxresultmap}>10000, Zagreb</Text>
                                     <Text style={styles.textinfoboxresultmap}>Hrvatska</Text>
                                 </View>
                             </View>
-                            <Image style={styles.map} source={require('../../assets/map.png')}></Image>
                         </View>
                     </View>
                 </ScrollView>
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     },
     maininfo:{
         marginTop:15,
-        marginLeft:5,
+        justifyContent:"center",
         flexDirection:"row"
     },
     branadmodelbox:{
@@ -191,18 +192,18 @@ const styles = StyleSheet.create({
     },
     textbox:{
         textAlign:"center",
-        fontSize:18,
-        fontWeight:"600"
+        fontSize:19,
+        fontWeight:"700"
     },
     textbox2:{
         textAlign:"center",
-        fontSize:15,
+        fontSize:16,
         fontWeight:"500"
     },
     textboxprice1:{
         textAlign:"center",
-        fontSize:18,
-        fontWeight:"600",
+        fontSize:17,
+        fontWeight:"700",
         color:theme.colors.primary,
     },
     texboxprice2:{
@@ -214,14 +215,13 @@ const styles = StyleSheet.create({
     infocontainer:{
         marginTop:5,
         marginBottom:20,
-        marginLeft:10,
-        alignSelf:"flex-start",
+        justifyContent:"center",
+        alignSelf:"center",
     },
     infocontent:{
-        marginLeft:15,
-        marginRight:20,
+        width:Dimensions.get('window').width - 40,
         padding:5,
-        borderWidth:0,
+        borderRadius:20,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -231,12 +231,9 @@ const styles = StyleSheet.create({
         shadowRadius: 2.22,
         elevation: 3,
         backgroundColor:theme.colors.white,
-        borderWidth:0.1
     },
     infocontentmap:{
-        marginLeft:15,
-        marginRight:20,
-        padding:5,
+        marginRight:10
     },
     infoitems:{
         padding:10,
@@ -271,19 +268,20 @@ const styles = StyleSheet.create({
     textinfoboxresultmap:{
         textAlign:"center",
         paddingLeft:7,
-        fontSize:17,
-        fontWeight:"700",
+        fontSize:18,
+        fontWeight:"600",
         color:theme.colors.primary
     },
     headerinfo:{
-        padding:15,
+        paddingVertical:15,
+        paddingLeft:5,
         fontSize:20,
-        fontWeight:"bold"
+        fontWeight:"700"
     },
     reservationcontainer:{
         alignItems:"center",
         justifyContent:"center",
-        marginTop:25
+        marginVertical:25
     },
     reservationbutton:{
         width:180,
@@ -303,16 +301,18 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     reservationtext:{
-        fontSize:18,
+        fontSize:20,
         color:theme.colors.white,
-        fontWeight:"700"
+        fontWeight:"600"
     },
     map:{
         alignSelf:"center",
-        margin:10,
-        width:250,
-        height:200,
-        borderRadius:20
+        width:270,
+        height:270,
+        borderRadius:135
+    },
+    locationtext:{
+        marginTop:20
     }
 
 });
