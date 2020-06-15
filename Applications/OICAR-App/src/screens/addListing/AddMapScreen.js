@@ -6,7 +6,7 @@ import {
   Image
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
 
 import BackButton from '../../components/BackButton';
