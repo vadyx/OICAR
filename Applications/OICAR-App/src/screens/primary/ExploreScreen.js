@@ -20,8 +20,9 @@ import ListingCard from '../../components/ListingCard';
 import Logo from "../../components/Logo";
 import * as vehicleDataActions from '../../store/actions/vehicleData';
 import { theme } from "../../utils/theme";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const { height, width } = Dimensions.get('window');
+const width = Dimensions.get('window').width/2 - 35;
 
 const _renderCategoryItem = (item) => {
   return (
@@ -103,17 +104,17 @@ const ExploreScreen = props => {
                   Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
                 </Text>
                           
-                <View style={styles.video_view}>
+                <TouchableOpacity style={styles.video_view}>
                     <Video
                         source={require("../../assets/Boat.mp4")}
                         rate={1.0}
                         isMuted={true}
-                        resizeMode="contain"
+                        resizeMode="cover"
                         shouldPlay={!!props.isFocused}
                         isLooping
                         style={styles.video1}
                       />
-                </View>
+                </TouchableOpacity>
 
               </View>
 
@@ -126,7 +127,7 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
@@ -140,7 +141,7 @@ const ExploreScreen = props => {
                     model="1"
                   />
                   
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Audi A3 TOP"
                     type="Automobil"
@@ -154,7 +155,7 @@ const ExploreScreen = props => {
                     model="A3"
                   />
 
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"
@@ -167,7 +168,7 @@ const ExploreScreen = props => {
                     brand = "Fiat"
                     model="Punto"
                   />
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"
@@ -180,7 +181,7 @@ const ExploreScreen = props => {
                     brand = "Fiat"
                     model="Punto"
                   />
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"
@@ -193,7 +194,7 @@ const ExploreScreen = props => {
                     brand = "Fiat"
                     model="Punto"
                   />
-                  <ListingCard width={168}
+                  <ListingCard width={width}
                     height={210}
                     name="Fiat Punto"
                     type="Automobil"
@@ -266,14 +267,23 @@ const styles = StyleSheet.create({
     },
     video_view:
     {
-      width: Platform.OS === "web" ? width : width - 40,
-      height: Platform.OS === "web" ? 450 : 200,
+      width: Platform.OS === "web" ? Dimensions.get('window').width : Dimensions.get('window').width - 50,
+      height: Platform.OS === "web" ? 450 : 220,
       marginTop: 20,
       borderRadius:10,
+      shadowColor: "#000",
+      shadowOffset:{
+          width: 0,
+          height: 2,
+          },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      backgroundColor:theme.colors.white,
       overflow:"hidden"
     },
     home_container:{
-      marginTop: Platform.OS === "web" ? 0 : 40
+      marginTop: Platform.OS === "web" ? 0 : 70
     },
     home_view:{
       paddingHorizontal: 20,

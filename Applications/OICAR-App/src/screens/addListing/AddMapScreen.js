@@ -30,8 +30,8 @@ const AddMapScreen = props => {
   const mapRegion = {
     latitude: startingLocation ? startingLocation.lat : defaultLocation.lat,
     longitude: startingLocation ? startingLocation.lng : defaultLocation.lng,
-    latitudeDelta: 0.0230,
-    longitudeDelta: 0.0105
+    latitudeDelta: 0.0115,
+    longitudeDelta: 0.0054
   };
 
   let markerCoordinates;

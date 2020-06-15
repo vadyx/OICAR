@@ -12,6 +12,7 @@ Applications/OICAR-App/*.mobileprovision
 Applications/OICAR-App/*.orig.*
 Applications/OICAR-App/web-build/
 Applications/OICAR-App/web-report/
+Applications/OICAR-App/env.js
 
 Applications/WebService/.vs/*
 Applications/WebService/WebService/bin/*
