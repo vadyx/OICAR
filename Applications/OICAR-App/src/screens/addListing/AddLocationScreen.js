@@ -15,12 +15,12 @@ import ExitButton from '../../components/ExitButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import { theme } from '../../utils/theme';
 import * as maps from '../../utils/mapsApi';
-import ENV from '../../../env';
 
 const AddLocationScreen = props => {
 
-  const selectedLocation = useSelector(state => state.newListing.coordinates);;
+  const selectedLocation = useSelector(state => state.newListing.coordinates);
   
+  const [location, setLocation] = useState({lat: 0, lng: 0});
   const [mapPreview, setMapPreview] = useState(null);
   const [address, setAddress] = useState(null);
 
@@ -50,7 +50,7 @@ const AddLocationScreen = props => {
       }
     }
 
-    props.navigation.navigate('AddMap', { startingLocation: userLocation} );
+    props.navigation.navigate('AddMap', { startingLocation: userLocation });
   };
 
   const _loadMapPreview = useCallback(async () => {
@@ -58,22 +58,22 @@ const AddLocationScreen = props => {
       const imagePreviewUrl = await maps.fetchStaticMap(selectedLocation.lat, selectedLocation.lng);
       setMapPreview(imagePreviewUrl);
     }
-  }, [setMapPreview]);
+  }, [setMapPreview, selectedLocation]);
 
   const _fetchAddress = useCallback(async () => {
     if (selectedLocation !== null) {
       const formattedAddr = await maps.fetchGeolocation(selectedLocation.lat, selectedLocation.lng);
       setAddress(formattedAddr);
     }
-  }, [setAddress]);
+  }, [setAddress, selectedLocation]);
 
   const _onNextPressed = () => {
     props.navigation.navigate('AddPictures');
   };
 
   useEffect(() => {
-      _loadMapPreview();
-      _fetchAddress();
+    _loadMapPreview();
+    _fetchAddress();
   }, [_loadMapPreview, _fetchAddress]);
 
   return (
