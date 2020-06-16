@@ -1,4 +1,4 @@
-import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING, CLEAR_LIST } from "../actions/listings";
+import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING, CLEAR_LIST, LOAD_USER_LISTINGS } from "../actions/listings";
 
 const initialState = {
     categoryID: null,
@@ -22,6 +22,11 @@ export default (state = initialState, action) => {
                 ...state,
                 listings: action.listings,
                 shownListings: action.shownListings
+            };
+        case LOAD_USER_LISTINGS:
+            return {
+                ...state,
+                listings: action.listings
             };
         case LOAD_SELECTED_LISTING:
             return {

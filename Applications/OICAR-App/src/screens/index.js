@@ -20,5 +20,7 @@ export { default as AddPicturesScreen } from './addListing/AddPicturesScreen';
 export { default as AddLocationScreen } from './addListing/AddLocationScreen';
 export { default as AddMapScreen } from './addListing/AddMapScreen';
 
-export { default as SearchListingsScreen } from './searchVehicles/SearchListingsScreen';
-export { default as SearchListingDetailsScreen } from './searchVehicles/SearchListingDetailsScreen';
+export { default as SearchListingsScreen } from './searchListings/SearchListingsScreen';
+export { default as SearchListingDetailsScreen } from './searchListings/SearchListingDetailsScreen';
+
+export { default as ProfileListingsScreen } from './profile/ProfileListingsScreen';

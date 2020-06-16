@@ -19,8 +19,7 @@ import * as maps from '../../utils/mapsApi';
 const AddLocationScreen = props => {
 
   const selectedLocation = useSelector(state => state.newListing.coordinates);
-  
-  const [location, setLocation] = useState({lat: 0, lng: 0});
+
   const [mapPreview, setMapPreview] = useState(null);
   const [address, setAddress] = useState(null);
 
@@ -54,14 +53,14 @@ const AddLocationScreen = props => {
   };
 
   const _loadMapPreview = useCallback(async () => {
-    if (selectedLocation !== null) {
+    if (selectedLocation !== null && selectedLocation !== undefined) {
       const imagePreviewUrl = await maps.fetchStaticMap(selectedLocation.lat, selectedLocation.lng);
       setMapPreview(imagePreviewUrl);
     }
   }, [setMapPreview, selectedLocation]);
 
   const _fetchAddress = useCallback(async () => {
-    if (selectedLocation !== null) {
+    if (selectedLocation !== null && selectedLocation !== undefined) {
       const formattedAddr = await maps.fetchGeolocation(selectedLocation.lat, selectedLocation.lng);
       setAddress(formattedAddr);
     }

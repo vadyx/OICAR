@@ -26,7 +26,8 @@ import {
   AddMapScreen,
   AddPicturesScreen,
   SearchListingsScreen,
-  SearchListingDetailsScreen
+  SearchListingDetailsScreen,
+  ProfileListingsScreen
 } from '../screens';
 
 const SearchNavigator = createStackNavigator(
@@ -38,7 +39,17 @@ const SearchNavigator = createStackNavigator(
   {
     headerMode:"none",
   }
-)
+);
+
+const ProfileNavigator = createStackNavigator(
+  {
+    Profile: ProfileScreen,
+    MyListings: ProfileListingsScreen
+  },
+  {
+    headerMode:"none",
+  }
+);
 
 const HomeTabNavigator = createBottomTabNavigator({
 
@@ -83,7 +94,7 @@ const HomeTabNavigator = createBottomTabNavigator({
   },
 
   Profile: {
-    screen: ProfileScreen,
+    screen: ProfileNavigator,
     navigationOptions: {
       tabBarLabel: 'PROFILE',
       tabBarIcon: ({ tintColor }) => (

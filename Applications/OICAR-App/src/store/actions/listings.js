@@ -6,6 +6,7 @@ import User from '../../models/user';
 export const CLEAR_LIST = "CLEAR_LIST";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
+export const LOAD_USER_LISTINGS = "LOAD_USER_LISTINGS";
 export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
 
 export const clearPreviousList = () => {
@@ -57,6 +58,42 @@ export const loadCategoryListings = () => {
             type: LOAD_CATEGORY_LISTINGS,
             listings: loadedListings,
             shownListings: listingsToShow
+        });
+    };
+};
+
+export const loadUserListings = () => {
+    return async (dispatch, getState) => {
+
+        const userID = getState().auth.userId;
+
+        const response = await fetch(`http://192.168.1.5:12335/api/userListings/${userID}`);
+
+        if (!response.ok) {
+            throw new Error("Listings not loaded");
+        }
+
+        const resData = await response.json();
+        const loadedListings = [];
+
+        for (const index in resData) {
+            loadedListings.push(new ShortListing(
+                resData[index].IDListing,
+                resData[index].Title,
+                resData[index].Category,
+                resData[index].Price,
+                resData[index].PriceBy,
+                resData[index].Rating,
+                resData[index].Image,
+                resData[index].VehicleManufacturer,
+                resData[index].VehicleModel
+            ));
+
+        }
+
+        dispatch({
+            type: LOAD_USER_LISTINGS,
+            listings: loadedListings
         });
     };
 };

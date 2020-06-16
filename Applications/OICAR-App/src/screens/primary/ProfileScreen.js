@@ -1,10 +1,11 @@
 import React from 'react';
-import StarRating from "react-native-star-rating";
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
-import { Ionicons,MaterialIcons,MaterialCommunityIcons,FontAwesome5,FontAwesome} from '@expo/vector-icons';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { Ionicons,MaterialIcons, FontAwesome5} from '@expo/vector-icons';
+import StarRating from "react-native-star-rating";
 import { useSelector, useDispatch } from 'react-redux';
-import ActionButton from '../../components/ActionButton'
+
+import ActionButton from '../../components/ActionButton';
 import NotLoggedInView from '../../components/NotLoggedInView';
 import ImagePicker from '../../components/ImagePicker';
 import VerificationSuccess from '../../components/VerificationSuccess';
@@ -155,7 +156,7 @@ const ProfileScreen = props => {
             </View>
         </ScrollView>
         
-        <ActionButton/>
+        <ActionButton navigation={props.navigation} />
         
     </View>
    

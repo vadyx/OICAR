@@ -42,7 +42,7 @@ const AddPicturesScreen = props => {
     setTimeout(async () => {
       setSuccessModalVisible(false);
       await dispatch(newListingActions.newListingClose());
-      props.navigation.navigate('Add');
+      props.navigation.navigate('MyListings');
     },
     3000);
   }
