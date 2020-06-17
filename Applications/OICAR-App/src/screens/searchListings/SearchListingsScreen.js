@@ -36,7 +36,9 @@ const _renderListHeader = () => {
 const SearchListingsScreen = props => {
     
     const listings = useSelector(state => state.listings);
+    const categories = useSelector(state => state.vehicleData.categories);
 
+    const [selectedCategory, setSelectedCategory] = useState(listings.category);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     const dispatch = useDispatch();
@@ -110,6 +112,9 @@ const SearchListingsScreen = props => {
 
     useEffect(() => {
         _loadListings();
+
+        const category = categories.find(cat => cat.id === listings.categoryID);
+        setSelectedCategory(category.name);
     }, [dispatch, _loadListings]);
 
     return (
@@ -117,7 +122,7 @@ const SearchListingsScreen = props => {
             <View style={styles.container}>
                 <View style={styles.headerstyle}>
                     <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-                    <Text style={styles.headertext}>Automobili</Text>
+                    <Text style={styles.headertext}>{selectedCategory}</Text>
                 </View>
                 <FlatList
                     data={listings.shownListings} 

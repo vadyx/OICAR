@@ -6,6 +6,7 @@ import { FloatingAction } from "react-native-floating-action";
 import { useDispatch } from 'react-redux';
 
 import * as authActions from '../store/actions/auth';
+import * as profileActions from '../store/actions/profile';
 import { theme } from '../utils/theme';
 
 /*All configuration -> https://github.com/santomegonzalo/react-native-floating-action*/
@@ -14,12 +15,17 @@ const ActionButton = props => {
 
   const dispatch = useDispatch();
 
+  const _onOpeningListings = async () => {
+    await dispatch(profileActions.clearPreviousList());
+    props.navigation.navigate("MyListings");
+  };
+
   const _onButtonPressed = name => {
     switch(name) {
       case "btn_settings":
         break;
       case "btn_myListings":
-        props.navigation.navigate("MyListings");
+        _onOpeningListings();
         break;
       case "btn_logout":
         dispatch(authActions.logout());

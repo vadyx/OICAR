@@ -1,11 +1,12 @@
 import { LOGIN, LOGOUT } from '../actions/auth';
-import { UPDATE_PROFILE_IMAGE, UPLOAD_ID, UPLOAD_DRIVER_LICENSE } from '../actions/profile';
+import { UPDATE_PROFILE_IMAGE, UPLOAD_ID, UPLOAD_DRIVER_LICENSE, LOAD_USER_LISTINGS, CLEAR_USER_LISTINGS } from '../actions/profile';
 
 import User from '../../models/user';
 import DocumentVerification from '../../models/documentVerification';
 
 const initialState = {
-    user: null
+    user: null,
+    listings: null
 };
 
 export default (state = initialState, action) => {
@@ -96,6 +97,18 @@ export default (state = initialState, action) => {
                 user: updatedUser
             };
             
+        case CLEAR_USER_LISTINGS:
+            return {
+                ...state,
+                listings: null
+            };
+
+        case LOAD_USER_LISTINGS:
+            return {
+                ...state,
+                listings: action.listings
+            }
+
         default:
             return state;
     }
