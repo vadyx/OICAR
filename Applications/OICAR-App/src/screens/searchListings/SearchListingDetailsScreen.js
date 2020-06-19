@@ -39,6 +39,11 @@ const SearchListingDetailsScreen = props => {
         _fetchAddress();
     }, [_loadMapPreview, _fetchAddress]);
 
+    const _onPress = async () => {
+
+        props.navigation.navigate('ReservationDate');
+    };
+
     return (
         <SafeAreaView style={styles.saw}>
             <View style={styles.container}>
@@ -68,7 +73,9 @@ const SearchListingDetailsScreen = props => {
                         </View>
                     </View>
                     <View style={styles.reservationcontainer}>
-                        <TouchableOpacity style={styles.reservationbutton}>
+                        <TouchableOpacity 
+                                style={styles.reservationbutton}
+                                onPress={_onPress}>
                             <Text style={styles.reservationtext}>Rezerviraj</Text>
                         </TouchableOpacity>
                     </View>
@@ -212,7 +219,7 @@ const styles = StyleSheet.create({
     },
     textbox:{
         textAlign:"center",
-        fontSize:19,
+        fontSize:17,
         fontWeight:"700"
     },
     textbox2:{

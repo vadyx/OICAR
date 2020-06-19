@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native";
 
 import { theme } from "../utils/theme";
@@ -12,12 +13,12 @@ const Category = props => {
 
     return (
         <View style={styles.category_container}>
-            <View style={styles.imagecontainer}>
+            <TouchableOpacity style={styles.imagecontainer}>
 
                 <Image source={{ uri: props.imageUri }}
                     style={styles.imagestyle}
                 />
-            </View>
+            </TouchableOpacity>
             <View style={styles.categoryname_container}>
                 <Text style={styles.text_style}>{props.name}</Text>
             </View>

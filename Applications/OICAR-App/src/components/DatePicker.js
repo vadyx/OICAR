@@ -18,10 +18,14 @@ const DatePicker = props => {
     return (
         <View>
             <View style={styles.boxstyle}>
-                <Text style={styles.lblstyle}>{props.label}</Text>
+                <Text style={{  fontSize:props.labelsize,
+                                marginVertical:5,
+                                fontWeight:props.labelfontweight,
+                                color:props.labelcolor}}>{props.label}</Text>
+                                
                 <TouchableOpacity style={styles.tostyle} onPress={() => setShowDatePicker(true)}>
                     <Fontisto name="date" size={24} color={theme.colors.primary}/>
-                    <Text style={styles.labelstyle}>{moment(props.date).format('DD.MM.YYYY')}</Text>
+                    <Text style={{...styles.labelstyle,...props.style}}>{moment(props.date).format('DD.MM.YYYY')}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -43,10 +47,6 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         alignItems:"flex-start",
         paddingBottom:20
-    },
-    lblstyle:{
-        fontSize:20,
-        marginVertical:5,
     },
     tostyle:{
         flexDirection:"row",
