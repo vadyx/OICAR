@@ -24,5 +24,10 @@ namespace WebServis.Models.ViewModels
         public string VehicleManufacturer{ get; set; }
 
         public string VehicleModel { get; set; }
+
+        public double Distance { get; set; }
+
+        public decimal? LocationX { get; set; }
+        public decimal? LocationY { get; set; }
     }
 }

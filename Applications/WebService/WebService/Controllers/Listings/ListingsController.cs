@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Common;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -53,20 +54,24 @@ namespace WebServis.Controllers.Listings
                 listingResponseModels = new List<ShortListingResponseModel>();
                 foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
                 {
-                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
-                    listingResponseModels.Add(
-                        new ShortListingResponseModel
-                        {
-                            IDListing = listing.IDListing,
-                            Title = listing.Title,
-                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
-                            Price = listing.Price,
-                            PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
-                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
-                            Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
-                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
-                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
-                        });
+                    bool hasLocation = listing.LocationCoordinateX != null && listing.LocationCoordinateY != null;
+                    if (!hasLocation)
+                    {
+                        bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                        listingResponseModels.Add(
+                            new ShortListingResponseModel
+                            {
+                                IDListing = listing.IDListing,
+                                Title = listing.Title,
+                                Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                                Price = listing.Price,
+                                PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                                Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                                Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                                VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                                VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
+                            });
+                    }
                 }
             }
             catch (Exception e)
@@ -75,6 +80,48 @@ namespace WebServis.Controllers.Listings
             }
 
             listingResponseModels.Reverse();
+            return Ok(listingResponseModels);
+        }
+
+        [Route("api/shortListings/{categoryID}/{locationX}/{locationY}")]
+        [ResponseType(typeof(ShortListingResponseModel))]
+        public IHttpActionResult GetListings(int categoryID, double locationX, double locationY)
+        {
+            List<ShortListingResponseModel> listingResponseModels;
+            try
+            {
+                listingResponseModels = new List<ShortListingResponseModel>();
+                foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
+                {
+                    bool hasLocation = listing.LocationCoordinateX != null && listing.LocationCoordinateY != null;
+                    if (hasLocation)
+                    {
+                        bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                        listingResponseModels.Add(
+                            new ShortListingResponseModel
+                            {
+                                IDListing = listing.IDListing,
+                                Title = listing.Title,
+                                Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                                Price = listing.Price,
+                                PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                                Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                                Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                                VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                                VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
+                                Distance = CalculateDistance(locationX, locationY, (double)listing.LocationCoordinateX, (double)listing.LocationCoordinateY),
+                                LocationX = listing.LocationCoordinateX,
+                                LocationY = listing.LocationCoordinateY
+                            });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            listingResponseModels.Sort((x,y) => x.Distance.CompareTo(y.Distance));
             return Ok(listingResponseModels);
         }
 
@@ -193,7 +240,7 @@ namespace WebServis.Controllers.Listings
                 return BadRequest(e.Message);
             }
 
-
+            listingResponseModels.Reverse();
             return Ok(listingResponseModels);
         }
 
@@ -332,13 +379,56 @@ namespace WebServis.Controllers.Listings
             return Ok(listing);
         }
 
-        protected override void Dispose(bool disposing)
+        //private double CalculateDistance(double x1, double y1, double x2, double y2)
+        //{
+        //    double distance;
+        //    double R = 6373; // Radijus zemlje u km
+
+        //    double dx = x2 - x1;
+        //    double dy = y2 - y1;
+
+        //    double a = Math.Pow(Math.Sin(dx / 2), 2) + Math.Cos(x1) * Math.Cos(x2) * Math.Pow(Math.Sin(dy / 2), 2);
+        //    double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        //    distance = R * c;
+
+        //    return distance;
+        //}
+
+        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
-            if (disposing)
+            if ((lat1 == lat2) && (lon1 == lon2))
             {
-                db.Dispose();
+                return 0;
             }
-            base.Dispose(disposing);
+            else
+            {
+                double theta = lon1 - lon2;
+                double dist = Math.Sin(deg2rad(lat1)) * Math.Sin(deg2rad(lat2)) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Cos(deg2rad(theta));
+                dist = Math.Acos(dist);
+                dist = rad2deg(dist);
+                dist = dist * 60 * 1.1515;
+
+                dist = dist * 1.609344;
+
+                return (dist);
+            }
+        }
+
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        //::  This function converts decimal degrees to radians             :::
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        private double deg2rad(double deg)
+        {
+            return (deg * Math.PI / 180.0);
+        }
+
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        //::  This function converts radians to decimal degrees             :::
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        private double rad2deg(double rad)
+        {
+            return (rad / Math.PI * 180.0);
         }
 
         private bool ListingExists(int id)
