@@ -89,7 +89,9 @@ const AddPicturesScreen = props => {
           <Text style={styles.nsbtextstyle}>Objavite oglas</Text>
         </NextScreenButton>
 
-        <ModalSuccess visible={successModalVisible}/>
+        <ModalSuccess visible={successModalVisible}>
+        <Text style={styles.modalsubheader}>Uspješno ste objavili oglas!</Text>
+        </ModalSuccess>
 
       </View>
     );
@@ -200,6 +202,12 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:"red"
   },
+  modalsubheader:{
+    fontSize: 14,
+    color: theme.colors.black,
+    textAlign:"center",
+    paddingTop:5
+  }
 });
 
 export default AddPicturesScreen;

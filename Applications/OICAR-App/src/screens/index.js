@@ -26,3 +26,4 @@ export { default as SearchListingDetailsScreen } from './searchListings/SearchLi
 export { default as ProfileListingsScreen } from './profile/ProfileListingsScreen';
 
 export { default as ReservationDateScreen } from './reservation/ReservationDateScreen';
+export { default as ReservationPayScreen } from './reservation/ReservationPayScreen';
