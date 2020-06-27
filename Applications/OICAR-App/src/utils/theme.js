@@ -14,6 +14,7 @@ export const theme = {
     black:'#000000',
     lightgrey:'#bbbbbb',
     darkgray:'#444444',
+    gray:'#666666',
     lightplusgrey:'#989898',
     success:'#006400'
   },

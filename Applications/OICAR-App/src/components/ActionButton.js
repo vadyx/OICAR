@@ -57,13 +57,23 @@ const ActionButton = props => {
       color:theme.colors.darkgray
     },
     {
+      text: "Moje rezervacije",
+      buttonSize: 45,
+      textBackground:theme.colors.gray,
+      textStyle: {fontWeight:"bold",color:theme.colors.white},
+      icon: require("../assets/items_icon.png"),
+      name: "btn_myReservation",
+      position: 3,
+      color:theme.colors.gray
+    },
+    {
       text: "Odjavite se",
       buttonSize: 45,
       textBackground:theme.colors.lightplusgrey,
       textStyle: {fontWeight:"bold",color:theme.colors.white},
       icon: require("../assets/logout_icon.png"),
       name: "btn_logout", 
-      position: 3,
+      position: 4,
       color:theme.colors.lightplusgrey
     }
   ];

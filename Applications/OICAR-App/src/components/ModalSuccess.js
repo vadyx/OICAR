@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native';
 
 import { theme } from '../utils/theme';
 
-const ModalSuccess = props =>{
+const ModalSuccess =  ({children,...props})  =>{
     
     return(
 
@@ -21,7 +21,7 @@ const ModalSuccess = props =>{
                   loop={false} 
                   source={require('../assets/lottie_success.json')}/>
                 <Text style={styles.modalheader}>Čestitam !</Text>
-                <Text style={styles.modalsubheader}>Uspješno ste dodali oglas vašeg vozila</Text>
+                {children}
               </View>
             </View>
 
@@ -60,13 +60,6 @@ const styles = StyleSheet.create({
         color: theme.colors.black,
         fontWeight:"700"
       },
-      modalsubheader:{
-        fontSize: 14,
-        color: theme.colors.black,
-        textAlign:"center",
-        paddingTop:5
-      }
-    
 });
 
 export default ModalSuccess;

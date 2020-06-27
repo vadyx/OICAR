@@ -28,6 +28,7 @@ import {
   SearchListingsScreen,
   SearchListingDetailsScreen,
   ReservationDateScreen,
+  ReservationPayScreen,
   ProfileListingsScreen,
 } from '../screens';
 
@@ -36,7 +37,8 @@ const SearchNavigator = createStackNavigator(
     Search: SearchScreen,
     Listings: SearchListingsScreen,
     ListingDetails: SearchListingDetailsScreen,
-    ReservationDate: ReservationDateScreen
+    ReservationDate: ReservationDateScreen,
+    ReservationPay: ReservationPayScreen,
   },
   {
     headerMode:"none",

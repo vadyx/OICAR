@@ -23,7 +23,7 @@ const ReservationDateScreen = props => {
 
   const _onNextPressed = async () => {
 
-      props.navigation.navigate('ListingDetails');
+      props.navigation.navigate('ReservationPay');
   };
 
   return (
@@ -31,7 +31,7 @@ const ReservationDateScreen = props => {
       <ScrollView style={{flex:1,width:"100%",height:"100%"}}>
       <BackButton style={styles.back} goBack={() => props.navigation.goBack()} />
       <Text style={styles.headerstyle}>Rezervacija</Text>
-        <Text style={styles.headerstyle2}>1/3</Text>
+        <Text style={styles.headerstyle2}>1/2</Text>
 
         <View style={styles.datecontainer}>
           <DatePicker
