@@ -7,14 +7,12 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Input } from 'react-native-elements';
 
 import BackButton from '../../components/BackButton';
-import NextScreenButton from '../../components/NextScreenButton';
-import DatePicker from '../../components/DatePicker';
 import { theme } from '../../utils/theme';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import StarRating from "react-native-star-rating";
 import moment from 'moment';
 
 const currentDate = moment().toDate();
@@ -90,6 +88,20 @@ const ReservedVehicleRenterScreen = props => {
                     <View style={styles.contactsubbox}>
                         <Text style={styles.contactinfodesctext}>Broj telefona:</Text>
                         <Text style={styles.contactinfotext}>+385921234567</Text>
+                    </View>
+                    <View style={styles.contactsubstarbox}>
+                        <Text style={styles.contactinfodescstartext}>Ocijenite unajmljivača</Text>
+                        <StarRating
+                            disabled={false}
+                            maxStars={5}
+                            rating={3}
+                            starSize={25}
+                            emptyStarColor={theme.colors.quaternary}
+                            fullStarColor={theme.colors.gold}
+                            />
+                            <TouchableOpacity  style={styles.starratingbutton}>
+                                <Text style={styles.starratingbuttontext}>Ocijeni</Text>
+                            </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -246,7 +258,32 @@ elevation: 3,
     fn:{
         fontSize:10,
         alignSelf:"flex-end"
+    },
+    contactinfodescstartext:{
+        fontSize:18,
+        color:theme.colors.primary,
+        fontWeight:"bold",
+        marginBottom:15
+    },
+    contactsubstarbox:{
+        flexDirection:"column",
+        marginTop:30
+    },
+    starratingbutton:{
+        alignSelf:"center",
+        marginTop:20,
+        backgroundColor:theme.colors.primary,
+        borderRadius:20
+    },
+    starratingbuttontext:{
+        fontSize:18,
+        color:theme.colors.white,
+        paddingVertical:10,
+        paddingHorizontal:16,
+        fontWeight:"bold"
+
     }
+
 });
 
 export default ReservedVehicleRenterScreen;

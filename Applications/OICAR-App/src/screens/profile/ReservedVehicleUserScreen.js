@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Input } from 'react-native-elements';
 
 import BackButton from '../../components/BackButton';
-import NextScreenButton from '../../components/NextScreenButton';
-import DatePicker from '../../components/DatePicker';
 import { theme } from '../../utils/theme';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import moment from 'moment';
+import StarRating from "react-native-star-rating";
 
 const currentDate = moment().toDate();
 let nextDayDate = moment(currentDate).add(1, 'days').toDate();
@@ -101,6 +99,21 @@ const ReservationVehicleUserScreen = props => {
                         <Text style={styles.contactinfodesctext}>Broj telefona:</Text>
                         <Text style={styles.contactinfotext}>+385921234567</Text>
                     </View>
+                    <View style={styles.contactsubstarbox}>
+                        <Text style={styles.contactinfodescstartext}>Ocijenite iznajmljivača</Text>
+                        <StarRating
+                            disabled={false}
+                            maxStars={5}
+                            rating={3}
+                            starSize={25}
+                            emptyStarColor={theme.colors.quaternary}
+                            fullStarColor={theme.colors.gold}
+                            />
+                        <TouchableOpacity  style={styles.starratingbutton}>
+                            <Text style={styles.starratingbuttontext}>Ocijeni</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             </View>
         
@@ -222,6 +235,12 @@ const styles = StyleSheet.create({
       fontWeight:"600",
       paddingLeft:7
   },
+  contactinfodescstartext:{
+    fontSize:18,
+    color:theme.colors.primary,
+    fontWeight:"bold",
+    marginBottom:15
+  },
   contactinfodesctext:{
       fontSize:18,
       color:theme.colors.primary,
@@ -236,6 +255,10 @@ const styles = StyleSheet.create({
   contactsubbox:{
       flexDirection:"row",
       marginBottom:3
+  },
+  contactsubstarbox:{
+      flexDirection:"column",
+      marginTop:30
   },
   image: {
       flex: 1,
@@ -258,6 +281,20 @@ const styles = StyleSheet.create({
     },
     back:{
         marginTop:-getStatusBarHeight()
+    },
+    starratingbutton:{
+        alignSelf:"center",
+        marginTop:20,
+        backgroundColor:theme.colors.primary,
+        borderRadius:20
+    },
+    starratingbuttontext:{
+        fontSize:18,
+        color:theme.colors.white,
+        paddingVertical:10,
+        paddingHorizontal:16,
+        fontWeight:"bold"
+
     }
 });
 
