@@ -20,12 +20,19 @@ const ActionButton = props => {
     props.navigation.navigate("MyListings");
   };
 
+  const _onOpeningmyReservation = async () => {
+    props.navigation.navigate("ReservedVehicle");
+  };
+
   const _onButtonPressed = name => {
     switch(name) {
       case "btn_settings":
         break;
       case "btn_myListings":
         _onOpeningListings();
+        break;
+      case "btn_myReservation":
+        _onOpeningmyReservation();
         break;
       case "btn_logout":
         dispatch(authActions.logout());

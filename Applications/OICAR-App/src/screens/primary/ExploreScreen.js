@@ -101,7 +101,7 @@ const ExploreScreen = props => {
                 </Text>
                 
                 <Text style={styles.textstyle2}>
-                  Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
+                  Rezervirajte već danas te započnite svoje nezaboravno plovljenje Jadranom!
                 </Text>
                           
                 <TouchableOpacity style={styles.video_view}>
@@ -223,8 +223,8 @@ const styles = StyleSheet.create({
       flex: 1
     },
     logo_search_container:{
-      paddingTop:10,
-      height:90,
+      paddingTop:15,
+      height:100,
       flexDirection:'row',
       backgroundColor: 'white',
       borderBottomWidth:0, //samo radi na iOS
