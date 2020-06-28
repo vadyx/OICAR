@@ -79,6 +79,7 @@ const TopTabNavigator = createMaterialTopTabNavigator({
     activeTintColor:theme.colors.white,
     inactiveTintColor:theme.colors.lightgrey,
     allowFontScaling:true,
+    pressColor:theme.colors.primary,
     indicatorStyle:{borderBottomColor:theme.colors.white, borderBottomWidth:3,},
     style:{backgroundColor:theme.colors.primary},
     labelStyle:{fontWeight:'bold',marginTop:getStatusBarHeight()+15,marginBottom:15}
