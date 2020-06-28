@@ -266,41 +266,6 @@ namespace WebServis.Controllers.Listings
             return Ok(listingResponseModels);
         }
 
-        //PUT: api/Listings/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutListing(int id, Listing listing)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != listing.IDListing)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(listing).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ListingExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: api/Listings
         [Route("api/newListing")]
         [HttpPost]
