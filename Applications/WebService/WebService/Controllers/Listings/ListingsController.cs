@@ -54,24 +54,21 @@ namespace WebServis.Controllers.Listings
                 listingResponseModels = new List<ShortListingResponseModel>();
                 foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
                 {
-                    bool hasLocation = listing.LocationCoordinateX != null && listing.LocationCoordinateY != null;
-                    if (!hasLocation)
-                    {
-                        bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
-                        listingResponseModels.Add(
-                            new ShortListingResponseModel
-                            {
-                                IDListing = listing.IDListing,
-                                Title = listing.Title,
-                                Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
-                                Price = listing.Price,
-                                PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
-                                Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
-                                Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
-                                VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
-                                VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
-                            });
-                    }
+                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                    listingResponseModels.Add(
+                        new ShortListingResponseModel
+                        {
+                            IDListing = listing.IDListing,
+                            Title = listing.Title,
+                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                            Price = listing.Price,
+                            PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
+                        });
+                    
                 }
             }
             catch (Exception e)
@@ -88,16 +85,19 @@ namespace WebServis.Controllers.Listings
         public IHttpActionResult GetListings(int categoryID, double locationX, double locationY)
         {
             List<ShortListingResponseModel> listingResponseModels;
+            List<ShortListingResponseModel> locationListingResponseModels;
+            List<ShortListingResponseModel> noLocationListingResponseModels;
             try
             {
-                listingResponseModels = new List<ShortListingResponseModel>();
+                locationListingResponseModels = new List<ShortListingResponseModel>();
+                noLocationListingResponseModels = new List<ShortListingResponseModel>();
                 foreach (Listing listing in db.Listing.Where(l => l.Vehicle.CategoryID == categoryID && l.AvailableToDate >= DateTime.Today))
                 {
                     bool hasLocation = listing.LocationCoordinateX != null && listing.LocationCoordinateY != null;
+                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
                     if (hasLocation)
-                    {
-                        bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
-                        listingResponseModels.Add(
+                    {                  
+                        locationListingResponseModels.Add(
                             new ShortListingResponseModel
                             {
                                 IDListing = listing.IDListing,
@@ -114,6 +114,23 @@ namespace WebServis.Controllers.Listings
                                 LocationY = listing.LocationCoordinateY
                             });
                     }
+                    else
+                    {
+                        noLocationListingResponseModels.Add(
+                              new ShortListingResponseModel
+                              {
+                                  IDListing = listing.IDListing,
+                                  Title = listing.Title,
+                                  Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                                  Price = listing.Price,
+                                  PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                                  Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                                  Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                                  VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                                  VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
+                              });
+
+                    }
                 }
             }
             catch (Exception e)
@@ -121,7 +138,12 @@ namespace WebServis.Controllers.Listings
                 return BadRequest(e.Message);
             }
 
-            listingResponseModels.Sort((x,y) => x.Distance.CompareTo(y.Distance));
+            locationListingResponseModels.Sort((x,y) => x.Distance.CompareTo(y.Distance));
+            noLocationListingResponseModels.Reverse();
+
+            listingResponseModels = new List<ShortListingResponseModel>(locationListingResponseModels.Count + noLocationListingResponseModels.Count);
+            locationListingResponseModels.ForEach(lrm => listingResponseModels.Add(lrm));
+            noLocationListingResponseModels.ForEach(lrm => listingResponseModels.Add(lrm));
             return Ok(listingResponseModels);
         }
 
