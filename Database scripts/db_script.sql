@@ -237,6 +237,7 @@ create table ListingReservation
 	MobileNumber nvarchar(20) not null,
 	Price float not null,
 	CardNumber int not null,
+	Rating float null,
 	ReservatorID int not null,
 	ListingOwnerID int not null,
 	ListingID int not null,
@@ -247,4 +248,17 @@ create table ListingReservation
 		REFERENCES RegisteredUser(IDRegisteredUser),
 	CONSTRAINT FK_ListingReservation_Listing FOREIGN KEY (ListingID)
 		REFERENCES Listing(IDListing),
+)
+
+create table Rating
+(
+	IDRating int primary key identity,
+	UserRaterID int not null,
+	RatedUserID int not null,
+	Rating float not null,
+
+	CONSTRAINT FK_Rating_UserRater FOREIGN KEY (UserRaterID)
+		REFERENCES RegisteredUser(IDRegisteredUser),
+	CONSTRAINT FK_Rating_RatedUser FOREIGN KEY (RatedUserID)
+		REFERENCES RegisteredUser(IDRegisteredUser)
 )

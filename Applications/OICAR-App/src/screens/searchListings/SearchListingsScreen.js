@@ -25,14 +25,7 @@ const imgsize = 140;
 const descbrandsize = "70%";
 const descpricesize = "30%";
 
-const _renderListHeader = () => {
-    return (
-        <View style={styles.sortfilter}>
-            <TouchableOpacity style={styles.tosort}><Text style={styles.totext}>Sortiraj</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.tofilter}><Text style={styles.totext}>Filtriraj</Text></TouchableOpacity>
-        </View>
-    );
-};
+
 
 const SearchListingsScreen = props => {
     
@@ -53,6 +46,10 @@ const SearchListingsScreen = props => {
         const result = await Permissions.askAsync(Permissions.LOCATION);
         return result.status === "granted";
     };
+    
+    const _onFilterPress = () => {
+        props.navigation.navigate('Filter')
+    }
 
     const _loadListings = useCallback(async () => {
         setIsRefreshing(true);
@@ -84,6 +81,15 @@ const SearchListingsScreen = props => {
                 widthprice={descpricesize}
                 marginHorizontal={20}
             />
+        );
+    };
+
+    const _renderListHeader = () => {
+        return (
+            <View style={styles.sortfilter}>
+                <TouchableOpacity style={styles.tosort}><Text style={styles.totext}>Sortiraj</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.tofilter} onPress={() => _onFilterPress()}><Text style={styles.totext}>Filtriraj</Text></TouchableOpacity>
+            </View>
         );
     };
 

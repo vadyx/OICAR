@@ -27,6 +27,7 @@ import {
   AddMapScreen,
   AddPicturesScreen,
   SearchListingsScreen,
+  SearchFilterScreen,
   SearchListingDetailsScreen,
   ReservationDateScreen,
   ReservationPayScreen,
@@ -92,6 +93,7 @@ const SearchNavigator = createStackNavigator(
   {
     Search: SearchScreen,
     Listings: SearchListingsScreen,
+    Filter: SearchFilterScreen,
     ListingDetails: SearchListingDetailsScreen,
     ReservationDate: ReservationDateScreen,
     ReservationPay: ReservationPayScreen,

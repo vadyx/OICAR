@@ -170,6 +170,7 @@ namespace WebServis.Controllers.User
                 PersonalIdentificationVerified = false,
                 PersonalIdentification = null
             };
+            registeredUser.Rating = (decimal)0.0;
 
             db.RegisteredUsers.Add(registeredUser);
 

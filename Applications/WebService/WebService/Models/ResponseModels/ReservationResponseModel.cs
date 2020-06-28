@@ -15,6 +15,7 @@ namespace WebServis.Models.ViewModels
         public string VehicleModel { get; set; }
         public int ReservationNumber { get; set; }
         public double Price { get; set; }
+        public double? Rating { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public decimal? LocationX { get; set; }

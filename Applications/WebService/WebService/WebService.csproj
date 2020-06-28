@@ -154,6 +154,8 @@
     <Compile Include="Models\Category\VehicleModelModel.cs" />
     <Compile Include="Models\ListingReservation\ListingReservation.cs" />
     <Compile Include="Models\ListingReservation\ListingReservationModel.cs" />
+    <Compile Include="Models\ListingReservation\Rating.cs" />
+    <Compile Include="Models\ListingReservation\RatingModel.cs" />
     <Compile Include="Models\Listings\Listing.cs" />
     <Compile Include="Models\Listings\ListingModel.cs" />
     <Compile Include="Models\Listings\PriceBy.cs" />
