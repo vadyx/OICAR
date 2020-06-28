@@ -12,7 +12,14 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case CLEAR_LIST:
-            return initialState;
+            return {
+                ...state,
+                categoryID: null,
+                listings: [],
+                shownListings: [],
+                selectedListing: null,
+                isMore: false
+            };
         case SET_CATEGORY:
             return {
                 ...state,

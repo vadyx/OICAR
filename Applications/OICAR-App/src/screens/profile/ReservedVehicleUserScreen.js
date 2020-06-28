@@ -7,18 +7,11 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Input } from 'react-native-elements';
 
 import BackButton from '../../components/BackButton';
-import NextScreenButton from '../../components/NextScreenButton';
-import DatePicker from '../../components/DatePicker';
 import { theme } from '../../utils/theme';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
-import moment from 'moment';
-
-const currentDate = moment().toDate();
-let nextDayDate = moment(currentDate).add(1, 'days').toDate();
+import { AntDesign } from '@expo/vector-icons';
 
 const ReservationVehicleUserScreen = props => {
 

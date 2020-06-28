@@ -36,6 +36,7 @@ const DatePicker = props => {
                     display="calendar"
                     onChange={_onDateChanged}
                     minimumDate={props.minimumDate}
+                    maximumDate={props.maximumDate}
                 />
             )}
         </View>

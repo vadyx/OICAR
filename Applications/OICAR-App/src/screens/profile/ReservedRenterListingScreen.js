@@ -2,17 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { 
     StyleSheet, 
     View, 
-    Text, 
     FlatList, 
     SafeAreaView,
     Dimensions
 } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
 
-import BackButton from '../../components/BackButton';
 import ListingCard from '../../components/ListingCard';
-import * as profileActions from '../../store/actions/profile';
+import * as reservationActions from '../../store/actions/reservation';
 import * as listingsActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
 
@@ -26,12 +23,12 @@ const descpricesize = "30%";
 const ReservedRenterListingScreen = props => {
 
     const [isRefreshing, setIsRefreshing] = useState(false);
-    
-    const listings = useSelector(state => state.profile.listings);
+
+    const listings = useSelector(state => state.reservation.givenReservations);
     const dispatch = useDispatch();
 
     const _loadListings = useCallback(async () => {
-        await dispatch(profileActions.loadUserListings());
+        await dispatch(reservationActions.loadGivenReservations());
     }, [dispatch, setIsRefreshing]);
 
     const _onListingPressed = async (id) => {

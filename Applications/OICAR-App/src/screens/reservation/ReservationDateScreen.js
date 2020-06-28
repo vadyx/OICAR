@@ -25,7 +25,7 @@ const ReservationDateScreen = props => {
   const userData = useSelector(state => state.profile.user);
   const listing = useSelector(state => state.listings.selectedListing);
 
-  const [startDate, setStartDate] = useState(moment().toDate());
+  const [startDate, setStartDate] = useState(currentDate);
   const [endDate, setEndDate] = useState(moment(currentDate).add(1, 'days').toDate());
   const [phoneNr, setPhoneNr] = useState("+ 385 ");
   const [totalPrice, setTotalPrice] = useState();
@@ -107,6 +107,7 @@ const ReservationDateScreen = props => {
             label="Do"
             date={endDate}
             minimumDate={currentDate}
+            maximumDate={listing.endDate}
             onDateChanged={_onDateChanged}
             style={styles.labelstyle}
             labelsize={18}
