@@ -17,7 +17,7 @@ namespace WebServis.Models.ViewModels
 
         public string PriceBy { get; set; }
 
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
 
         public string Image { get; set; }
 
@@ -28,7 +28,9 @@ namespace WebServis.Models.ViewModels
         public double Distance { get; set; }
 
         public decimal? LocationX { get; set; }
+
         public decimal? LocationY { get; set; }
+
         public int ReservationID { get; set; }
     }
 }

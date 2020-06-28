@@ -26,6 +26,8 @@ namespace WebServis.Models.ListingReservation
 
         public int CardNumber { get; set; }
 
+        public double? Rating { get; set; }
+
         public int ReservatorID { get; set; }
 
         public int ListingOwnerID { get; set; }

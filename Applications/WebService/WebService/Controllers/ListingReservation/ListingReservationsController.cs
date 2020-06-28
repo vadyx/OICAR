@@ -28,6 +28,7 @@ namespace WebServis.Controllers.ListingReservationNamespace
         private VehicleManufacturerModel db_vehicleManufacturerModel = new VehicleManufacturerModel();
         private VehicleModelModel db_vehicleModelModel = new VehicleModelModel();
         private CategoryModel db_category = new CategoryModel();
+        private RatingModel db_ratingModel = new RatingModel();
 
 
         [Route("api/myReservations/{userID}")]
@@ -49,7 +50,7 @@ namespace WebServis.Controllers.ListingReservationNamespace
                             Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
                             Price = listing.Price,
                             PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
-                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Rating = reservation.Rating,
                             Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
                             VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
                             VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
@@ -86,7 +87,7 @@ namespace WebServis.Controllers.ListingReservationNamespace
                             Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
                             Price = listing.Price,
                             PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
-                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Rating = reservation.Rating,
                             Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
                             VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
                             VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
@@ -107,23 +108,23 @@ namespace WebServis.Controllers.ListingReservationNamespace
         //GET: api/ListingReservations/5
         [Route("api/reservation/{reservationID}/{userID}")]
         [ResponseType(typeof(ListingReservation))]
-        public async Task<IHttpActionResult> GetListingReservation(int reservationID, int userID)
+        public IHttpActionResult GetListingReservation(int reservationID, int userID)
         {
-            ListingReservation reservation = await db.ListingReservation.FindAsync(reservationID);
+            ListingReservation reservation = db.ListingReservation.Find(reservationID);
 
             if (reservation == null)
             {
                 return NotFound();
             }
 
-            Listing listing = await db_listingModel.Listing.FindAsync(reservation.ListingID);
+            Listing listing = db_listingModel.Listing.Find(reservation.ListingID);
 
             RegisteredUser user;
             if (reservation.ListingOwnerID == userID)
-                user = await db_registeredUserModel.RegisteredUsers.FindAsync(reservation.ReservatorID);
+                user = db_registeredUserModel.RegisteredUsers.Find(reservation.ReservatorID);
             else
             {
-                user = await db_registeredUserModel.RegisteredUsers.FindAsync(reservation.ListingOwnerID);
+                user = db_registeredUserModel.RegisteredUsers.Find(reservation.ListingOwnerID);
             }
 
             
@@ -139,12 +140,14 @@ namespace WebServis.Controllers.ListingReservationNamespace
                     VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
                     ReservationNumber = reservation.IDListingReservation,
                     Price = listing.Price,
+                    Rating = reservation.Rating,
                     DateFrom = reservation.FromDate,
                     DateTo = reservation.ToDate,
                     LocationX = listing.LocationCoordinateX,
                     LocationY = listing.LocationCoordinateY,
                     UserInfo = new ReservationUserResponseModel
                     { 
+                        IDUser = user.IDRegisteredUser,
                         FirstName = user.FirstName,
                         Lastname = user.LastName,
                         Email = user.Email,
@@ -160,6 +163,61 @@ namespace WebServis.Controllers.ListingReservationNamespace
             }
 
             return Ok(reservationResponseModel);
+        }
+
+
+        // POST: api/rateUser
+        [Route("api/rate/{reservationID}")]
+        [HttpPost]
+        [ResponseType(typeof(ListingReservation))]
+        public IHttpActionResult PostUserRating(int reservationID, Rating rating)
+        {
+      
+                RegisteredUser user = db_registeredUserModel.RegisteredUsers.Find(rating.RatedUserID);
+                List<Rating> ratings = db_ratingModel.Rating.Where(r => r.RatedUserID == rating.RatedUserID).ToList();
+                ListingReservation listingReservation = db.ListingReservation.Find(reservationID);
+
+                if (user == null || listingReservation == null)
+                {
+                    return NotFound();
+                }
+
+                if (rating.RatingValue < 0 || rating.RatingValue > 5)
+                {
+                    return BadRequest();
+                }
+
+
+                double sum = 0;
+                sum += rating.RatingValue;
+
+                foreach (var r in ratings)
+                {
+                    sum += r.RatingValue;
+                }
+
+                double newUserRating = sum;
+                if (ratings.Any())
+                    newUserRating = sum / (ratings.Count + 1);
+
+                db_ratingModel.Rating.Add(rating);
+                db_ratingModel.SaveChanges();
+
+                user.Rating = (decimal)newUserRating;
+                db_registeredUserModel.Entry(user).Property(u => u.LoginCredentialsID).IsModified = false;
+                db_registeredUserModel.Entry(user).State = EntityState.Modified;
+                db_registeredUserModel.SaveChanges();
+
+                listingReservation.Rating = rating.RatingValue;
+                db.Entry(listingReservation).Property(lr => lr.ListingID).IsModified = false;
+                db.Entry(listingReservation).Property(lr => lr.ListingOwnerID).IsModified = false;
+                db.Entry(listingReservation).Property(lr => lr.ReservatorID).IsModified = false;
+                db.SaveChanges();
+            
+
+
+
+            return Ok("Success");
         }
 
 
