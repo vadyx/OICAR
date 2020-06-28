@@ -33,6 +33,8 @@ const ExploreScreen = props => {
   const hightlightedListings = useSelector(state => state.listings.hightlightedListings);
   const dispatch = useDispatch();
 
+  //console.log(hightlightedListings);
+
   if (categories.length === 0) {
     try {
       dispatch(vehicleDataActions.loadCategories());
@@ -47,7 +49,7 @@ const ExploreScreen = props => {
   }
 
   const _highlightedListingsLoad = useCallback(async () => {
-    await dispatch(listingsActions.loadHighlightedListings);
+    await dispatch(listingsActions.loadHighlightedListings());
   }, [dispatch]);
 
   const _onCategoryPressed = async (categoryID) => {
@@ -71,12 +73,14 @@ const ExploreScreen = props => {
   const _renderHighlightedItem = (item) => {
     return (
       <ListingCard 
+        key={item.id}
         width={width}
         height={210}
         name={item.title}
         type={item.category}
         price={item.price}
         rating={item.rating}
+        imageUri={`data:image/jpg;base64,${item.image}`}
         imageHeight={Platform.OS === "web" ? 200 : 110}
         pricetime={item.pricePeriod}
         widthbrand="50%"
@@ -170,88 +174,8 @@ const ExploreScreen = props => {
                         
                 <View style={styles.home_view}>
                   {hightlightedListings.map(item => _renderHighlightedItem(item))}
-                  {/* <ListingCard width={width}
-                    height={210}
-                    name="Aprilia Scooter 1"
-                    type="Motocikl"
-                    price={20}
-                    rating={4}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="tjedan"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Aprilia"
-                    model="1"
-                  />
-                  
-                  <ListingCard width={width}
-                    height={210}
-                    name="Audi A3 TOP"
-                    type="Automobil"
-                    price={42}
-                    rating={3.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="dan"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Audi"
-                    model="A3"
-                  />
-
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  /> */}
-
                 </View>
+
               </View>
             </View>
           </View>

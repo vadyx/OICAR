@@ -24,8 +24,6 @@ namespace WebServis.Models.ListingReservation
 
         public double Price { get; set; }
 
-        public int PriceByID { get; set; }
-
         public int CardNumber { get; set; }
 
         public int ReservatorID { get; set; }

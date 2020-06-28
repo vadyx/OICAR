@@ -147,6 +147,44 @@ namespace WebServis.Controllers.Listings
             return Ok(listingResponseModels);
         }
 
+
+        [Route("api/highlightedListings")]
+        [ResponseType(typeof(ShortListingResponseModel))]
+        public IHttpActionResult GetHighlightedListings()
+        {
+            List<ShortListingResponseModel> listingResponseModels;
+            List<Listing> listings = db.Listing.OrderByDescending(l => l.IDListing).Take(10).ToList();
+            try
+            {
+                listingResponseModels = new List<ShortListingResponseModel>();
+                foreach (Listing listing in listings.Where(l => l.AvailableToDate >= DateTime.Today))
+                {
+                    bool listingHasNoImage = db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault() == null;
+                    listingResponseModels.Add(
+                        new ShortListingResponseModel
+                        {
+                            IDListing = listing.IDListing,
+                            Title = listing.Title,
+                            Category = db_category.Category.Where(cat => cat.IDCategory == listing.Vehicle.CategoryID).First().CategoryName,
+                            Price = listing.Price,
+                            PriceBy = db_priceByModel.PriceBy.Where(priceBy => priceBy.IDPriceBy == listing.PriceByID).SingleOrDefault().PriceBy1,
+                            Rating = db_registeredUserModel.RegisteredUsers.Where(user => user.IDRegisteredUser == listing.UserID).SingleOrDefault().Rating,
+                            Image = listingHasNoImage ? "" : Convert.ToBase64String(db_vehicleImageModel.VehicleImage.Where(image => image.VehicleID == listing.VehicleID).FirstOrDefault().VehicleImageString),
+                            VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
+                            VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName
+                        });
+
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Ok(listingResponseModels);
+        }
+
+
         [Route("api/getListing/{listingID}")]
         [ResponseType(typeof(ShortListingResponseModel))]
         public IHttpActionResult GetListing(int listingID)
@@ -366,22 +404,6 @@ namespace WebServis.Controllers.Listings
             return Ok(listing);
         }
 
-        //private double CalculateDistance(double x1, double y1, double x2, double y2)
-        //{
-        //    double distance;
-        //    double R = 6373; // Radijus zemlje u km
-
-        //    double dx = x2 - x1;
-        //    double dy = y2 - y1;
-
-        //    double a = Math.Pow(Math.Sin(dx / 2), 2) + Math.Cos(x1) * Math.Cos(x2) * Math.Pow(Math.Sin(dy / 2), 2);
-        //    double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-
-        //    distance = R * c;
-
-        //    return distance;
-        //}
-
         private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
             if ((lat1 == lat2) && (lon1 == lon2))
@@ -402,17 +424,11 @@ namespace WebServis.Controllers.Listings
             }
         }
 
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        //::  This function converts decimal degrees to radians             :::
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         private double deg2rad(double deg)
         {
             return (deg * Math.PI / 180.0);
         }
 
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        //::  This function converts radians to decimal degrees             :::
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         private double rad2deg(double rad)
         {
             return (rad / Math.PI * 180.0);

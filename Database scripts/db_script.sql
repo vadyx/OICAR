@@ -236,14 +236,11 @@ create table ListingReservation
 	ToDate date not null,
 	MobileNumber nvarchar(20) not null,
 	Price float not null,
-	PriceByID int not null,
 	CardNumber int not null,
 	ReservatorID int not null,
 	ListingOwnerID int not null,
 	ListingID int not null,
 
-	CONSTRAINT FK_ListingReservation_PriceBy FOREIGN KEY (PriceByID)
-		REFERENCES PriceBy(IDPriceBy),
 	CONSTRAINT FK_ListingReservation_Reservator FOREIGN KEY (ReservatorID)
 		REFERENCES RegisteredUser(IDRegisteredUser),
 	CONSTRAINT FK_ListingReservation_ListingOwner FOREIGN KEY (ListingOwnerID)
@@ -251,4 +248,3 @@ create table ListingReservation
 	CONSTRAINT FK_ListingReservation_Listing FOREIGN KEY (ListingID)
 		REFERENCES Listing(IDListing),
 )
-

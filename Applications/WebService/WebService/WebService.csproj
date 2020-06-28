@@ -171,6 +171,9 @@
     <Compile Include="Models\Registration\RegisteredUserModel.cs" />
     <Compile Include="Models\Category\VehicleManufacturerModel.cs" />
     <Compile Include="Models\ResponseModels\ListingUserResponseModel.cs" />
+    <Compile Include="Models\ResponseModels\ReservationResponseModel.cs" />
+    <Compile Include="Models\ResponseModels\ReservationUserResponseModel.cs" />
+    <Compile Include="Models\ResponseModels\ShortListingReservationResponseModel.cs" />
     <Compile Include="Models\ResponseModels\VehicleResponseModel.cs" />
     <Compile Include="Models\Vehicle\DriveType.cs" />
     <Compile Include="Models\Vehicle\DriveTypeModel.cs" />

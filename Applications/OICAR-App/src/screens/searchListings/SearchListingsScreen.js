@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
-import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 import BackButton from '../../components/BackButton';

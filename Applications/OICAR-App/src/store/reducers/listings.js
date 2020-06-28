@@ -27,8 +27,8 @@ export default (state = initialState, action) => {
         case LOAD_HIGHLIGHTED_LISTINGS:
             return {
                 ...state,
-                hightlightedListings: action.hightlightedListings
-            }
+                hightlightedListings: action.highlightedListings
+            };
         case LOAD_SELECTED_LISTING:
             return {
                 ...state,

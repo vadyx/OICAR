@@ -1,3 +1,5 @@
+import * as Location from 'expo-location';
+
 import ShortListing from '../../models/shortListing';
 import FullListing from '../../models/fullListing';
 import Vehicle from '../../models/vehicle';
@@ -35,17 +37,13 @@ export const loadCategoryListings = (locationPermission) => {
                   enableHighAccuracy: true
                 });
 
-                response = await fetch(`api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
-                console.log(response);
-            } catch {
+                response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
+            } catch (error) {
                 //error logic
             }
         } else {
             response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}`);
-            console.log(response);
         }
-
-        console.log(response);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -81,7 +79,36 @@ export const loadCategoryListings = (locationPermission) => {
 };
 
 export const loadHighlightedListings = () => {
-    
+    return async (dispatch) => {
+
+        let response = await fetch(`http://192.168.1.10:12335/api/highlightedListings`);
+
+        if (!response.ok) {
+            throw new Error("Listings not loaded");
+        }
+
+        const resData = await response.json();
+        const loadedHighlightedListings = [];
+
+        for (const index in resData) {
+            loadedHighlightedListings.push(new ShortListing(
+                resData[index].IDListing,
+                resData[index].Title,
+                resData[index].Category,
+                resData[index].Price,
+                resData[index].PriceBy,
+                resData[index].Rating,
+                resData[index].Image,
+                resData[index].VehicleManufacturer,
+                resData[index].VehicleModel
+            ));
+        }
+
+        dispatch({
+            type: LOAD_HIGHLIGHTED_LISTINGS,
+            highlightedListings: loadedHighlightedListings
+        });
+    };
 }
 
 export const load10MoreListings = () => {
