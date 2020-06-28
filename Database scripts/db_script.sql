@@ -251,3 +251,4 @@ create table ListingReservation
 	CONSTRAINT FK_ListingReservation_Listing FOREIGN KEY (ListingID)
 		REFERENCES Listing(IDListing),
 )
+
