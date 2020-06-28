@@ -21,6 +21,7 @@ export { default as AddLocationScreen } from './addListing/AddLocationScreen';
 export { default as AddMapScreen } from './addListing/AddMapScreen';
 
 export { default as SearchListingsScreen } from './searchListings/SearchListingsScreen';
+export { default as SearchFilterScreen } from './searchListings/SearchFilterScreen';
 export { default as SearchListingDetailsScreen } from './searchListings/SearchListingDetailsScreen';
 
 export { default as ProfileListingsScreen } from './profile/ProfileListingsScreen';
