@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -23,10 +23,12 @@ const currentDate = moment().toDate();
 const ReservationDateScreen = props => {
 
   const userData = useSelector(state => state.profile.user);
+  const listing = useSelector(state => state.listings.selectedListing);
 
   const [startDate, setStartDate] = useState(moment().toDate());
   const [endDate, setEndDate] = useState(moment(currentDate).add(1, 'days').toDate());
   const [phoneNr, setPhoneNr] = useState("+ 385 ");
+  const [totalPrice, setTotalPrice] = useState();
 
   const dispatch = useDispatch();
 
@@ -46,10 +48,39 @@ const ReservationDateScreen = props => {
     }
   };
 
+  const _calculateTotalPrice = () => {
+    let totalPrice = listing.price;
+
+    const start = new Date(startDate.toDateString());
+    const end = new Date(endDate.toDateString());
+
+    var days = (end.getTime() - start.getTime()) / (1000 * 3600 * 24); 
+
+    switch (listing.pricePeriod) {
+      case "Sat":
+        totalPrice = totalPrice * 24 * days;
+        break;
+      case "Dan":
+        totalPrice = totalPrice * days;
+        break;
+      case "Tjedan":
+        totalPrice = ((totalPrice * days) / 12);
+        break;
+      default:
+        break;
+    }
+
+    setTotalPrice(totalPrice.toFixed(2));
+  }
+
   const _onNextPressed = async () => {
-    dispatch(reservationAction.setReservation1(startDate, endDate, phoneNr));
+    dispatch(reservationAction.setReservation1(startDate, endDate, phoneNr, totalPrice));
     props.navigation.navigate('ReservationPay');
   };
+
+  useEffect(() => {
+    _calculateTotalPrice();
+  }, [startDate, endDate]);
 
   return (
     <View style={styles.container}>
@@ -128,7 +159,7 @@ const ReservationDateScreen = props => {
 
         <View style={styles.pricebox}>
           <Text style={styles.pricetextstyle}>Cijena ukupno:</Text>
-          <Text style={styles.pricetextstyle1}>450 kn</Text>
+          <Text style={styles.pricetextstyle1}>{totalPrice}</Text>
         </View>
         <TouchableOpacity style={styles.detailboxstyle}>
           <Text style={styles.detailprice}> - Pogledajte detalje cijene</Text>

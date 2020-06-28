@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -19,24 +19,18 @@ import CategoryExplore from '../../components/CategoryExplore';
 import ListingCard from '../../components/ListingCard';
 import Logo from "../../components/Logo";
 import * as vehicleDataActions from '../../store/actions/vehicleData';
+import * as listingsActions from '../../store/actions/listings';
 import { theme } from "../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const width = Dimensions.get('window').width/2 - 35;
 
-const _renderCategoryItem = (item) => {
-  return (
-    <CategoryExplore
-      key={item.id} 
-      imageUri={item.imageUri}
-      name={item.name}
-    />
-  );
-}
-
 const ExploreScreen = props => { 
 
+  const [loadingListings, setLoadingListings] = useState(false);
+
   const categories = useSelector(state => state.vehicleData.categories);
+  const hightlightedListings = useSelector(state => state.listings.hightlightedListings);
   const dispatch = useDispatch();
 
   if (categories.length === 0) {
@@ -51,6 +45,54 @@ const ExploreScreen = props => {
   if (Platform.OS == 'android') {
       startHeaderHeight = 58 + StatusBar.currentHeight
   }
+
+  const _highlightedListingsLoad = useCallback(async () => {
+    await dispatch(listingsActions.loadHighlightedListings);
+  }, [dispatch]);
+
+  const _onCategoryPressed = async (categoryID) => {
+    await dispatch(listingsActions.clearPreviousList());
+    await dispatch(listingsActions.setCategory(categoryID));
+    props.navigation.navigate('Listings');
+  };
+
+  const _renderCategoryItem = (item) => {
+    return (
+      <CategoryExplore
+        key={item.id}
+        categoryID = {item.id}
+        onCategoryPressed={_onCategoryPressed}
+        imageUri={item.imageUri}
+        name={item.name}
+      />
+    );
+  }
+
+  const _renderHighlightedItem = (item) => {
+    return (
+      <ListingCard 
+        width={width}
+        height={210}
+        name={item.title}
+        type={item.category}
+        price={item.price}
+        rating={item.rating}
+        imageHeight={Platform.OS === "web" ? 200 : 110}
+        pricetime={item.pricePeriod}
+        widthbrand="50%"
+        widthprice="50%"
+        brand={item.manufacturer}
+        model={item.model}
+      />
+    );
+  }
+
+  useEffect(() => {
+    setLoadingListings(true);
+    _highlightedListingsLoad().then(() => {
+      setLoadingListings(false);
+    });
+  }, [_highlightedListingsLoad]);
 
   return (
     <SafeAreaView style={styles.safeareastyle}>
@@ -101,7 +143,7 @@ const ExploreScreen = props => {
                 </Text>
                 
                 <Text style={styles.textstyle2}>
-                  Odaberite idealan brod za sebe i započnite svoje nezaboravno plovljenje Jadranom!
+                  Rezervirajte već danas te započnite svoje nezaboravno plovljenje Jadranom!
                 </Text>
                           
                 <TouchableOpacity style={styles.video_view}>
@@ -127,7 +169,8 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <ListingCard width={width}
+                  {hightlightedListings.map(item => _renderHighlightedItem(item))}
+                  {/* <ListingCard width={width}
                     height={210}
                     name="Aprilia Scooter 1"
                     type="Motocikl"
@@ -206,7 +249,7 @@ const ExploreScreen = props => {
                     widthprice="50%"
                     brand = "Fiat"
                     model="Punto"
-                  />
+                  /> */}
 
                 </View>
               </View>
@@ -223,8 +266,8 @@ const styles = StyleSheet.create({
       flex: 1
     },
     logo_search_container:{
-      paddingTop:10,
-      height:90,
+      paddingTop:15,
+      height:100,
       flexDirection:'row',
       backgroundColor: 'white',
       borderBottomWidth:0, //samo radi na iOS

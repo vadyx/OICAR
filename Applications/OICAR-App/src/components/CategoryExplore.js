@@ -13,11 +13,14 @@ const Category = props => {
 
     return (
         <View style={styles.category_container}>
-            <TouchableOpacity style={styles.imagecontainer}>
+            <TouchableOpacity 
+                style={styles.imagecontainer} 
+                onPress={() => props.onCategoryPressed(props.categoryID)}>
 
                 <Image source={{ uri: props.imageUri }}
                     style={styles.imagestyle}
                 />
+                
             </TouchableOpacity>
             <View style={styles.categoryname_container}>
                 <Text style={styles.text_style}>{props.name}</Text>

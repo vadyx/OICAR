@@ -1,9 +1,10 @@
-import { SET_RESERVATION_1 } from "../actions/reservation";
+import { SET_RESERVATION_1, COMPLETE_RESERVATION } from "../actions/reservation";
 
 const initialState = {
     startDate: null, 
     endDate: null,
-    phoneNr: null
+    phoneNr: null,
+    totalPrice: null
 };
 
 export default (state = initialState, action) => {
@@ -14,8 +15,11 @@ export default (state = initialState, action) => {
                 ...state,
                 startDate: action.startDate,
                 endDate: action.endDate,
-                phoneNr: action.phoneNr
+                phoneNr: action.phoneNr,
+                totalPrice: action.totalPrice
             };
+        case COMPLETE_RESERVATION:
+            return initialState;
         default:
             return state;
     }

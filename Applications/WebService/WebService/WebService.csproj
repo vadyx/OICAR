@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Categories\CategoriesController.cs" />
+    <Compile Include="Controllers\ListingReservation\ListingReservationsController.cs" />
     <Compile Include="Controllers\Listings\ListingsController.cs" />
     <Compile Include="Controllers\Listings\PricesByController.cs" />
     <Compile Include="Controllers\User\LoginCredentialsController.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="Models\Category\VehicleManufacturer.cs" />
     <Compile Include="Models\Category\VehicleModel.cs" />
     <Compile Include="Models\Category\VehicleModelModel.cs" />
+    <Compile Include="Models\ListingReservation\ListingReservation.cs" />
+    <Compile Include="Models\ListingReservation\ListingReservationModel.cs" />
     <Compile Include="Models\Listings\Listing.cs" />
     <Compile Include="Models\Listings\ListingModel.cs" />
     <Compile Include="Models\Listings\PriceBy.cs" />

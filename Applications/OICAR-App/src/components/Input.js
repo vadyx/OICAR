@@ -63,6 +63,10 @@ const Input = props => {
       if (props.price) {
         onInputChange(inputState.value, inputState.isValid);
       }
+
+      if (props.cardNum) {
+        onInputChange(inputState.value);
+      }
    }
 
     setUpdateState(false);

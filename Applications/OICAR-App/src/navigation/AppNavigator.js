@@ -1,6 +1,7 @@
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { theme } from '../utils/theme';
 import { AntDesign,SimpleLineIcons,Feather } from '@expo/vector-icons';
@@ -30,7 +31,62 @@ import {
   ReservationDateScreen,
   ReservationPayScreen,
   ProfileListingsScreen,
+  ReservedVehicleUserScreen,
+  ReservedVehicleRenterScreen,
+  ReservedUserListingScreen,
+  ReservedRenterListingScreen
 } from '../screens';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
+const ReservedUserNavigator = createStackNavigator(
+  {
+    ReservedUserListing:ReservedUserListingScreen,
+    ReservedUser:ReservedVehicleUserScreen
+  },
+  {
+    headerMode:"none",
+  }
+);
+
+const ReservedRenterNavigator = createStackNavigator(
+  {
+    ReservedRenterListing:ReservedRenterListingScreen,
+    ReservedRenter: ReservedVehicleRenterScreen
+  },
+  {
+    headerMode:"none",
+  }
+);
+
+const TopTabNavigator = createMaterialTopTabNavigator({
+  ReservedUserNav:{
+    screen: ReservedUserNavigator,
+    navigationOptions:{
+      tabBarLabel:"Unajmljena vozila"
+    }
+  },
+  ReservedRenterNav:{
+    screen: ReservedRenterNavigator,
+    navigationOptions:{
+      tabBarLabel:"Iznajmljena vozila"
+    }
+  }
+},
+{
+  swipeEnabled:true,
+  initialRouteName:'ReservedUserNav',
+  tabBarOptions:{
+    activeTintColor:theme.colors.white,
+    inactiveTintColor:theme.colors.lightgrey,
+    allowFontScaling:true,
+    pressColor:theme.colors.primary,
+    indicatorStyle:{borderBottomColor:theme.colors.white, borderBottomWidth:3,},
+    style:{backgroundColor:theme.colors.primary},
+    labelStyle:{fontWeight:'bold',marginTop:getStatusBarHeight()+15,marginBottom:15}
+  }
+}
+)
+
 
 const SearchNavigator = createStackNavigator(
   {
@@ -49,7 +105,8 @@ const ProfileNavigator = createStackNavigator(
   {
     Profile: ProfileScreen,
     MyListings: ProfileListingsScreen,
-    ListingDetails: SearchListingDetailsScreen
+    ListingDetails: SearchListingDetailsScreen,
+    ReservedVehicle: TopTabNavigator
   },
   {
     headerMode:"none",

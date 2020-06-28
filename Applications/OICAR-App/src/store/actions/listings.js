@@ -6,6 +6,7 @@ import User from '../../models/user';
 export const CLEAR_LIST = "CLEAR_LIST";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
+export const LOAD_HIGHLIGHTED_LISTINGS = "LOAD_HIGHLIGHTED_LISTINGS";
 export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
 
 export const clearPreviousList = () => {
@@ -21,12 +22,30 @@ export const setCategory = categoryID => {
     };
 };
 
-export const loadCategoryListings = () => {
+export const loadCategoryListings = (locationPermission) => {
     return async (dispatch, getState) => {
 
         const categoryID = getState().listings.categoryID;
+        let response;
 
-        const response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}`);
+        if (locationPermission) {
+            try {
+                const currentPos = await Location.getCurrentPositionAsync({
+                  timeout: 5000,
+                  enableHighAccuracy: true
+                });
+
+                response = await fetch(`api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
+                console.log(response);
+            } catch {
+                //error logic
+            }
+        } else {
+            response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}`);
+            console.log(response);
+        }
+
+        console.log(response);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -60,6 +79,10 @@ export const loadCategoryListings = () => {
         });
     };
 };
+
+export const loadHighlightedListings = () => {
+    
+}
 
 export const load10MoreListings = () => {
     return async (dispatch, getState) => {

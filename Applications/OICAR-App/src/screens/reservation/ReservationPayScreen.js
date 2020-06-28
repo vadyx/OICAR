@@ -7,28 +7,43 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { MaterialIcons,AntDesign } from '@expo/vector-icons';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 import BackButton from '../../components/BackButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import Input from '../../components/Input';
 import ModalSuccess from '../../components/ModalSuccess';
-import { theme } from '../../utils/theme';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
 import Loader from '../../components/Loader';
+import * as reservationActions from '../../store/actions/reservation';
+import { theme } from '../../utils/theme';
 
 const ReservationDateScreen = props => {
 
     const [successModalVisible, setSuccessModalVisible] = useState(false);
     const [loadVisible,setLoadVisible] = useState(false);
 
+    const [cardNum, setCardNum] = useState("");
+
+    const listing = useSelector(state => state.listings.selectedListing);
+    const totalPrice = useSelector(state => state.reservation.totalPrice);
+
+    const dispatch = useDispatch();
+
     const notOnBrowser = Platform.OS === "web" ? false : true;
+
+    const _onCardChange = (text) => {
+        serCardNum(text.trim().substring(text.length-4));
+        console.log(cardNum);
+    }
 
     const _onNextPressed = async () => {
         setLoadVisible(true);
         setTimeout(async () => {
             setLoadVisible(false);
+            await dispatch(reservationActions.completeReservation());
             setSuccessModalVisible(true);
             setTimeout(async () => {
                 setSuccessModalVisible(false);
@@ -47,17 +62,19 @@ const ReservationDateScreen = props => {
             <Text style={styles.headerstyle}>Rezervacija</Text>
             <Text style={styles.headerstyle2}>2/2</Text>
             <View>
-                <Image style={styles.mainimage} source={require("../../assets/car3.jpg")}/>
+                <Image 
+                    style={styles.mainimage} 
+                    source={{ uri: listing.images[0] }}/>
             </View>
 
             <View style={styles.namebox}>
             <Text style={styles.pricetextstyle}>Naziv vozila:</Text>
-            <Text style={styles.pricetextstyle1}>Fiat Punto</Text>
+            <Text style={styles.pricetextstyle1}>{listing.vehicle.manufacturer} {listing.vehicle.model}</Text>
             </View>
 
             <View style={styles.pricebox}>
             <Text style={styles.pricetextstyle}>Cijena ukupno:</Text>
-            <Text style={styles.pricetextstyle1}>450 kn</Text>
+            <Text style={styles.pricetextstyle1}>{totalPrice}</Text>
             <TouchableOpacity style={styles.detailinfo}>
                 <AntDesign name="questioncircle" size={18} color={theme.colors.lightgrey} />
             </TouchableOpacity>
@@ -72,33 +89,37 @@ const ReservationDateScreen = props => {
                 <Input
                     keyboardType='decimal-pad'
                     placeholder="Broj kartice"
+                    onInputChange={_onCardChange}
                     style={styles.input}
                 />
                 <View style={styles.detailcardbox}>
                     <Text style={styles.detailtext}>Ime i prezime</Text>
                     <Input
                         placeholder="Ime i prezime"
-                        style={styles.detailinput}/>
+                        style={styles.detailinput}
+                    />
                 </View>
                 <View style={styles.detailcardbox}>
                     <Text style={styles.detailtext}>Sigurnosni kod</Text>
                     <Input
                         keyboardType='decimal-pad'
                         placeholder="CVV"
-                        style={styles.detailinput}/>
+                        style={styles.detailinput}
+                    />
                 </View>
                 <View style={styles.detailcardbox}>
                     <Text style={styles.detailtext}>Datum isteka</Text>
                     <Input
                         keyboardType='decimal-pad'
                         placeholder="MM/GG"
-                        style={styles.detailinput}/>
+                        style={styles.detailinput} 
+                    />
                 </View>
                 <View style={styles.descriptionbox}>
                     <MaterialIcons name="security" size={45} color={theme.colors.lightplusgrey} />
                     <View style={styles.textdescription}>
-                    <Text style={styles.primarydescriptiontext}>Sigurno plaćanje</Text>
-                    <Text style={styles.secondarydescriptiontext}>Provjereno od više od 500 milijuna korisnika</Text>
+                        <Text style={styles.primarydescriptiontext}>Sigurno plaćanje</Text>
+                        <Text style={styles.secondarydescriptiontext}>Provjereno od više od 500 milijuna korisnika</Text>
                     </View>
                 </View>
             </View>
