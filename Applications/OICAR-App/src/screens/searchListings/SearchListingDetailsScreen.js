@@ -20,6 +20,7 @@ import { theme } from '../../utils/theme';
 const SearchListingDetailsScreen = props => {
 
     const listing = useSelector(state => state.listings.selectedListing);
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
     const [mapPreview, setMapPreview] = useState(null);
     const [address, setAddress] = useState(null);
@@ -40,8 +41,11 @@ const SearchListingDetailsScreen = props => {
     }, [_loadMapPreview, _fetchAddress]);
 
     const _onPress = async () => {
-
-        props.navigation.navigate('ReservationDate');
+        if (!isLoggedIn) {
+            props.navigation.navigate("Auth");
+        } else {
+            props.navigation.navigate('ReservationDate');
+        }
     };
 
     return (

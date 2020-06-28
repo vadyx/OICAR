@@ -9,7 +9,7 @@ const InboxScreen = props => {
   return (
     <NotLoggedInView 
       titleText='Ups!'
-      contentText='Prijavite se kako bih ste vidjeli dolazne poruke'
+      contentText='Prijavite se kako biste vidjeli dolazne poruke'
       navigation={props.navigation}>
 
       <MaterialCommunityIcons name="email-lock" size={220} color={theme.colors.lightgrey} style={styles.iconstyle}/>

@@ -26,7 +26,7 @@ export const loadCategoryListings = () => {
 
         const categoryID = getState().listings.categoryID;
 
-        const response = await fetch(`http://192.168.1.5:12335/api/shortListings/${categoryID}`);
+        const response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -81,7 +81,7 @@ export const load10MoreListings = () => {
 export const loadSelectedListing = id => {
     return async (dispatch) => {
 
-        const response = await fetch(`http://192.168.1.5:12335/api/getListing/${id}`);
+        const response = await fetch(`http://192.168.1.10:12335/api/getListing/${id}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");

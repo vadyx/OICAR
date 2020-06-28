@@ -49,7 +49,7 @@ const ProfileNavigator = createStackNavigator(
   {
     Profile: ProfileScreen,
     MyListings: ProfileListingsScreen,
-    //ListingDetails: SearchListingDetailsScreen
+    ListingDetails: SearchListingDetailsScreen
   },
   {
     headerMode:"none",

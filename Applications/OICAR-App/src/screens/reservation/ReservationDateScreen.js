@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,23 +7,48 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Input } from 'react-native-elements';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useDispatch, useSelector } from 'react-redux';
+import { MaterialIcons } from '@expo/vector-icons';
+import moment from 'moment';
 
 import BackButton from '../../components/BackButton';
 import NextScreenButton from '../../components/NextScreenButton';
 import DatePicker from '../../components/DatePicker';
+import * as reservationAction from '../../store/actions/reservation';
 import { theme } from '../../utils/theme';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { MaterialIcons } from '@expo/vector-icons';
-import moment from 'moment';
 
 const currentDate = moment().toDate();
-let nextDayDate = moment(currentDate).add(1, 'days').toDate();
 
 const ReservationDateScreen = props => {
 
-  const _onNextPressed = async () => {
+  const userData = useSelector(state => state.profile.user);
 
-      props.navigation.navigate('ReservationPay');
+  const [startDate, setStartDate] = useState(moment().toDate());
+  const [endDate, setEndDate] = useState(moment(currentDate).add(1, 'days').toDate());
+  const [phoneNr, setPhoneNr] = useState("+ 385 ");
+
+  const dispatch = useDispatch();
+
+  const _onDateChanged = (id, selectedDate) => {
+    let date;
+
+    if (id === 'startDate') {
+      date = selectedDate || startDate;
+      setStartDate(date);
+      return;
+    }
+
+    if (id === 'endDate') {
+      date = selectedDate || endDate;
+      setEndDate(date);
+      return;
+    }
+  };
+
+  const _onNextPressed = async () => {
+    dispatch(reservationAction.setReservation1(startDate, endDate, phoneNr));
+    props.navigation.navigate('ReservationPay');
   };
 
   return (
@@ -37,7 +62,9 @@ const ReservationDateScreen = props => {
           <DatePicker
             id='startDate'
             label="Od"
-            date={currentDate}     
+            date={startDate}
+            minimumDate={currentDate}
+            onDateChanged={_onDateChanged}     
             style={styles.labelstyle}
             labelsize={18}
             labelfontweight="bold"
@@ -47,7 +74,9 @@ const ReservationDateScreen = props => {
           <DatePicker
             id='endDate'
             label="Do"
-            date={nextDayDate}
+            date={endDate}
+            minimumDate={currentDate}
+            onDateChanged={_onDateChanged}
             style={styles.labelstyle}
             labelsize={18}
             labelfontweight="bold"
@@ -59,21 +88,23 @@ const ReservationDateScreen = props => {
           containerStyle={styles.input}
           label='Ime'
           labelStyle={styles.inputlabel}
-          placeholder='Vilko' 
+          placeholder={userData.firstName}
           disabled
           inputContainerStyle={styles.inputinside}
           inputStyle={styles.textinput}
         />
+
         <Input 
           containerStyle={styles.input} 
           label='Prezime'
           labelStyle={styles.inputlabel}
-          placeholder='Jugovic'
+          placeholder={userData.lastName}
           disabled
           inputContainerStyle={styles.inputinside}
         />
+
         <Input 
-          placeholder='user@mail.com'
+          placeholder={userData.email}
           label='E-mail'
           labelStyle={styles.inputlabel}
           disabled
@@ -82,16 +113,17 @@ const ReservationDateScreen = props => {
           leftIconContainerStyle={styles.iconstyle}
           inputStyle={styles.textinput}
         />
-        <Input 
-          placeholder='npr. 00385911234567'
-          placeholderTextColor={theme.colors.lightplusgrey}
+        
+        <Input
           keyboardType="decimal-pad"
           label='Telefon'
           labelStyle={styles.inputlabel}
           containerStyle={styles.input}
           leftIcon={<MaterialIcons name="phone" size={20} color={theme.colors.lightgrey} />}
           leftIconContainerStyle={styles.iconstyle}
+          value={phoneNr}
           inputStyle={styles.textinput}
+          onChangeText={(text) => setPhoneNr(text)}
         />
 
         <View style={styles.pricebox}>
@@ -104,6 +136,7 @@ const ReservationDateScreen = props => {
         
       </ScrollView>
       <NextScreenButton
+        disabled={startDate > endDate || phoneNr.length < 9}
         navigate={_onNextPressed}
       />
 

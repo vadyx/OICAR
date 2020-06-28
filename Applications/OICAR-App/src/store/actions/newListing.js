@@ -89,7 +89,7 @@ export const confirmListing = () => {
         const newListingData = getState().newListing;
         const userID = getState().auth.userId;
 
-        const response = await fetch('http://192.168.1.5:12335/api/newListing',
+        const response = await fetch('http://192.168.1.10:12335/api/newListing',
             {
                 method: 'POST',
                 headers: {
