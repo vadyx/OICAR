@@ -1,4 +1,4 @@
-import { SET_RESERVATION_1, COMPLETE_RESERVATION, LOAD_GIVEN_RESERVATIONS, LOAD_MADE_RESERVATIONS } from "../actions/reservation";
+import { SET_RESERVATION_1, COMPLETE_RESERVATION, LOAD_GIVEN_RESERVATIONS, LOAD_MADE_RESERVATIONS, LOAD_SELECTED_USER_RESERVATION, LOAD_SELECTED_RENTER_RESERVATION } from "../actions/reservation";
 
 const initialState = {
     startDate: null, 
@@ -7,7 +7,8 @@ const initialState = {
     totalPrice: null,
     madeReservations: [],
     givenReservations: [],
-    selectedReservation: null
+    selectedUserReservation: null,
+    selectedRenterReservation: null
 };
 
 export default (state = initialState, action) => {
@@ -38,6 +39,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 madeReservations: action.madeReservations
+            };
+        case LOAD_SELECTED_USER_RESERVATION:
+            return {
+                ...state,
+                selectedUserReservation: action.selectedReservation
+            };
+        case LOAD_SELECTED_RENTER_RESERVATION:
+            return {
+                ...state,
+                selectedRenterReservation: action.selectedReservation
             };
         default:
             return state;

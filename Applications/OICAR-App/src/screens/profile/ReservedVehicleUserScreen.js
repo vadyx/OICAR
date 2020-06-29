@@ -7,99 +7,113 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { AntDesign } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
+import StarRating from "react-native-star-rating";
 
 import BackButton from '../../components/BackButton';
 import { theme } from '../../utils/theme';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { AntDesign } from '@expo/vector-icons';
 
 const ReservationVehicleUserScreen = props => {
 
-  const _onNextPressed = async () => {
+    const reservation = useSelector(state => state.reservation.selectedUserReservation);
 
-      props.navigation.navigate('ReservationPay');
-  };
+    return (
+        <View style={styles.container}>
+            <ScrollView style={{flex:1,width:"100%",height:"100%"}}>
+                <BackButton style={styles.back} goBack={() => props.navigation.goBack()}/>
+                <Text style={styles.headerstyle}>Potvrda rezervacije</Text>
 
-  return (
-    <View style={styles.container}>
-        <ScrollView style={{flex:1,width:"100%",height:"100%"}}>
-            <BackButton style={styles.back} goBack={() => props.navigation.goBack()}/>
-            <Text style={styles.headerstyle}>Potvrda rezervacije</Text>
+                <Image style={styles.mainimage} source={{ uri: `data:image/jpg;base64,${reservation.image}`}}/>
+                <View style={styles.infoboxstyle}>
+                    <View style={styles.inforow}>
+                        <Text style={styles.namestyle}>Rezervacija broj:</Text>
+                        <Text style={styles.namestyle}>{reservation.id}</Text>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.inforow}>
+                        <Text style={styles.namestyle}>Naziv oglasa:</Text>
+                        <Text style={styles.namestyle}>{reservation.title}</Text>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.inforow}>
+                        <Text style={styles.namestyle}>Cijena ukupno:</Text>
+                        <Text style={styles.namestyle}>{reservation.price} kn</Text>
+                        <TouchableOpacity style={styles.detailinfo}>
+                            <AntDesign name="questioncircle" size={20} color={theme.colors.lightgrey} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.inforow}>
+                        <Text style={styles.namestyle}>Marka:</Text>
+                        <Text style={styles.namestyle}>{reservation.manufacturer}</Text>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.inforow}>
+                        <Text style={styles.namestyle}>Model:</Text>
+                        <Text style={styles.namestyle}>{reservation.model}</Text>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.dateboxstyle}>
+                        <View style={styles.datesubbox}>
+                            <Text style={styles.datesubtext}>Od</Text>
+                            <Text style={styles.brandstyle}>{reservation.displayStartDate}</Text>
+                        </View>
+                        <View style={styles.datesubbox}>
+                            <Text style={styles.datesubtext}>Do</Text>
+                            <Text style={styles.brandstyle}>{reservation.displayEndDate}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.hl}/>
+                    <View style={styles.locationbox}>
+                        <Image source={require('../../assets/map.png')} style={styles.mapimg}/>
+                        <View style={styles.mapinfobox}>
+                            <Text style={styles.maptextinfo}>Zagreb, 10000</Text>
+                            <Text style={styles.maptextinfo}>Ilica 242</Text>
+                            <Text style={styles.maptextinfo}>Hrvatska</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.fn}>*Lokacija preuzimanja vozila</Text>
+                    <View style={styles.hl}/>
+                    <Text style={styles.headercontact}>Kontakt informacije iznajmljivača</Text>
+                    <View style={styles.contactbox}>
+                        <View style={styles.profileImage}>
+                            <Image source={{ uri: reservation.user.imageUri }} style={styles.image} resizeMode="cover"></Image>
+                        </View>
+                        <View style={styles.contactsubbox}>
+                            <Text style={styles.contactinfodesctext}>Ime i prezime:</Text>
+                            <Text style={styles.contactinfotext}>{reservation.user.firstName} {reservation.user.lastName}</Text>
+                        </View>
+                        <View style={styles.contactsubbox}>
+                            <Text style={styles.contactinfodesctext}>Email:</Text>
+                            <Text style={styles.contactinfotext}>{reservation.user.email}</Text>
+                        </View>
+                        <View style={styles.contactsubbox}>
+                            <Text style={styles.contactinfodesctext}>Broj telefona:</Text>
+                            <Text style={styles.contactinfotext}>{reservation.phoneNr}</Text>
+                        </View>
+                        <View style={styles.contactsubstarbox}>
+                            <Text style={styles.contactinfodescstartext}>Ocijenite iznajmljivača</Text>
+                            <StarRating
+                                disabled={false}
+                                maxStars={5}
+                                rating={3}
+                                starSize={25}
+                                emptyStarColor={theme.colors.quaternary}
+                                fullStarColor={theme.colors.gold}
+                            />
+                            <TouchableOpacity  style={styles.starratingbutton}>
+                                <Text style={styles.starratingbuttontext}>Ocijeni</Text>
+                            </TouchableOpacity>
+                        </View>
 
-            <Image style={styles.mainimage} source={require("../../assets/car3.jpg")}/>
-            <View style={styles.infoboxstyle}>
-                <View style={styles.inforow}>
-                    <Text style={styles.namestyle}>Rezervacija broj:</Text>
-                    <Text style={styles.namestyle}>1234567</Text>
-                </View>
-                <View style={styles.hl}/>
-                <View style={styles.inforow}>
-                    <Text style={styles.namestyle}>Naziv oglasa:</Text>
-                    <Text style={styles.namestyle}>Audi A3 </Text>
-                </View>
-                <View style={styles.hl}/>
-                <View style={styles.inforow}>
-                    <Text style={styles.namestyle}>Cijena ukupno:</Text>
-                    <Text style={styles.namestyle}>450 kn</Text>
-                    <TouchableOpacity style={styles.detailinfo}>
-                        <AntDesign name="questioncircle" size={20} color={theme.colors.lightgrey} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.hl}/>
-                <View style={styles.inforow}>
-                    <Text style={styles.namestyle}>Marka:</Text>
-                    <Text style={styles.namestyle}>Audi</Text>
-                </View>
-                <View style={styles.hl}/>
-                <View style={styles.inforow}>
-                    <Text style={styles.namestyle}>Model:</Text>
-                    <Text style={styles.namestyle}>A3</Text>
-                </View>
-                <View style={styles.hl}/>
-                <View style={styles.dateboxstyle}>
-                    <View style={styles.datesubbox}>
-                        <Text style={styles.datesubtext}>Od</Text>
-                        <Text style={styles.brandstyle}>26.06.2020</Text>
-                    </View>
-                    <View style={styles.datesubbox}>
-                        <Text style={styles.datesubtext}>Do</Text>
-                        <Text style={styles.brandstyle}>28.06.2020</Text>
                     </View>
                 </View>
-                <View style={styles.hl}/>
-                <View style={styles.locationbox}>
-                    <Image source={require('../../assets/map.png')} style={styles.mapimg}/>
-                    <View style={styles.mapinfobox}>
-                        <Text style={styles.maptextinfo}>Zagreb, 10000</Text>
-                        <Text style={styles.maptextinfo}>Ilica 242</Text>
-                        <Text style={styles.maptextinfo}>Hrvatska</Text>
-                    </View>
-                </View>
-                <Text style={styles.fn}>*Lokacija preuzimanja vozila</Text>
-                <View style={styles.hl}/>
-                <Text style={styles.headercontact}>Kontakt informacije iznajmljivača</Text>
-                <View style={styles.contactbox}>
-                    <View style={styles.profileImage}>
-                        <Image source={require('../../assets/universal_profile_image.png')} style={styles.image} resizeMode="cover"></Image>
-                    </View>
-                    <View style={styles.contactsubbox}>
-                        <Text style={styles.contactinfodesctext}>Ime i prezime:</Text>
-                        <Text style={styles.contactinfotext}>Ivan Ivanovic</Text>
-                    </View>
-                    <View style={styles.contactsubbox}>
-                        <Text style={styles.contactinfodesctext}>Email:</Text>
-                        <Text style={styles.contactinfotext}>mail@mail.com</Text>
-                    </View>
-                    <View style={styles.contactsubbox}>
-                        <Text style={styles.contactinfodesctext}>Broj telefona:</Text>
-                        <Text style={styles.contactinfotext}>+385921234567</Text>
-                    </View>
-                </View>
-            </View>
-        
-        </ScrollView>
-    </View>
-  );
+            
+            </ScrollView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -215,6 +229,12 @@ const styles = StyleSheet.create({
       fontWeight:"600",
       paddingLeft:7
   },
+  contactinfodescstartext:{
+    fontSize:18,
+    color:theme.colors.primary,
+    fontWeight:"bold",
+    marginBottom:15
+  },
   contactinfodesctext:{
       fontSize:18,
       color:theme.colors.primary,
@@ -229,6 +249,10 @@ const styles = StyleSheet.create({
   contactsubbox:{
       flexDirection:"row",
       marginBottom:3
+  },
+  contactsubstarbox:{
+      flexDirection:"column",
+      marginTop:30
   },
   image: {
       flex: 1,
@@ -251,6 +275,20 @@ const styles = StyleSheet.create({
     },
     back:{
         marginTop:-getStatusBarHeight()
+    },
+    starratingbutton:{
+        alignSelf:"center",
+        marginTop:20,
+        backgroundColor:theme.colors.primary,
+        borderRadius:20
+    },
+    starratingbuttontext:{
+        fontSize:18,
+        color:theme.colors.white,
+        paddingVertical:10,
+        paddingHorizontal:16,
+        fontWeight:"bold"
+
     }
 });
 

@@ -6,7 +6,8 @@ export const SET_RESERVATION_1 = "SET_RESERVATION_1";
 export const COMPLETE_RESERVATION = "COMPLETE_RESERVATION";
 export const LOAD_GIVEN_RESERVATIONS = "LOAD_GIVEN_RESERVATIONS";
 export const LOAD_MADE_RESERVATIONS = "LOAD_MADE_RESERVATIONS";
-export const LOAD_SELECTED_RESERVATION = "LOAD_SELECTED_RESERVATION";
+export const LOAD_SELECTED_USER_RESERVATION = "LOAD_SELECTED_USER_RESERVATION";
+export const LOAD_SELECTED_RENTER_RESERVATION = "LOAD_SELECTED_RENTER_RESERVATION";
 
 export const setReservation1 = (startDate, endDate, phoneNr, totalPrice) => {
     return {
@@ -75,17 +76,20 @@ export const loadGivenReservations = () => {
         const loadedReservations = [];
 
         for (const index in resData) {
-            loadedReservations.push(new ShortListing(
-                resData[index].IDListing,
-                resData[index].Title,
-                resData[index].Category,
-                resData[index].Price,
-                resData[index].PriceBy,
-                resData[index].Rating,
-                resData[index].Image,
-                resData[index].VehicleManufacturer,
-                resData[index].VehicleModel
-            ));
+            loadedReservations.push({
+                reservationID: resData.ReservationID,
+                listing: new ShortListing(
+                    resData[index].IDListing,
+                    resData[index].Title,
+                    resData[index].Category,
+                    resData[index].Price,
+                    resData[index].PriceBy,
+                    resData[index].Rating,
+                    resData[index].Image,
+                    resData[index].VehicleManufacturer,
+                    resData[index].VehicleModel
+                )
+            });
         }
 
         dispatch({
@@ -110,17 +114,20 @@ export const loadMadeReservations = () => {
         const loadedReservations = [];
 
         for (const index in resData) {
-            loadedReservations.push(new ShortListing(
-                resData[index].IDListing,
-                resData[index].Title,
-                resData[index].Category,
-                resData[index].Price,
-                resData[index].PriceBy,
-                resData[index].Rating,
-                resData[index].Image,
-                resData[index].VehicleManufacturer,
-                resData[index].VehicleModel
-            ));
+            loadedReservations.push({
+                reservationID: resData[index].ReservationID,
+                listing: new ShortListing(
+                    resData[index].IDListing,
+                    resData[index].Title,
+                    resData[index].Category,
+                    resData[index].Price,
+                    resData[index].PriceBy,
+                    resData[index].Rating,
+                    resData[index].Image,
+                    resData[index].VehicleManufacturer,
+                    resData[index].VehicleModel
+                )
+            });
         }
 
         dispatch({
@@ -130,7 +137,7 @@ export const loadMadeReservations = () => {
     };
 };
 
-export const loadSelectedReservation = (reservationID) => {
+export const loadSelectedReservation = (reservationID, mode) => {
     return async (dispatch, getState) => {
 
         const userID = getState().profile.user.id;
@@ -138,10 +145,11 @@ export const loadSelectedReservation = (reservationID) => {
         let response = await fetch(`http://192.168.1.10:12335/api/reservation/${reservationID}/${userID}`);
 
         if (!response.ok) {
-            throw new Error("Made reservations not loaded");
+            throw new Error("Selected reservation not loaded");
         }
 
         const resData = await response.json();
+
         const loadedReservation = new Reservation(
             resData.ReservationNumber,
             resData.Title,
@@ -160,7 +168,7 @@ export const loadSelectedReservation = (reservationID) => {
             new User(
                 resData.UserInfo.IDUser,
                 resData.UserInfo.FirstName,
-                resData.UserInfo.LastName,
+                resData.UserInfo.Lastname,
                 resData.UserInfo.Email,
                 "",
                 "",
@@ -169,9 +177,18 @@ export const loadSelectedReservation = (reservationID) => {
             )
         );
 
-        dispatch({
-            type: LOAD_MADE_RESERVATIONS,
-            madeReservations: loadedReservations
-        });
+        console.log(mode);
+        if (mode === 1) {
+            dispatch({
+                type: LOAD_SELECTED_USER_RESERVATION,
+                selectedReservation: loadedReservation
+            });
+        } else if (mode === 2) {
+            dispatch({
+                type: LOAD_SELECTED_RENTER_RESERVATION,
+                selectedReservation: loadedReservation
+            });
+        }
+        
     };
 };

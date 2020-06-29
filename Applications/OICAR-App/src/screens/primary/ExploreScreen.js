@@ -58,6 +58,11 @@ const ExploreScreen = props => {
     props.navigation.navigate('Listings');
   };
 
+  const _onListingPressed = async (id) => {
+    await dispatch(listingsActions.loadSelectedListing(id));
+    props.navigation.navigate('ListingDetails');
+}
+
   const _renderCategoryItem = (item) => {
     return (
       <CategoryExplore
@@ -83,6 +88,7 @@ const ExploreScreen = props => {
         imageUri={`data:image/jpg;base64,${item.image}`}
         imageHeight={Platform.OS === "web" ? 200 : 110}
         pricetime={item.pricePeriod}
+        onPress={() => _onListingPressed(item.id)}
         widthbrand="50%"
         widthprice="50%"
         brand={item.manufacturer}

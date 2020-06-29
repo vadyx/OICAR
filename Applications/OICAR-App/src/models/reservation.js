@@ -1,6 +1,8 @@
+import moment from 'moment';
+
 class Reservation {
 
-    constructor(id, title, manufacturer, model, image, price, rating, startDate, phoneNr, endDate, coordinates, user) {
+    constructor(id, title, manufacturer, model, image, price, rating, startDate, endDate, phoneNr, coordinates, user) {
         this.id = id,
         this.title = title,
         this.manufacturer = manufacturer,
@@ -15,6 +17,13 @@ class Reservation {
         this.user = user
     }
 
+    get displayStartDate() {
+        return moment(this.startDate).format('DD.MM.YYYY');
+    }
+
+    get displayEndDate() {
+        return moment(this.endDate).format('DD.MM.YYYY');
+    }
 };
 
 export default Reservation;
