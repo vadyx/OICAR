@@ -5,7 +5,6 @@ import {
   StyleSheet
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
 import BackButton from '../../components/BackButton';
