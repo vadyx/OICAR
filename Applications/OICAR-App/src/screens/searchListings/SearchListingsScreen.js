@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
+import * as Permissions from 'expo-permissions';
 
 import BackButton from '../../components/BackButton';
 import ListingCard from '../../components/ListingCard';
@@ -41,13 +42,19 @@ const SearchListingsScreen = props => {
         props.navigation.navigate('ListingDetails');
     }
 
+    const _verifyPermissions = async () => {
+        const result = await Permissions.askAsync(Permissions.LOCATION);
+        return result.status === "granted";
+    };
+    
     const _onFilterPress = () => {
         props.navigation.navigate('Filter')
     }
 
     const _loadListings = useCallback(async () => {
         setIsRefreshing(true);
-        await dispatch(listingsActions.loadCategoryListings());
+        const hasPermission = await _verifyPermissions();
+        await dispatch(listingsActions.loadCategoryListings(hasPermission));
         setIsRefreshing(false);
     }, [dispatch, setIsRefreshing]);
 

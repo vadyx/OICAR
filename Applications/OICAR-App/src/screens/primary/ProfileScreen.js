@@ -44,7 +44,7 @@ const ProfileScreen = props => {
         return (
             <NotLoggedInView 
                 titleText='Ups!'
-                contentText='Prvo se morate prijaviti kako bih ste vidjeli svoje podatke'
+                contentText='Prvo se morate prijaviti kako biste vidjeli svoje podatke'
                 navigation={props.navigation}>
 
                 <FontAwesome5 name="user-lock"  size={210} color={theme.colors.lightgrey} style={styles.iconstyle}/>

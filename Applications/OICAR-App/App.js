@@ -9,6 +9,7 @@ import profileReducer from './src/store/reducers/profile';
 import vehicleDataReducer from './src/store/reducers/vehicleData';
 import newListingReducer from './src/store/reducers/newListing';
 import listingsReducer from './src/store/reducers/listings';
+import reservationReducer from './src/store/reducers/reservation';
 import AppNavigator from './src/navigation/AppNavigator';
 import { theme } from './src/utils/theme';
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   vehicleData: vehicleDataReducer,
   newListing: newListingReducer,
-  listings: listingsReducer
+  listings: listingsReducer,
+  reservation: reservationReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

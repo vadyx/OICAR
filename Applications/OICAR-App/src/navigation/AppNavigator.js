@@ -88,6 +88,15 @@ const TopTabNavigator = createMaterialTopTabNavigator({
 }
 )
 
+const ExploreNavigator = createStackNavigator(
+  {
+    Explore: ExploreScreen,
+    ListingDetails: SearchListingDetailsScreen
+  },
+  {
+    headerMode:"none",
+  }
+);
 
 const SearchNavigator = createStackNavigator(
   {
@@ -107,8 +116,8 @@ const ProfileNavigator = createStackNavigator(
   {
     Profile: ProfileScreen,
     MyListings: ProfileListingsScreen,
-    ReservedVehicle: TopTabNavigator,
-    ListingDetails: SearchListingDetailsScreen
+    ListingDetails: SearchListingDetailsScreen,
+    ReservedVehicle: TopTabNavigator
   },
   {
     headerMode:"none",
@@ -118,7 +127,7 @@ const ProfileNavigator = createStackNavigator(
 const HomeTabNavigator = createBottomTabNavigator({
 
   Explore: {
-    screen: ExploreScreen,
+    screen: ExploreNavigator,
     navigationOptions: {
       tabBarLabel: 'EXPLORE',
       tabBarIcon:({ tintColor }) => (

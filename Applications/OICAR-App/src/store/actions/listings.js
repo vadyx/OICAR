@@ -1,3 +1,5 @@
+import * as Location from 'expo-location';
+
 import ShortListing from '../../models/shortListing';
 import FullListing from '../../models/fullListing';
 import Vehicle from '../../models/vehicle';
@@ -6,6 +8,7 @@ import User from '../../models/user';
 export const CLEAR_LIST = "CLEAR_LIST";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
+export const LOAD_HIGHLIGHTED_LISTINGS = "LOAD_HIGHLIGHTED_LISTINGS";
 export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
 
 export const clearPreviousList = () => {
@@ -21,12 +24,26 @@ export const setCategory = categoryID => {
     };
 };
 
-export const loadCategoryListings = () => {
+export const loadCategoryListings = (locationPermission) => {
     return async (dispatch, getState) => {
 
         const categoryID = getState().listings.categoryID;
+        let response;
 
-        const response = await fetch(`http://192.168.1.5:12335/api/shortListings/${categoryID}`);
+        if (locationPermission) {
+            try {
+                const currentPos = await Location.getCurrentPositionAsync({
+                  timeout: 5000,
+                  enableHighAccuracy: true
+                });
+
+                response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
+            } catch (error) {
+                //error logic
+            }
+        } else {
+            response = await fetch(`http://192.168.1.10:12335/api/shortListings/${categoryID}`);
+        }
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -61,6 +78,39 @@ export const loadCategoryListings = () => {
     };
 };
 
+export const loadHighlightedListings = () => {
+    return async (dispatch) => {
+
+        let response = await fetch(`http://192.168.1.10:12335/api/highlightedListings`);
+
+        if (!response.ok) {
+            throw new Error("Listings not loaded");
+        }
+
+        const resData = await response.json();
+        const loadedHighlightedListings = [];
+
+        for (const index in resData) {
+            loadedHighlightedListings.push(new ShortListing(
+                resData[index].IDListing,
+                resData[index].Title,
+                resData[index].Category,
+                resData[index].Price,
+                resData[index].PriceBy,
+                resData[index].Rating,
+                resData[index].Image,
+                resData[index].VehicleManufacturer,
+                resData[index].VehicleModel
+            ));
+        }
+
+        dispatch({
+            type: LOAD_HIGHLIGHTED_LISTINGS,
+            highlightedListings: loadedHighlightedListings
+        });
+    };
+}
+
 export const load10MoreListings = () => {
     return async (dispatch, getState) => {
 
@@ -81,7 +131,7 @@ export const load10MoreListings = () => {
 export const loadSelectedListing = id => {
     return async (dispatch) => {
 
-        const response = await fetch(`http://192.168.1.5:12335/api/getListing/${id}`);
+        const response = await fetch(`http://192.168.1.10:12335/api/getListing/${id}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");

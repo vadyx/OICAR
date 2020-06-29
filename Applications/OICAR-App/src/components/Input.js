@@ -63,6 +63,10 @@ const Input = props => {
       if (props.price) {
         onInputChange(inputState.value, inputState.isValid);
       }
+
+      if (props.cardNum) {
+        onInputChange(inputState.value);
+      }
    }
 
     setUpdateState(false);
@@ -92,7 +96,7 @@ const Input = props => {
 
     if (props.minLength && !minLengthValidator(text, props.minLength)) {
       isValid = false;
-      errorMsg = `${props.label} mora sadržavati minimalno ${props.minLength} znaka!`;
+      errorMsg = `${props.label} mora sadržavati minimalno ${props.minLength} znakova!`;
     }
 
     if (props.maxLength && !maxLengthValidator(text, props.maxLength)) {

@@ -37,7 +37,7 @@ export const isEmptyValidator = text => {
 };
 
 export const minLengthValidator = (text, lenght) => {
-  if (!text || text.length <= lenght) {
+  if (!text || text.length < lenght) {
     return false;
   }
 
@@ -45,7 +45,7 @@ export const minLengthValidator = (text, lenght) => {
 };
 
 export const maxLengthValidator = (text, lenght) => {
-  if (!text || text.length >= lenght) {
+  if (!text || text.length > lenght) {
     return false;
   }
 

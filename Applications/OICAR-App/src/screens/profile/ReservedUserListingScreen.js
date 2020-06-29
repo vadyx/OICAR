@@ -2,17 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { 
     StyleSheet, 
     View, 
-    Text, 
     FlatList, 
     SafeAreaView,
     Dimensions
 } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useSelector, useDispatch } from 'react-redux';
 
-import BackButton from '../../components/BackButton';
 import ListingCard from '../../components/ListingCard';
-import * as profileActions from '../../store/actions/profile';
+import * as reservationActions from '../../store/actions/reservation';
 import * as listingsActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
 
@@ -27,30 +24,30 @@ const ReservedUserListingScreen = props => {
 
     const [isRefreshing, setIsRefreshing] = useState(false);
     
-    const listings = useSelector(state => state.profile.listings);
+    const listings = useSelector(state => state.reservation.madeReservations);
     const dispatch = useDispatch();
 
     const _loadListings = useCallback(async () => {
-        await dispatch(profileActions.loadUserListings());
+        await dispatch(reservationActions.loadMadeReservations());
     }, [dispatch, setIsRefreshing]);
 
-    const _onListingPressed = async (id) => {
-        await dispatch(listingsActions.loadSelectedListing(id));
+    const _onReservationPressed = async (id) => {
+        await dispatch(reservationActions.loadSelectedReservation(id, 1));
         props.navigation.navigate('ReservedUser');
     }
 
     const _renderListing = itemData => {
         return (
             <ListingCard
-                imageUri={`data:image/jpg;base64,${itemData.item.image}`}
-                name={itemData.item.title}
+                imageUri={`data:image/jpg;base64,${itemData.item.listing.image}`}
+                name={itemData.item.listing.title}
                 type="Auto"
-                price={itemData.item.price}
-                pricetime={itemData.item.pricePeriod}
-                rating={itemData.item.rating}
-                brand = {itemData.item.manufacturer}
-                model={itemData.item.model}
-                onPress={() => _onListingPressed(itemData.item.id)}
+                price={itemData.item.listing.price}
+                pricetime={itemData.item.listing.pricePeriod}
+                rating={itemData.item.listing.rating}
+                brand = {itemData.item.listing.manufacturer}
+                model={itemData.item.listing.model}
+                onPress={() => _onReservationPressed(itemData.item.reservationID)}
                 width={width}
                 height={height}
                 imageHeight={imgsize}
@@ -73,7 +70,7 @@ const ReservedUserListingScreen = props => {
             <View style={styles.container}>
                 <FlatList
                     data={listings} 
-                    keyExtractor={item => item.id.toString()}
+                    keyExtractor={item => item.listing.id.toString()}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={
                         <View style={styles.headerstyle}/>

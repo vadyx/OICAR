@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -19,25 +19,21 @@ import CategoryExplore from '../../components/CategoryExplore';
 import ListingCard from '../../components/ListingCard';
 import Logo from "../../components/Logo";
 import * as vehicleDataActions from '../../store/actions/vehicleData';
+import * as listingsActions from '../../store/actions/listings';
 import { theme } from "../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const width = Dimensions.get('window').width/2 - 35;
-
-const _renderCategoryItem = (item) => {
-  return (
-    <CategoryExplore
-      key={item.id} 
-      imageUri={item.imageUri}
-      name={item.name}
-    />
-  );
-}
+const width = Dimensions.get('window').width/2 - 30;
 
 const ExploreScreen = props => { 
 
+  const [loadingListings, setLoadingListings] = useState(false);
+
   const categories = useSelector(state => state.vehicleData.categories);
+  const hightlightedListings = useSelector(state => state.listings.hightlightedListings);
   const dispatch = useDispatch();
+
+  //console.log(hightlightedListings);
 
   if (categories.length === 0) {
     try {
@@ -51,6 +47,62 @@ const ExploreScreen = props => {
   if (Platform.OS == 'android') {
       startHeaderHeight = 58 + StatusBar.currentHeight
   }
+
+  const _highlightedListingsLoad = useCallback(async () => {
+    await dispatch(listingsActions.loadHighlightedListings());
+  }, [dispatch]);
+
+  const _onCategoryPressed = async (categoryID) => {
+    await dispatch(listingsActions.clearPreviousList());
+    await dispatch(listingsActions.setCategory(categoryID));
+    props.navigation.navigate('Listings');
+  };
+
+  const _onListingPressed = async (id) => {
+    await dispatch(listingsActions.loadSelectedListing(id));
+    props.navigation.navigate('ListingDetails');
+}
+
+  const _renderCategoryItem = (item) => {
+    return (
+      <CategoryExplore
+        key={item.id}
+        categoryID = {item.id}
+        onCategoryPressed={_onCategoryPressed}
+        imageUri={item.imageUri}
+        name={item.name}
+      />
+    );
+  }
+
+  const _renderHighlightedItem = (item) => {
+    return (
+      <ListingCard 
+        key={item.id}
+        width={width}
+        height={228}
+        name={item.title}
+        type={item.category}
+        price={item.price}
+        rating={item.rating}
+        imageUri={`data:image/jpg;base64,${item.image}`}
+        imageHeight={Platform.OS === "web" ? 200 : 110}
+        pricetime={item.pricePeriod}
+        onPress={() => _onListingPressed(item.id)}
+        widthbrand="45%"
+        widthprice="55%"
+        brand={item.manufacturer}
+        model={item.model}
+      />
+    );
+  }
+
+  useEffect(() => {
+    setLoadingListings(true);
+    _highlightedListingsLoad().then(() => {
+      setLoadingListings(false);
+    });
+  }, [_highlightedListingsLoad]);
 
   return (
     <SafeAreaView style={styles.safeareastyle}>
@@ -127,88 +179,9 @@ const ExploreScreen = props => {
                 </Text>
                         
                 <View style={styles.home_view}>
-                  <ListingCard width={width}
-                    height={210}
-                    name="Aprilia Scooter 1"
-                    type="Motocikl"
-                    price={20}
-                    rating={4}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="tjedan"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Aprilia"
-                    model="1"
-                  />
-                  
-                  <ListingCard width={width}
-                    height={210}
-                    name="Audi A3 TOP"
-                    type="Automobil"
-                    price={42}
-                    rating={3.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="dan"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Audi"
-                    model="A3"
-                  />
-
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-                  <ListingCard width={width}
-                    height={210}
-                    name="Fiat Punto"
-                    type="Automobil"
-                    price={30}
-                    rating={4.5}
-                    imageHeight={Platform.OS === "web" ? 200 : 110}
-                    pricetime="sat"
-                    widthbrand="50%"
-                    widthprice="50%"
-                    brand = "Fiat"
-                    model="Punto"
-                  />
-
+                  {hightlightedListings.map(item => _renderHighlightedItem(item))}
                 </View>
+
               </View>
             </View>
           </View>
