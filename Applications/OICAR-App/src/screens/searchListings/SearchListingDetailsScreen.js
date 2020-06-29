@@ -12,6 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { SliderBox } from "react-native-image-slider-box";
+import StarRating from "react-native-star-rating";
 
 import BackButton from '../../components/BackButton';
 import * as maps from '../../utils/mapsApi';
@@ -114,7 +115,7 @@ const SearchListingDetailsScreen = props => {
                                 <Text style={styles.textinfoboxresult}>{listing.vehicle.drive === "" ? "Nedefinirano" : listing.vehicle.drive}</Text>
                             </View>
                             <View style={styles.infoitems}>
-                                <Text style={styles.textinfobox}>Dodatna oprema</Text>
+                                <Text style={styles.textinfobox}>Dodatna oprema:</Text>
                                 <View>
                                     {listing.vehicle.accessories.length > 0 ? (
                                         listing.vehicle.accessories.map((item, i) => 
@@ -156,6 +157,26 @@ const SearchListingDetailsScreen = props => {
                             }
                             </View>
                         </View>
+                        <Text style={styles.headerinfo}>Podatci o iznajmljivaču:</Text>
+                        <View style={styles.contactbox}>
+                            <View style={styles.profileImage}>
+                                <Image source={{ uri: listing.user.imageUri }} style={styles.image} resizeMode="cover"></Image>
+                            </View>
+                            <View style={styles.contactsubstarbox}>
+                                <StarRating
+                                    disabled={true}
+                                    maxStars={5}
+                                    rating={listing.user.rating}
+                                    starSize={20}
+                                    emptyStarColor={theme.colors.quaternary}
+                                    fullStarColor={theme.colors.gold}
+                                />
+                            </View>
+                            <View style={styles.contactsubbox}>
+                                <Text style={styles.contactinfodesctext}>Ime i prezime:</Text>
+                                <Text style={styles.contactinfotext}>{listing.user.firstName} {listing.user.lastName}</Text>
+                            </View>
+                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -165,13 +186,14 @@ const SearchListingDetailsScreen = props => {
 
 const styles = StyleSheet.create({
     saw:{
-        flex:1
+        flex:1,
     },
     container:{
         flex:1,
         backgroundColor:theme.colors.white,
         marginTop:getStatusBarHeight(),
-        paddingBottom:10
+        paddingBottom:10,
+        overflow:"hidden"
     },
     headerstyle:{
         height:60,
@@ -179,6 +201,12 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"center",
         backgroundColor:theme.colors.white,
+        borderBottomWidth:0, //samo radi na iOS
+        shadowOffset: { width: 5, height: 3 },
+        shadowColor: "black",
+        shadowOpacity: 0.5,
+        //samo radi na Android
+        elevation: 5,
     },
     headertext:{
         color:theme.colors.primary,
@@ -280,7 +308,7 @@ const styles = StyleSheet.create({
         textAlign:"left",
         paddingLeft:5,
         fontSize:17,
-        fontWeight:"500"
+        fontWeight:"500",
     },
     textinfoboxextra:{
         textAlign:"left",
@@ -344,7 +372,60 @@ const styles = StyleSheet.create({
     },
     locationtext:{
         marginTop:20
-    }
+    },
+    contactbox:{
+        backgroundColor:theme.colors.white,
+        width:Dimensions.get('window').width - 40,
+        marginVertical:10,
+        alignItems:"center",
+        alignSelf:"center",
+        padding:30,
+        borderRadius:20,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    image: {
+        flex: 1,
+        height: undefined,
+        width: undefined,
+    },
+    profileImage: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        overflow: "hidden",
+        marginBottom:5
+    },
+    contactsubbox:{
+        flexDirection:"row",
+    },
+    contactsubstarbox:{
+        flexDirection:"column",
+        marginVertical:15
+    },
+    contactinfotext:{
+        fontSize:17,
+        color:theme.colors.black,
+        fontWeight:"600",
+        paddingLeft:7
+    },
+    contactinfodescstartext:{
+      fontSize:17,
+      color:theme.colors.primary,
+      fontWeight:"bold",
+      marginBottom:15
+    },
+    contactinfodesctext:{
+        fontSize:17,
+        color:theme.colors.primary,
+        fontWeight:"bold"
+    },
 
 });
 

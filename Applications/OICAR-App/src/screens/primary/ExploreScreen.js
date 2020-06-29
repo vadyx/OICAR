@@ -23,7 +23,7 @@ import * as listingsActions from '../../store/actions/listings';
 import { theme } from "../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const width = Dimensions.get('window').width/2 - 35;
+const width = Dimensions.get('window').width/2 - 30;
 
 const ExploreScreen = props => { 
 
@@ -80,7 +80,7 @@ const ExploreScreen = props => {
       <ListingCard 
         key={item.id}
         width={width}
-        height={210}
+        height={228}
         name={item.title}
         type={item.category}
         price={item.price}
@@ -89,8 +89,8 @@ const ExploreScreen = props => {
         imageHeight={Platform.OS === "web" ? 200 : 110}
         pricetime={item.pricePeriod}
         onPress={() => _onListingPressed(item.id)}
-        widthbrand="50%"
-        widthprice="50%"
+        widthbrand="45%"
+        widthprice="55%"
         brand={item.manufacturer}
         model={item.model}
       />
