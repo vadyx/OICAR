@@ -10,6 +10,7 @@ export const SET_CATEGORY = "SET_CATEGORY";
 export const LOAD_CATEGORY_LISTINGS = "LOAD_CATEGORY_LISTINGS";
 export const LOAD_HIGHLIGHTED_LISTINGS = "LOAD_HIGHLIGHTED_LISTINGS";
 export const LOAD_SELECTED_LISTING = "LOAD_SELECTED_LISTING";
+export const FILTER_LISTINGS = "FILTER_LISTINGS";
 
 export const clearPreviousList = () => {
     return {
@@ -184,4 +185,28 @@ export const loadSelectedListing = id => {
             selectedListing: loadedListing
         });
     };
+};
+
+export const filter = (manufacturer) => {
+    return async (dispatch, getState) => {
+
+        const listings = getState().listings.listings;
+
+        const filteredListings = await listings.filter(v => v.manufacturer === manufacturer);
+        
+        console.log(filteredListings.length);
+
+        const listingsToShow = [];
+
+        for (const index in filteredListings) {
+            listingsToShow.length < 10 ? listingsToShow.push(filteredListings[index]) : "";
+        }
+
+        dispatch({
+            type: FILTER_LISTINGS,
+            listings: filteredListings,
+            shownListings: listingsToShow
+        });
+
+    }
 };

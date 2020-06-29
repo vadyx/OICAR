@@ -1,27 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useDispatch } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
+import RNPickerSelect from 'react-native-picker-select';
 import moment from 'moment';
 
 import NextScreenButton from '../../components/NextScreenButton';
 import BackButton from '../../components/BackButton';
 import DatePicker from '../../components/DatePicker';
+import * as listingActions from '../../store/actions/listings';
 import { theme } from '../../utils/theme';
-import { AntDesign } from '@expo/vector-icons';
-import RNPickerSelect from 'react-native-picker-select';
 
 const currentDate = moment().toDate();
 let nextDayDate = moment(currentDate).add(1, 'days').toDate();
 
 const SearchFilterScreen = props => {
 
+  const [selectedManufacturer, setSelectedManufacturer] = useState('');
 
-  const _onNextPressed = () => {
-    props.navigation.navigate('');
+  const dispatch = useDispatch();
+
+  const _onNextPressed = async () => {
+    await dispatch(listingActions.filter(selectedManufacturer));
+    props.navigation.goBack();
   };
 
   let dropdownsstyles = {
@@ -38,8 +44,8 @@ const SearchFilterScreen = props => {
     }
   };
 
-  const placeholder_subcategory = {
-    label: 'Tip vozila',
+  const placeholder_manufacturer = {
+    label: 'Marka vozila',
     value: null,
     color:theme.colors.lightgrey  
   };
@@ -51,11 +57,14 @@ const SearchFilterScreen = props => {
         <AntDesign name="filter" size={50} color={theme.colors.black} style={styles.icon}/>
         <View style={styles.subcategory}>
             <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              placeholder={placeholder_subcategory}
+              onValueChange={(value) => setSelectedManufacturer(value)}
+              placeholder={placeholder_manufacturer}
               items={[
-                {label:'Gradski', value:'Gradski'},
-                {label:'Limuzina', value:'Limuzina'}
+                {label:'Audi', value:'Audi'},
+                {label:'Peugeot', value:'Peugeot'},
+                {label:'Opel', value:'Opel'},
+                {label:'Renault', value:'Renault'},
+                {label:'Volkswagen', value:'Volkswagen'}
                 ]}
               style={dropdownsstyles}
               />

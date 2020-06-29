@@ -1,4 +1,4 @@
-import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING, CLEAR_LIST, LOAD_HIGHLIGHTED_LISTINGS } from "../actions/listings";
+import { LOAD_CATEGORY_LISTINGS, SET_CATEGORY, LOAD_SELECTED_LISTING, CLEAR_LIST, LOAD_HIGHLIGHTED_LISTINGS, FILTER_LISTINGS } from "../actions/listings";
 
 const initialState = {
     categoryID: null,
@@ -40,7 +40,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 selectedListing: action.selectedListing
-            }
+            };
+        case FILTER_LISTINGS:
+            return {
+                ...state,
+                listings: action.listings,
+                shownListings: action.shownListings
+            };
         default: 
             return state;
     }
