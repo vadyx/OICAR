@@ -70,7 +70,7 @@ const ReservedUserListingScreen = props => {
             <View style={styles.container}>
                 <FlatList
                     data={listings} 
-                    keyExtractor={item => item.listing.id.toString()}
+                    keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={
                         <View style={styles.headerstyle}/>

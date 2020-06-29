@@ -8,6 +8,7 @@ export const LOAD_GIVEN_RESERVATIONS = "LOAD_GIVEN_RESERVATIONS";
 export const LOAD_MADE_RESERVATIONS = "LOAD_MADE_RESERVATIONS";
 export const LOAD_SELECTED_USER_RESERVATION = "LOAD_SELECTED_USER_RESERVATION";
 export const LOAD_SELECTED_RENTER_RESERVATION = "LOAD_SELECTED_RENTER_RESERVATION";
+export const SET_RESERVATION_RATING = "SET_RESERVATION_RATING";
 
 export const setReservation1 = (startDate, endDate, phoneNr, totalPrice) => {
     return {
@@ -189,5 +190,55 @@ export const loadSelectedReservation = (reservationID, mode) => {
             });
         }
         
+    };
+};
+
+export const setReservationRating = (rating) => {
+    return async (dispatch, getState) => {
+
+        const reservation = getState().reservation.selectedUserReservation;
+        const renterID = getState().reservation.selectedUserReservation.user.id;
+        const loggedUserID = getState().auth.userId;
+
+        const response = await fetch(`http://192.168.1.10:12335/api/rate/${reservation.id}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    UserRaterID: loggedUserID,
+                    RatedUserID: renterID,
+                    RatingValue: rating
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("New listing not registered!");
+        }
+
+        const resData = await response.json();
+        const success = resData === "Success";
+
+        const updatedReservation = new Reservation(
+            reservation.id,
+            reservation.title,
+            reservation.manufacturer,
+            reservation.model,
+            reservation.Image,
+            reservation.price,
+            rating,
+            reservation.startDate,
+            reservation.endDate,
+            reservation.phoneNr,
+            reservation.coordinates,
+            reservation.user
+        );
+
+        dispatch({
+            type: SET_RESERVATION_RATING,
+            updatedReservation: updatedReservation
+        });
     };
 };

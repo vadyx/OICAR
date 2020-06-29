@@ -6,9 +6,6 @@ export const fetchStaticMap = async (lat, lng) => {
 }
 
 export const fetchGeolocation = async (lat, lng) => {
-    console.log("got into the function");
-    console.log(lat);
-    console.log(lng);
     const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=hr&key=${ENV.googleApiKey}`);
     const resData = await response.json();
     const addr = resData.results[0].formatted_address;
@@ -19,8 +16,6 @@ export const fetchGeolocation = async (lat, lng) => {
         city: addrData[1] + ", " + addrData[2],
         country: addrData[3]
     };
-
-    console.log(formattedAddr);
 
     return formattedAddr;
 };

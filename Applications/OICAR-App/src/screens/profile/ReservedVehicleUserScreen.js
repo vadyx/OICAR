@@ -9,11 +9,12 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { AntDesign } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import StarRating from "react-native-star-rating";
 
 import BackButton from '../../components/BackButton';
 import * as maps from '../../utils/mapsApi';
+import * as reservationActions from '../../store/actions/reservation';
 import { theme } from '../../utils/theme';
 
 const ReservationVehicleUserScreen = props => {
@@ -22,8 +23,9 @@ const ReservationVehicleUserScreen = props => {
 
     const [mapPreview, setMapPreview] = useState(null);
     const [address, setAddress] = useState(null);
+    const [rating, setRating] = useState(0);
 
-    console.log(reservation.rating);
+    const dispatch = useDispatch();
 
     const _loadMapPreview = useCallback(async () => {
         const imagePreviewUrl = await maps.fetchStaticMap(reservation.coordinates.lat, reservation.coordinates.lng);
@@ -35,8 +37,11 @@ const ReservationVehicleUserScreen = props => {
         setAddress(formattedAddr);
     }, [setAddress]);
 
+    const _onConfirmRating = async () => {
+        await dispatch(reservationActions.setReservationRating(rating));
+    };
+
     useEffect(() => {
-        console.log("useEffect triggered");
         _loadMapPreview();
         _fetchAddress();
     }, [_loadMapPreview, _fetchAddress]);
@@ -122,21 +127,23 @@ const ReservationVehicleUserScreen = props => {
                             <Text style={styles.contactinfodesctext}>Broj telefona:</Text>
                             <Text style={styles.contactinfotext}>{reservation.phoneNr}</Text>
                         </View>
-                        <View style={styles.contactsubstarbox}>
-                            <Text style={styles.contactinfodescstartext}>Ocijenite iznajmljivača</Text>
-                            <StarRating
-                                disabled={false}
-                                maxStars={5}
-                                rating={3}
-                                starSize={25}
-                                emptyStarColor={theme.colors.quaternary}
-                                fullStarColor={theme.colors.gold}
-                            />
-                            <TouchableOpacity  style={styles.starratingbutton}>
-                                <Text style={styles.starratingbuttontext}>Ocijeni</Text>
-                            </TouchableOpacity>
-                        </View>
-
+                        {reservation.rating === null &&
+                            <View style={styles.contactsubstarbox}>
+                                <Text style={styles.contactinfodescstartext}>Ocijenite iznajmljivača</Text>
+                                <StarRating
+                                    disabled={false}
+                                    maxStars={5}
+                                    rating={rating}
+                                    starSize={25}
+                                    emptyStarColor={theme.colors.quaternary}
+                                    fullStarColor={theme.colors.gold}
+                                    selectedStar={(rating) => setRating(rating)}
+                                />
+                                <TouchableOpacity  style={styles.starratingbutton} onPress={_onConfirmRating}>
+                                    <Text style={styles.starratingbuttontext}>Ocijeni</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
                     </View>
                 </View>
             
