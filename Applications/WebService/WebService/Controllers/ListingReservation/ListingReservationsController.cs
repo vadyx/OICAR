@@ -139,7 +139,7 @@ namespace WebServis.Controllers.ListingReservationNamespace
                     VehicleManufacturer = db_vehicleManufacturerModel.VehicleManufacturer.Where(v => v.IDVehicleManufacturer == listing.Vehicle.VehicleManufacturerID).SingleOrDefault().ManufacturerName,
                     VehicleModel = listing.Vehicle.VehicleModelID == null ? "" : db_vehicleModelModel.VehicleModel.Where(v => v.IDVehicleModel == listing.Vehicle.VehicleModelID).SingleOrDefault().ModelName,
                     ReservationNumber = reservation.IDListingReservation,
-                    Price = listing.Price,
+                    Price = reservation.Price,
                     Rating = reservation.Rating,
                     DateFrom = reservation.FromDate,
                     DateTo = reservation.ToDate,
