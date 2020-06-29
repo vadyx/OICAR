@@ -142,12 +142,12 @@ const SearchListingDetailsScreen = props => {
                         <Text style={styles.headerinfo}>Lokacija:</Text>
                         <View style={styles.infocontentmap}>
                             <View style={styles.infoitemsmap}>
-                            {mapPreview !== null && 
-                                <Image 
-                                    style={styles.map} 
-                                    source={{ uri: mapPreview }} 
-                                />
-                            }
+                                {mapPreview !== null && 
+                                    <Image 
+                                        style={styles.map} 
+                                        source={{ uri: mapPreview }} 
+                                    />
+                                }
                             {address !== null &&
                                 <View style={styles.locationtext}>
                                     <Text style={styles.textinfoboxresultmap}>{address.street}</Text>
@@ -157,7 +157,7 @@ const SearchListingDetailsScreen = props => {
                             }
                             </View>
                         </View>
-                        <Text style={styles.headerinfo}>Podatci o iznajmljivaču:</Text>
+                        <Text style={styles.headerinfo}>Podaci o iznajmljivaču:</Text>
                         <View style={styles.contactbox}>
                             <View style={styles.profileImage}>
                                 <Image source={{ uri: listing.user.imageUri }} style={styles.image} resizeMode="cover"></Image>

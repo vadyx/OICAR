@@ -13,11 +13,30 @@ import { useSelector } from 'react-redux';
 import StarRating from "react-native-star-rating";
 
 import BackButton from '../../components/BackButton';
+import * as maps from '../../utils/mapsApi';
 import { theme } from '../../utils/theme';
 
 const ReservationVehicleUserScreen = props => {
 
     const reservation = useSelector(state => state.reservation.selectedUserReservation);
+
+    const [mapPreview, setMapPreview] = useState(null);
+    const [address, setAddress] = useState(null);
+
+    const _loadMapPreview = useCallback(async () => {
+        const imagePreviewUrl = await maps.fetchStaticMap(reservation.coordinates.lat, reservation.coordinates.lng);
+        setMapPreview(imagePreviewUrl);
+    }, [setMapPreview]);
+    
+    const _fetchAddress = useCallback(async () => {
+        const formattedAddr = await maps.fetchGeolocation(reservation.coordinates.lat, reservation.coordinates.lng);
+        setAddress(formattedAddr);
+    }, [setAddress]);
+
+    useEffect(() => {
+        _loadMapPreview();
+        _fetchAddress();
+    }, [_loadMapPreview, _fetchAddress]);
 
     return (
         <View style={styles.container}>
@@ -67,11 +86,16 @@ const ReservationVehicleUserScreen = props => {
                     </View>
                     <View style={styles.hl}/>
                     <View style={styles.locationbox}>
-                        <Image source={require('../../assets/map.png')} style={styles.mapimg}/>
+                        {mapPreview !== null && 
+                            <Image 
+                                style={styles.mapimg} 
+                                source={{ uri: mapPreview }} 
+                            />
+                        }
                         <View style={styles.mapinfobox}>
-                            <Text style={styles.maptextinfo}>Zagreb, 10000</Text>
-                            <Text style={styles.maptextinfo}>Ilica 242</Text>
-                            <Text style={styles.maptextinfo}>Hrvatska</Text>
+                            <Text style={styles.maptextinfo}>{address.street}</Text>
+                            <Text style={styles.maptextinfo}>{address.city}</Text>
+                            <Text style={styles.maptextinfo}>{address.country}</Text>
                         </View>
                     </View>
                     <Text style={styles.fn}>*Lokacija preuzimanja vozila</Text>
