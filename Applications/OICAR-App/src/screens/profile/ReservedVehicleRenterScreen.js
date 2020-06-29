@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -81,11 +81,13 @@ const ReservedVehicleRenterScreen = props => {
                                 source={{ uri: mapPreview }} 
                             />
                         }
-                        <View style={styles.mapinfobox}>
-                            <Text style={styles.maptextinfo}>{address.street}</Text>
-                            <Text style={styles.maptextinfo}>{address.city}</Text>
-                            <Text style={styles.maptextinfo}>{address.country}</Text>
-                        </View>
+                        {address !== null &&
+                            <View style={styles.mapinfobox}>
+                                <Text style={styles.maptextinfo}>{address.street}</Text>
+                                <Text style={styles.maptextinfo}>{address.city}</Text>
+                                <Text style={styles.maptextinfo}>{address.country}</Text>
+                            </View>
+                        }
                     </View>
                     <Text style={styles.fn}>*Na ovoj lokaciji će unajmljivač preuzeti vaše vozilo</Text>
                     <View style={styles.hl}/>

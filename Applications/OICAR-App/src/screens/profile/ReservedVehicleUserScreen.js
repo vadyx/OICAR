@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ const ReservationVehicleUserScreen = props => {
     const [mapPreview, setMapPreview] = useState(null);
     const [address, setAddress] = useState(null);
 
+    console.log(reservation.rating);
+
     const _loadMapPreview = useCallback(async () => {
         const imagePreviewUrl = await maps.fetchStaticMap(reservation.coordinates.lat, reservation.coordinates.lng);
         setMapPreview(imagePreviewUrl);
@@ -34,6 +36,7 @@ const ReservationVehicleUserScreen = props => {
     }, [setAddress]);
 
     useEffect(() => {
+        console.log("useEffect triggered");
         _loadMapPreview();
         _fetchAddress();
     }, [_loadMapPreview, _fetchAddress]);
@@ -92,11 +95,13 @@ const ReservationVehicleUserScreen = props => {
                                 source={{ uri: mapPreview }} 
                             />
                         }
-                        <View style={styles.mapinfobox}>
-                            <Text style={styles.maptextinfo}>{address.street}</Text>
-                            <Text style={styles.maptextinfo}>{address.city}</Text>
-                            <Text style={styles.maptextinfo}>{address.country}</Text>
-                        </View>
+                        {address !== null &&
+                            <View style={styles.mapinfobox}>
+                                <Text style={styles.maptextinfo}>{address.street}</Text>
+                                <Text style={styles.maptextinfo}>{address.city}</Text>
+                                <Text style={styles.maptextinfo}>{address.country}</Text>
+                            </View>
+                        }
                     </View>
                     <Text style={styles.fn}>*Lokacija preuzimanja vozila</Text>
                     <View style={styles.hl}/>

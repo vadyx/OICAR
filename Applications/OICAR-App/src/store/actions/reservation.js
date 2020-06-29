@@ -177,7 +177,6 @@ export const loadSelectedReservation = (reservationID, mode) => {
             )
         );
 
-        console.log(mode);
         if (mode === 1) {
             dispatch({
                 type: LOAD_SELECTED_USER_RESERVATION,
