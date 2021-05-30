@@ -38,8 +38,10 @@ const styles = StyleSheet.create({
     fontWeight:"500"
   },
   logo:{
-    width:200,
-    height:200
+    marginLeft:20,
+    marginBottom:-20,
+    width:300,
+    height:300
   }
 });
 

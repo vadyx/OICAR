@@ -124,7 +124,7 @@ const LoginScreen = props => {
       <BackButton goBack={() => props.navigation.goBack()} />
 
       <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
-        <Logo />
+        <Logo style={{width:250, height: 250, m}} />
       </View>
       <Header>Dobrodošli natrag.</Header>
 

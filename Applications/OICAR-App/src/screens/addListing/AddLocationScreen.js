@@ -110,7 +110,7 @@ const AddLocationScreen = props => {
 
 
         <NextScreenButton 
-          disabled={mapPreview === null || address === null}
+          // disabled={mapPreview === null || address === null}
           navigate={_onNextPressed} 
         />
 
