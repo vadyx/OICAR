@@ -1,8 +1,8 @@
 # OICAR
 Theme: P2P vehicle sharing app    
-Tehnologije:
-- Mobilna i web aplikacija: React Native
-- Web servis: C#
+Technology:
+- Mobile & web app: React Native
+- Web service: C#
 - Database: Microsoft SQL
 
 # Team
