@@ -7,8 +7,3 @@
 - Database: Microsoft SQL
 </br>
 
-# Team
-- Vilko Jugovic (vadyx)
-- Anton Maurovic (garadholg)
-- Ante Gazibaric (agazibaric)
-
