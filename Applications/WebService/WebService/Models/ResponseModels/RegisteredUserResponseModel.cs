@@ -15,5 +15,6 @@ namespace WebServis.Models.ViewModels
         public DateTime RegistrationDate { get; set; }
         public byte[] ProfileImage { get; set; }
         public virtual VerificationResponseModel Verification { get; set; }
+        public string Token { get; set; }
     }
 }
