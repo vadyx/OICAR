@@ -16,6 +16,8 @@ using WebServis.Models.Registration;
 using WebServis.Models.ResponseModels;
 using WebServis.Models.Vehicle;
 using WebServis.Models.ViewModels;
+using WebServis.Filters;
+using WebServis.Services;
 
 namespace WebServis.Controllers.Listings
 {
@@ -37,6 +39,7 @@ namespace WebServis.Controllers.Listings
         private VehicleAccessoriesModel db_vehicleAccessories = new VehicleAccessoriesModel();
         private RegisteredUserModel db_user = new RegisteredUserModel();
         private SubCategoryModel db_subCategory = new SubCategoryModel();
+        private IUserService userService = new UserService();
 
         // GET: api/Listings
         public IQueryable<Listing> GetListing()
@@ -46,6 +49,7 @@ namespace WebServis.Controllers.Listings
 
         [Route("api/shortListings/{categoryID}")]
         [ResponseType(typeof(ShortListingResponseModel))]
+        [AllowAnonymous]
         public IHttpActionResult GetListings(int categoryID)
         {
             List<ShortListingResponseModel> listingResponseModels;
@@ -82,6 +86,7 @@ namespace WebServis.Controllers.Listings
 
         [Route("api/shortListings/{categoryID}/{locationX}/{locationY}")]
         [ResponseType(typeof(ShortListingResponseModel))]
+        [AllowAnonymous]
         public IHttpActionResult GetListings(int categoryID, double locationX, double locationY)
         {
             List<ShortListingResponseModel> listingResponseModels;
@@ -150,6 +155,7 @@ namespace WebServis.Controllers.Listings
 
         [Route("api/highlightedListings")]
         [ResponseType(typeof(ShortListingResponseModel))]
+        [AllowAnonymous]
         public IHttpActionResult GetHighlightedListings()
         {
             List<ShortListingResponseModel> listingResponseModels;
@@ -187,6 +193,7 @@ namespace WebServis.Controllers.Listings
 
         [Route("api/getListing/{listingID}")]
         [ResponseType(typeof(ShortListingResponseModel))]
+        [AllowAnonymous]
         public IHttpActionResult GetListing(int listingID)
         {
             ListingResponseModel listingResponseModel;
@@ -315,6 +322,8 @@ namespace WebServis.Controllers.Listings
                 return BadRequest(ModelState);
             }
 
+            var currentUser = userService.getCurrentUser(RequestContext.Principal.Identity.Name);
+            listing.UserID = currentUser.IDRegisteredUser;
             db.Listing.Add(listing);
             await db.SaveChangesAsync();
 
