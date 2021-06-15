@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
         backgroundColor:theme.colors.white,
     },
     submit:{
-        width:"35%",
         alignSelf: Platform.OS === "web" ? 'center' : "flex-end",
-        marginHorizontal:20,
-        marginTop:10,
-        height:50,
+        marginHorizontal:24,
+        marginTop: 16
       },
     touchablestyle:{
         color:"transparent",
         borderRadius:10,
+        paddingHorizontal:48,
+        paddingVertical:2,
         borderWidth: 2,
         borderColor: theme.colors.primary,
         alignSelf: Platform.OS === "web" ? "center" : null,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         color:theme.colors.primary,
         alignSelf: "center",
         paddingVertical:8,
-        fontWeight:"900"
+        fontWeight:"600"
     }
 });
 
