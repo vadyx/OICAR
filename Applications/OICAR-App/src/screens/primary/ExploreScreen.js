@@ -83,6 +83,7 @@ const ExploreScreen = props => {
         height={228}
         name={item.title}
         type={item.category}
+        fontTextSize={12}
         price={item.price}
         rating={item.rating}
         imageUri={`data:image/jpg;base64,${item.image}`}

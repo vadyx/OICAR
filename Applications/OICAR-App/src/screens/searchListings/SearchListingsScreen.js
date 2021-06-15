@@ -4,23 +4,28 @@ import {
   StyleSheet,
   SafeAreaView,
   Text,
+  Image,
   TouchableOpacity,
   FlatList,
   Dimensions
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import LottieView from 'lottie-react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Permissions from 'expo-permissions';
-
+// State
+import * as listingsActions from '../../store/actions/listings';
+// Colors
+import { theme } from '../../utils/theme';
+// Vector icons
+import { AntDesign } from '@expo/vector-icons';
+// Components
+import EmptyList from '../../components/EmptyList';
 import BackButton from '../../components/BackButton';
 import ListingCard from '../../components/ListingCard';
-import * as listingsActions from '../../store/actions/listings';
-import { theme } from '../../utils/theme';
-import LottieView from 'lottie-react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 const width = Math.round(Dimensions.get('window').width) -50;
-const height = 235;
+const height = 250;
 const imgsize = 140;
 const descbrandsize = "70%";
 const descpricesize = "30%";
@@ -67,9 +72,10 @@ const SearchListingsScreen = props => {
             <ListingCard
                 imageUri={`data:image/jpg;base64,${itemData.item.image}`}
                 name={itemData.item.title}
-                type="Auto"
                 price={itemData.item.price}
                 pricetime={itemData.item.pricePeriod}
+                // type={itemData.category}
+                fontTextSize={14}
                 rating={itemData.item.rating}
                 brand = {itemData.item.manufacturer}
                 model={itemData.item.model}
@@ -125,7 +131,7 @@ const SearchListingsScreen = props => {
 
     useEffect(() => {
         _loadListings();
-
+        
         const category = categories.find(cat => cat.id === listings.categoryID);
         setSelectedCategory(category.name);
     }, [dispatch, _loadListings]);
@@ -137,18 +143,29 @@ const SearchListingsScreen = props => {
                     <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
                     <Text style={styles.headertext}>{selectedCategory}</Text>
                 </View>
-                <FlatList
-                    data={listings.shownListings} 
-                    keyExtractor={item => item.id.toString()}
-                    ListHeaderComponent={_renderListHeader}
-                    ListFooterComponent={_renderListFooter}
-                    showsVerticalScrollIndicator={false}
-                    onRefresh={_loadListings}
-                    refreshing={isRefreshing}
-                    renderItem={itemData => _renderListing(itemData)}
-                    onEndReachedThreshold={0.5}
-                    onEndReached={_loadMoreListings}
-                />
+                {
+                        listings.shownListings.length !== 0  ?
+                        <FlatList
+                            data={listings.shownListings} 
+                            keyExtractor={item => item.id.toString()}
+                            ListHeaderComponent={_renderListHeader}
+                            ListFooterComponent={_renderListFooter}
+                            showsVerticalScrollIndicator={false}
+                            onRefresh={_loadListings}
+                            refreshing={isRefreshing}
+                            renderItem={itemData => _renderListing(itemData)}
+                            onEndReachedThreshold={0.5}
+                            onEndReached={_loadMoreListings}
+                        />
+                        :
+                        <EmptyList
+                        headerText={"Nažalost ne postoje vozila za odabranu kategoriju"}
+                        subHeaderText={"Pokušajte promijeniti kategoriju ili probati s drugim datumom ili lokacijom"}
+                        icon={
+                            <Image source={require("../../assets/not-found.png")} style={styles.emptyPageImg}/>
+                        }
+                        />
+                    }
             </View>
         </SafeAreaView>
     );
@@ -257,6 +274,12 @@ const styles = StyleSheet.create({
     },
     footerbuttontext:{
         color:theme.colors.white
+    },
+    emptyPageImg:{
+        resizeMode:"cover",
+        width:150,
+        height:150,
+        tintColor:theme.colors.primary
     }
 });
 

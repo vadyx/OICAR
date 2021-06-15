@@ -16,14 +16,14 @@ const ListingCard = props => {
             onPress={props.onPress}
             style={{
                 width: props.width,
-                height: props.height, 
+                height: props.height,
                 borderWidth: 0.8,
-                borderRadius:10,
-                backgroundColor:theme.colors.white,
-                overflow:"hidden",
-                borderColor: theme.colors.quaternary, 
-                paddingBottom:5,
-                marginBottom:20,
+                borderRadius: 10,
+                backgroundColor: theme.colors.white,
+                overflow: "hidden",
+                borderColor: theme.colors.quaternary,
+                paddingBottom: 5,
+                marginBottom: 20,
                 shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
@@ -32,84 +32,75 @@ const ListingCard = props => {
                 shadowOpacity: 0.34,
                 shadowRadius: 6.27,
                 elevation: 10,
-                marginHorizontal:props.marginHorizontal
+                marginHorizontal: props.marginHorizontal
             }}>
 
-            <View style={{  width: "100%",
-                            height: props.imageHeight}}>
+            <View style={{ resizeMode: "cover", flex: 1 }}>
                 <Image
                     style={styles.imagestyle}
-                    source={{ uri: props.imageUri}} />
+                    source={{ uri: props.imageUri }} />
             </View>
             <View style={styles.description_container}>
-                <Text style={styles.texttype}>{props.type}</Text>
-                <Text style={styles.textname}>{props.name}</Text>
-                <View style={styles.brandmodel}>
-                    <View style={{  alignSelf:"flex-start",
-                                    justifyContent:"flex-start",
-                                    width:props.widthbrand}}>
 
-                        <Text style={styles.textbrand}>{props.brand}</Text>
-                        <Text style = {styles.textbrand}>{props.model}</Text>
+                {props.type !== undefined && <Text style={[styles.texttype, { fontSize: props.fontTextSize - 2 }]}>{props.type}</Text>}
+                <Text style={[styles.textname, { fontSize: props.fontTextSize }]}>{props.name}</Text>
+                <View style={[styles.brandmodel, { paddingTop: props.fontTextSize }]}>
+                    <View style={{ width: "50%" }}>
+                        <Text style={[styles.textbrand, { fontSize: props.fontTextSize }]}>{props.brand}</Text>
+                        <Text style={[styles.textbrand, { fontSize: props.fontTextSize }]}>{props.model}</Text>
                     </View>
-                    <View style={{  alignItems:"flex-end",
-                                    width:props.widthprice,
-                                    marginLeft:-7}}>
-
-                    <Text style={styles.textprice}>{props.price}kn / {props.pricetime}</Text>
-                    <StarRating
-                        disable={true}
-                        maxStars={5}
-                        rating={props.rating}
-                        starSize={10}
-                        fullStarColor={theme.colors.gold}
-                    />
+                    <View style={{ width: "50%" }}>
+                        <Text style={[styles.textprice, { fontSize: props.fontTextSize }]}>{props.price}kn / {props.pricetime}</Text>
+                        <View style={{ width: 70, alignSelf: "flex-end" }}>
+                            <StarRating
+                                disable={true}
+                                maxStars={5}
+                                rating={props.rating}
+                                starSize={props.fontTextSize}
+                                fullStarColor={theme.colors.gold}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
     );
-    
+
 }
 
 const styles = StyleSheet.create({
 
-    description_container:{
+    description_container: {
         alignItems: 'flex-start',
-        paddingLeft: 10,
-        paddingTop:2
+        paddingHorizontal: 16,
+        paddingVertical: 4
     },
-    imagestyle:{
+    imagestyle: {
         flex: 1,
-        width: null,
-        height: null,
-        resizeMode: 'cover'
+        resizeMode: "cover"
     },
-    brandmodel:{
-        flexDirection:"row",
-        width:"100%",
-        paddingTop:7,
-        alignItems:"center"
+    brandmodel: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
     },
-    texttype:{
-        fontSize: 11,
-        fontWeight:"bold",
+    texttype: {
         color: theme.colors.primary,
-        paddingBottom:5,
+        paddingBottom: 4,
     },
-    textname:{
-        fontSize: 14,
-        fontWeight: 'bold',
-        paddingBottom:2,
+    textname: {
+        fontWeight: '700',
+        color: theme.colors.darkgray
     },
-    textprice:{
-        fontSize: 10,
-        paddingBottom:2,
-        alignSelf:"flex-end"
+    textprice: {
+        paddingBottom: 4,
+        fontWeight: "700",
+        color: theme.colors.darkgray,
+        textAlign: "right"
     },
-    textbrand:{
-        fontSize: 12,
-        fontWeight:"700"
+    textbrand: {
+        fontWeight: "500",
+        color: theme.colors.gray
     }
 });
 
