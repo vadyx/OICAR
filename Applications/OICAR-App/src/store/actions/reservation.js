@@ -1,6 +1,7 @@
 import ShortListing from '../../models/shortListing';
 import Reservation from '../../models/reservation';
 import User from '../../models/user';
+import Api from '../../services/api';
 
 export const SET_RESERVATION_1 = "SET_RESERVATION_1";
 export const COMPLETE_RESERVATION = "COMPLETE_RESERVATION";
@@ -28,7 +29,7 @@ export const completeReservation = () => {
         const ownerID = getState().listings.selectedListing.user.id;
         const listingID = getState().listings.selectedListing.id;
 
-        const response = await fetch('http://192.168.0.15:12335/api/reserveListing',
+        const response = await Api('http://192.168.2.237:12335/api/reserveListing',
             {
                 method: 'POST',
                 headers: {
@@ -67,7 +68,7 @@ export const loadGivenReservations = () => {
 
         const userID = getState().profile.user.id;
 
-        let response = await fetch(`http://192.168.0.15:12335/api/myListingsReserved/${userID}`);
+        let response = await Api(`http://192.168.2.237:12335/api/myListingsReserved/${userID}`);
 
         if (!response.ok) {
             throw new Error("Given reservations not loaded");
@@ -105,7 +106,7 @@ export const loadMadeReservations = () => {
 
         const userID = getState().profile.user.id;
 
-        let response = await fetch(`http://192.168.0.15:12335/api/myReservations/${userID}`);
+        let response = await Api(`http://192.168.2.237:12335/api/myReservations/${userID}`);
 
         if (!response.ok) {
             throw new Error("Made reservations not loaded");
@@ -143,7 +144,7 @@ export const loadSelectedReservation = (reservationID, mode) => {
 
         const userID = getState().profile.user.id;
 
-        let response = await fetch(`http://192.168.0.15:12335/api/reservation/${reservationID}/${userID}`);
+        let response = await Api(`http://192.168.2.237:12335/api/reservation/${reservationID}/${userID}`);
 
         if (!response.ok) {
             throw new Error("Selected reservation not loaded");
@@ -200,7 +201,7 @@ export const setReservationRating = (rating) => {
         const renterID = getState().reservation.selectedUserReservation.user.id;
         const loggedUserID = getState().auth.userId;
 
-        const response = await fetch(`http://192.168.0.15:12335/api/rate/${reservation.id}`,
+        const response = await Api(`http://192.168.2.237:12335/api/rate/${reservation.id}`,
             {
                 method: 'POST',
                 headers: {

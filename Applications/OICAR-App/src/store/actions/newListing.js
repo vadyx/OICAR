@@ -1,3 +1,5 @@
+import Api from "../../services/api";
+
 export const SET_CATEGORY = "SET CATEGORY";
 export const SET_MANUFACTURER_MODEL = "SET_MANUFACTURER_MODEL";
 export const SET_TITLE = "SET_TITLE";
@@ -89,7 +91,7 @@ export const confirmListing = () => {
         const newListingData = getState().newListing;
         const userID = getState().auth.userId;
 
-        const response = await fetch('http://192.168.0.15:12335/api/newListing',
+        const response = await Api('http://192.168.2.237:12335/api/newListing',
             {
                 method: 'POST',
                 headers: {
