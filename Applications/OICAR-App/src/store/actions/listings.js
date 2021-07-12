@@ -4,6 +4,7 @@ import ShortListing from '../../models/shortListing';
 import FullListing from '../../models/fullListing';
 import Vehicle from '../../models/vehicle';
 import User from '../../models/user';
+import Api from '../../services/api';
 
 export const CLEAR_LIST = "CLEAR_LIST";
 export const SET_CATEGORY = "SET_CATEGORY";
@@ -38,12 +39,12 @@ export const loadCategoryListings = (locationPermission) => {
                   enableHighAccuracy: true
                 });
 
-                response = await fetch(`http://192.168.0.15:12335/api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
+                response = await Api(`http://192.168.151.113:12335/api/shortListings/${categoryID}/${currentPos.coords.latitude}/${currentPos.coords.longitude}/`);
             } catch (error) {
                 //error logic
             }
         } else {
-            response = await fetch(`http://192.168.0.15:12335/api/shortListings/${categoryID}`);
+            response = await Api(`http://192.168.151.113:12335/api/shortListings/${categoryID}`);
         }
 
         if (!response.ok) {
@@ -82,7 +83,7 @@ export const loadCategoryListings = (locationPermission) => {
 export const loadHighlightedListings = () => {
     return async (dispatch) => {
 
-        let response = await fetch(`http://192.168.0.15:12335/api/highlightedListings`);
+        let response = await Api(`http://192.168.151.113:12335/api/highlightedListings`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
@@ -132,7 +133,7 @@ export const load10MoreListings = () => {
 export const loadSelectedListing = id => {
     return async (dispatch) => {
 
-        const response = await fetch(`http://192.168.0.15:12335/api/getListing/${id}`);
+        const response = await Api(`http://192.168.151.113:12335/api/getListing/${id}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");

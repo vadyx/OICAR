@@ -2,15 +2,16 @@ import moment from 'moment';
 
 class User {
 
-    constructor(id, firstName, lastName, email, rating, registrationDate, profilePicture, documentVerification) {
+    constructor(id, firstName, lastName, email, rating, registrationDate, profilePicture, documentVerification, token) {
         this.id = id,
-        this.firstName = firstName,
-        this.lastName = lastName,
-        this.email = email,
-        this.rating = rating,
-        this.registrationDate = registrationDate,
-        this.profilePicture = profilePicture,
-        this.documentVerification = documentVerification
+            this.firstName = firstName,
+            this.lastName = lastName,
+            this.email = email,
+            this.rating = rating,
+            this.registrationDate = registrationDate,
+            this.profilePicture = profilePicture,
+            this.documentVerification = documentVerification,
+            this.token = token
     }
 
     get displayRegistrationDate() {

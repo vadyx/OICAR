@@ -3,7 +3,8 @@ import { REGISTRATION, LOGIN, LOGOUT } from '../actions/auth';
 const initialState = {
     registrationSuccessful: null,
     isLoggedIn: false,
-    userId: null
+    userId: null, 
+    user: null
 };
 
 export default (state = initialState, action) => {
@@ -17,7 +18,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: action.isLoggedIn,
-                userId: action.userData.id
+                userId: action.userData.id,
+                user: action.userData
             };
         case LOGOUT:
             state = initialState;

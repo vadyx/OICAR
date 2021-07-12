@@ -22,6 +22,7 @@ import * as vehicleDataActions from '../../store/actions/vehicleData';
 import * as listingsActions from '../../store/actions/listings';
 import { theme } from "../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { getAsyncData } from "../../services/asyncStorage";
 
 const width = Dimensions.get('window').width/2 - 30;
 

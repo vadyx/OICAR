@@ -42,6 +42,7 @@ namespace WebServis.Controllers.Listings
         private IUserService userService = new UserService();
 
         // GET: api/Listings
+        [AllowAnonymous]
         public IQueryable<Listing> GetListing()
         {
             return db.Listing;

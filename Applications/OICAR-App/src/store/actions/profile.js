@@ -1,4 +1,5 @@
 import ShortListing from '../../models/shortListing';
+import Api from '../../services/api';
 
 export const UPDATE_PROFILE_IMAGE = "UPDATE_PROFILE_IMAGE";
 export const UPLOAD_ID = "UPLOAD_ID";
@@ -8,7 +9,7 @@ export const LOAD_USER_LISTINGS = "LOAD_USER_LISTINGS";
 
 export const updateProfilePicture = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.0.15:12335/api/user/setProfileImage/${id}`,
+        const response = await Api(`http://192.168.151.113:12335/api/user/setProfileImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
@@ -31,7 +32,8 @@ export const updateProfilePicture = (id, picture) => {
 
 export const uploadID = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.0.15:12335/api/user/setPersonalIDImage/${id}`,
+     try {
+        const response = await Api(`http://192.168.151.113:12335/api/user/setPersonalIDImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
@@ -50,12 +52,16 @@ export const uploadID = (id, picture) => {
             idVerification: true,
             idExpirationDate: new Date().setFullYear(oneYearFromNow.getFullYear() + 1)
         });
+    }
+    catch(e) {
+        console.log(e);
+    }
     };
 };
 
 export const uploadDriverLicense = (id, picture) => {
     return async dispatch => {
-        const response = await fetch(`http://192.168.0.15:12335/api/user/setDriverLicenseImage/${id}`,
+        const response = await Api(`http://192.168.151.113:12335/api/user/setDriverLicenseImage/${id}`,
             {
                 method: 'PUT',               
                 headers: {
@@ -88,7 +94,7 @@ export const loadUserListings = () => {
 
         const userID = getState().auth.userId;
 
-        const response = await fetch(`http://192.168.0.15:12335/api/userListings/${userID}`);
+        const response = await Api(`http://192.168.151.113:12335/api/userListings/${userID}`);
 
         if (!response.ok) {
             throw new Error("Listings not loaded");
