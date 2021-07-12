@@ -13,6 +13,7 @@ using WebServis.Models.Vehicle;
 
 namespace WebServis.Controllers.Vehicle
 {
+    [AllowAnonymous]
     public class SubCategoriesController : ApiController
     {
         private SubCategoryModel db = new SubCategoryModel();

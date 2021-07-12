@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebServis.Models.Listings;
+using WebServis.Filters;
 
 namespace WebServis.Controllers.Listings
 {
@@ -18,6 +19,7 @@ namespace WebServis.Controllers.Listings
         private PriceByModel db = new PriceByModel();
 
         [Route("api/listing/priceBy")]
+        [AllowAnonymous]
         public IQueryable<PriceBy> GetPriceBy()
         {
             return db.PriceBy;

@@ -13,6 +13,7 @@ using WebServis.Models.Vehicle;
 
 namespace WebServis.Controllers.Vehicle
 {
+    [AllowAnonymous]
     public class FuelTypesController : ApiController
     {
         private FuelTypeModel db = new FuelTypeModel();

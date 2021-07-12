@@ -13,6 +13,7 @@ using WebServis.Models.Category;
 
 namespace WebServis.Controllers.Categories
 {
+    [AllowAnonymous]
     public class VehicleModelsController : ApiController
     {
         private VehicleModelModel db = new VehicleModelModel();

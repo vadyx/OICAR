@@ -153,6 +153,7 @@ namespace WebServis.Controllers.User
         // POST: api/user
         [ResponseType(typeof(RegisteredUser))]
         [Route("api/registration")]
+        [AllowAnonymous]
         public async Task<IHttpActionResult> PostRegisteredUser(RegisteredUser registeredUser)
         {
             if (!ModelState.IsValid)

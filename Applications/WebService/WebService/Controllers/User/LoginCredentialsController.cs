@@ -15,6 +15,7 @@ using WebServis.Models.Login;
 using WebServis.Models.Registration;
 using WebServis.Models.ViewModels;
 using WebServis.PasswordSecurity;
+using WebServis.Services;
 
 namespace WebServis.Controllers.User
 {
@@ -73,36 +74,37 @@ namespace WebServis.Controllers.User
         }
 
         // POST: api/login
-        [ResponseType(typeof(LoginCredentials))]
+        [ResponseType(typeof(RegisteredUserResponseModel))]
         [Route("api/login")]
-        public async Task<Object> CheckUserLogin(LoginCredentials loginCredentials)
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IHttpActionResult> UserLogin(LoginCredentials loginCredentials)
         {
-            foreach (var loginCred in db.LoginCredentials)
-            {
-                if (loginCred.Username.Equals(loginCredentials.Username) && PasswordStorage.VerifyPassword(loginCredentials.Pwd, loginCred.Pwd))
-                {
-                    RegisteredUser registeredUser = await dbRegistartion.RegisteredUsers.Where(user => user.LoginCredentials.Username == loginCredentials.Username).SingleOrDefaultAsync();
-                    return Ok(new RegisteredUserResponseModel 
-                    {
-                        IDRegisteredUser = registeredUser.IDRegisteredUser, 
-                        FirstName = registeredUser.FirstName,
-                        LastName = registeredUser.LastName,
-                        Email = registeredUser.Email,
-                        Rating = registeredUser.Rating,
-                        RegistrationDate = registeredUser.RegistrationDate,
-                        ProfileImage = registeredUser.ProfileImage,
-                        Verification = new VerificationResponseModel 
-                        {
-                            DriverLicenseVerified = registeredUser.Verification.DriverLicenseVerified,
-                            DriverLicenseVerificationExpirationDate = registeredUser.Verification.DriverLicenseVerificationExpirationDate,
-                            PersonalIdentificationVerified = registeredUser.Verification.PersonalIdentificationVerified,
-                            PersonalIdentificationVerificationExpirationDate = registeredUser.Verification.PersonalIdentificationVerificationExpirationDate
-                        }
-                    });
-                }
-            }
+            var login = await db.LoginCredentials.Where(l => l.Username.Equals(loginCredentials.Username)).SingleOrDefaultAsync();
 
-            return false;
+            if (login == null || !PasswordStorage.VerifyPassword(loginCredentials.Pwd, login.Pwd))
+                return BadRequest("Invalid credentials");
+
+            RegisteredUser registeredUser = await dbRegistartion.RegisteredUsers.Where(user => user.LoginCredentials.Username == loginCredentials.Username).SingleOrDefaultAsync();
+
+            return Ok(new RegisteredUserResponseModel
+            {
+                IDRegisteredUser = registeredUser.IDRegisteredUser,
+                FirstName = registeredUser.FirstName,
+                LastName = registeredUser.LastName,
+                Email = registeredUser.Email,
+                Rating = registeredUser.Rating,
+                RegistrationDate = registeredUser.RegistrationDate,
+                ProfileImage = registeredUser.ProfileImage,
+                Verification = new VerificationResponseModel
+                {
+                    DriverLicenseVerified = registeredUser.Verification.DriverLicenseVerified,
+                    DriverLicenseVerificationExpirationDate = registeredUser.Verification.DriverLicenseVerificationExpirationDate,
+                    PersonalIdentificationVerified = registeredUser.Verification.PersonalIdentificationVerified,
+                    PersonalIdentificationVerificationExpirationDate = registeredUser.Verification.PersonalIdentificationVerificationExpirationDate
+                },
+                Token = JwtManager.GenerateToken(login.Username)
+            });
         }
 
         private bool LoginCredentialsExists(int id)
