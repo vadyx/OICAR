@@ -43,9 +43,9 @@ const formReducer = (state, action) => {
 };
 
 const LoginScreen = props => {
-  
+
   const [showErrors, setShowErrors] = useState(false);
-  const [loadVisible,setLoadVisible] = useState(false);
+  const [loadVisible, setLoadVisible] = useState(false);
   const [updateInputState, setUpdateInputState] = useState(false);
 
   const notOnBrowser = Platform.OS === "web" ? false : true;
@@ -109,7 +109,7 @@ const LoginScreen = props => {
   }
 
   useEffect(() => {
-    _loginHandler(); 
+    _loginHandler();
   }, [formState]);
 
   useEffect(() => {
@@ -123,8 +123,8 @@ const LoginScreen = props => {
     <Background style={styles.container}>
       <BackButton goBack={() => props.navigation.goBack()} />
 
-      <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
-        <Logo style={{width:300, height: 300}} />
+      <View style={{ alignItems: Platform.OS === "web" ? "center" : null }}>
+        <Logo style={{ width: 300, height: 300 }} />
       </View>
       <Header>Dobrodošli natrag.</Header>
 
@@ -157,13 +157,16 @@ const LoginScreen = props => {
         </TouchableOpacity>
       </View>
 
-      <View style={{alignItems: Platform.OS === "web" ? "center" : null}}>
-        <Button mode="contained" onPress={_onLoginPressed} style={styles.button}>
+      <View style={{ alignItems: Platform.OS === "web" ? "center" : null }}>
+        <Button
+          mode="contained"
+          onPress={_onLoginPressed}
+          style={{ borderRadius: 10, paddingHorizontal:20 }}>
           Prijava
         </Button>
       </View>
 
-      { 
+      {
         loadVisible && notOnBrowser &&
         <Loader
           modalVisible={loadVisible}
@@ -182,13 +185,9 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
-  container:{
-    justifyContent:"center"
+  container: {
+    justifyContent: "center"
   },
-  button:{
-    width:"40%"
-  },
-
   forgotPassword: {
     width: Platform.OS === "web" ? "100%" : '80%',
     alignItems: 'flex-end',
@@ -208,7 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   }
-  
+
 });
 
 export default memo(LoginScreen);
