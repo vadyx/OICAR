@@ -9,7 +9,7 @@ const keyToken = "@token";
 
 export const registration = (username, firstName, lastName, email, password) => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/registration',
+        const response = await Api('http://192.168.151.113:12335/api/registration',
             {
                 method: 'POST',
                 headers: {
@@ -63,7 +63,7 @@ export const registration = (username, firstName, lastName, email, password) => 
 
 export const login = (username, password) => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/login',
+        const response = await Api('http://192.168.151.113:12335/api/login',
             {
                 method: 'POST',
                 headers: {

@@ -22,7 +22,7 @@ export const LOAD_PRICE_PERIODS = "LOAD_PRICE_PERIODS";
 
 export const loadCategories = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/categories');
+        const response = await Api('http://192.168.151.113:12335/api/categories');
 
         if (!response.ok) {
             throw new Error("Categories not loaded");
@@ -48,7 +48,7 @@ export const loadCategories = () => {
 
 export const loadSubcategories = (categoryID) => {
     return async dispatch => {
-        const response = await Api(`http://192.168.2.237:12335/api/vehicle/subCategories/${categoryID}`);
+        const response = await Api(`http://192.168.151.113:12335/api/vehicle/subCategories/${categoryID}`);
 
         if (!response.ok) {
             throw new Error("Subcategories not loaded");
@@ -73,7 +73,7 @@ export const loadSubcategories = (categoryID) => {
 
 export const loadManufacturers = categoryID => {
     return async dispatch => {
-        const response = await Api(`http://192.168.2.237:12335/api/vehicleManufacturers/${categoryID}`);
+        const response = await Api(`http://192.168.151.113:12335/api/vehicleManufacturers/${categoryID}`);
 
         if (!response.ok) {
             throw new Error("Manufacturers not loaded");
@@ -98,7 +98,7 @@ export const loadManufacturers = categoryID => {
 
 export const loadModels = manufacturerID => {
     return async dispatch => {
-        const response = await Api(`http://192.168.2.237:12335/api/vehicleModels/${manufacturerID}`);
+        const response = await Api(`http://192.168.151.113:12335/api/vehicleModels/${manufacturerID}`);
 
         if (!response.ok) {
             throw new Error("Models not loaded");
@@ -141,7 +141,7 @@ export const loadManufacturingYears = () => {
 
 export const loadWheelDrives = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/vehicle/driveTypes');
+        const response = await Api('http://192.168.151.113:12335/api/vehicle/driveTypes');
 
         if (!response.ok) {
             throw new Error("Drive types not loaded");
@@ -166,7 +166,7 @@ export const loadWheelDrives = () => {
 
 export const loadFuelTypes = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/vehicle/fuelTypes');
+        const response = await Api('http://192.168.151.113:12335/api/vehicle/fuelTypes');
 
         if (!response.ok) {
             throw new Error("Fuel types not loaded");
@@ -191,7 +191,7 @@ export const loadFuelTypes = () => {
 
 export const loadGearShiftTypes = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/vehicle/gearShiftTypes');
+        const response = await Api('http://192.168.151.113:12335/api/vehicle/gearShiftTypes');
 
         if (!response.ok) {
             throw new Error("Gear shift types not loaded");
@@ -216,7 +216,7 @@ export const loadGearShiftTypes = () => {
 
 export const loadVehicleAccessories = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/vehicle/accessories');
+        const response = await Api('http://192.168.151.113:12335/api/vehicle/accessories');
 
         if (!response.ok) {
             throw new Error("Accessories not loaded");
@@ -241,7 +241,7 @@ export const loadVehicleAccessories = () => {
 
 export const loadPricePeriods = () => {
     return async dispatch => {
-        const response = await Api('http://192.168.2.237:12335/api/listing/priceBy');
+        const response = await Api('http://192.168.151.113:12335/api/listing/priceBy');
 
         if (!response.ok) {
             throw new Error("Price periods not loaded");
