@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Dimensions
+    View,
+    StyleSheet,
+    SafeAreaView,
+    Text,
+    TouchableOpacity,
+    ScrollView,
+    Image,
+    Dimensions
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -30,7 +30,7 @@ const SearchListingDetailsScreen = props => {
         const imagePreviewUrl = await maps.fetchStaticMap(listing.coordinates.lat, listing.coordinates.lng);
         setMapPreview(imagePreviewUrl);
     }, [setMapPreview]);
-    
+
     const _fetchAddress = useCallback(async () => {
         const formattedAddr = await maps.fetchGeolocation(listing.coordinates.lat, listing.coordinates.lng);
         setAddress(formattedAddr);
@@ -52,35 +52,41 @@ const SearchListingDetailsScreen = props => {
     return (
         <SafeAreaView style={styles.saw}>
             <View style={styles.container}>
-
-                <View style={styles.headerstyle}>
-                    <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
-                    <Text style={styles.headertext}>{listing.title}</Text>
-                </View>
+                {/* 
+                <View style={styles.headerstyle}> */}
+                <BackButton style={styles.backandexit} goBack={() => props.navigation.goBack()} />
+                {/* <Text style={styles.headertext}>{listing.title}</Text>
+                </View> */}
                 <ScrollView>
                     <SliderBox
                         images={listing.images}
                         dotColor={theme.colors.darkgray}
-                        height={250}
-                        imageLoadingColor={theme.colors.primary}    
+                        height={200}
+                        imageLoadingColor={theme.colors.primary}
                     />
                     <View style={styles.maininfo}>
-                        <View style={styles.branadmodelbox}>
-                            <Text style={styles.textbox}>{listing.vehicle.manufacturer}</Text>
-                            <Text style={styles.textbox2}>{listing.vehicle.model}</Text>
-                        </View>
-                        <View style={styles.branadmodelbox}>
-                            <Text style={styles.textbox}>{listing.vehicle.subcategory}</Text>
-                        </View>
-                        <View style={styles.branadmodelbox}>
-                            <Text style={styles.textboxprice1}>{listing.price} kn</Text>
-                            <Text style={styles.texboxprice2}>/ {listing.pricePeriod}</Text>
+                        <Text style={styles.textbox}>{listing.title}</Text>
+                        <View style={{flexDirection:"row", width:"100%", justifyContent:"space-between", alignItems:"center", marginTop:16}}>
+                            <View style={styles.branadmodelbox}>
+                                <Text style={styles.textbox2}>{listing.vehicle.manufacturer}</Text>
+                                <Text style={styles.textbox2}>{listing.vehicle.model}</Text>
+                            </View>
+                            <View style={styles.branadmodelbox}>
+                                <Text style={styles.textbox2}>{listing.vehicle.subcategory}</Text>
+                            </View>
+                            <View style={styles.branadmodelbox}>
+                                <TouchableOpacity style={{position:"absolute", justifyContent:"center",top:-10,right:-10, borderRadius:12,width:24,height:24, backgroundColor:theme.colors.primary}}>
+                                    <Text style={{textAlign:"center", color:theme.colors.white, fontWeight:"bold", fontSize:14}}>i</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.textboxprice1}>{listing.price} kn</Text>
+                                <Text style={styles.texboxprice2}>/ {listing.pricePeriod}</Text>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.reservationcontainer}>
-                        <TouchableOpacity 
-                                style={styles.reservationbutton}
-                                onPress={_onPress}>
+                        <TouchableOpacity
+                            style={styles.reservationbutton}
+                            onPress={_onPress}>
                             <Text style={styles.reservationtext}>Rezerviraj</Text>
                         </TouchableOpacity>
                     </View>
@@ -118,9 +124,9 @@ const SearchListingDetailsScreen = props => {
                                 <Text style={styles.textinfobox}>Dodatna oprema:</Text>
                                 <View>
                                     {listing.vehicle.accessories.length > 0 ? (
-                                        listing.vehicle.accessories.map((item, i) => 
+                                        listing.vehicle.accessories.map((item, i) =>
                                             <Text key={i} style={styles.textinfoboxresult}>
-                                                 -  {item}
+                                                -  {item}
                                             </Text>
                                         )
                                     ) : (
@@ -142,19 +148,19 @@ const SearchListingDetailsScreen = props => {
                         <Text style={styles.headerinfo}>Lokacija:</Text>
                         <View style={styles.infocontentmap}>
                             <View style={styles.infoitemsmap}>
-                                {mapPreview !== null && 
-                                    <Image 
-                                        style={styles.map} 
-                                        source={{ uri: mapPreview }} 
+                                {mapPreview !== null &&
+                                    <Image
+                                        style={styles.map}
+                                        source={{ uri: mapPreview }}
                                     />
                                 }
-                            {address !== null &&
-                                <View style={styles.locationtext}>
-                                    <Text style={styles.textinfoboxresultmap}>{address.street}</Text>
-                                    <Text style={styles.textinfoboxresultmap}>{address.city}</Text>
-                                    <Text style={styles.textinfoboxresultmap}>{address.country}</Text>
-                                </View>
-                            }
+                                {address !== null &&
+                                    <View style={styles.locationtext}>
+                                        <Text style={styles.textinfoboxresultmap}>{address.street}</Text>
+                                        <Text style={styles.textinfoboxresultmap}>{address.city}</Text>
+                                        <Text style={styles.textinfoboxresultmap}>{address.country}</Text>
+                                    </View>
+                                }
                             </View>
                         </View>
                         <Text style={styles.headerinfo}>Podaci o iznajmljivaču:</Text>
@@ -185,61 +191,68 @@ const SearchListingDetailsScreen = props => {
 }
 
 const styles = StyleSheet.create({
-    saw:{
-        flex:1,
+    saw: {
+        flex: 1,
     },
-    container:{
-        flex:1,
-        backgroundColor:theme.colors.white,
-        marginTop:getStatusBarHeight(),
-        paddingBottom:10,
-        overflow:"hidden"
+    container: {
+        flex: 1,
+        backgroundColor: theme.colors.white,
+        marginTop: getStatusBarHeight(),
+        paddingBottom: 10,
+        overflow: "hidden"
     },
-    headerstyle:{
-        height:60,
-        width:"100%",
-        flexDirection:"row",
-        justifyContent:"center",
-        backgroundColor:theme.colors.white,
-        borderBottomWidth:0, //samo radi na iOS
+    headerstyle: {
+        height: 60,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        backgroundColor: theme.colors.white,
+        borderBottomWidth: 0, //samo radi na iOS
         shadowOffset: { width: 5, height: 3 },
         shadowColor: "black",
         shadowOpacity: 0.5,
         //samo radi na Android
         elevation: 5,
     },
-    headertext:{
-        color:theme.colors.primary,
-        alignSelf:"center",
-        textAlign:"center",
-        fontWeight:"700",
-        fontSize:20,
-        width:"80%",
-        paddingLeft:10
+    headertext: {
+        color: theme.colors.primary,
+        alignSelf: "center",
+        textAlign: "center",
+        fontWeight: "700",
+        fontSize: 20,
+        width: "80%",
+        paddingLeft: 10
     },
-    backandexit:{
-        top:null,
-        alignSelf:"center",
-        width:"20%"
+    backandexit: {
+        zIndex: 999,
+        left: 16,
+        top: 16,
+        padding: 4,
+        borderRadius: 10,
+        backgroundColor: "white",
+        elevation: 5,
     },
-    content:{
-        alignItems:"center"
+    content: {
+        alignItems: "center"
     },
-    maininfo:{
-        marginTop:15,
-        justifyContent:"center",
-        flexDirection:"row"
+    maininfo: {
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        paddingVertical: 16,
+        paddingHorizontal:16,
+        backgroundColor: "white",
+        elevation: 5
     },
-    branadmodelbox:{
-        backgroundColor:theme.colors.white,
-        borderRadius:20,
-        borderWidth:0.1,
-        marginHorizontal:10,
-        width:"28%",
-        padding:10,
-        alignItems:"center",
-        justifyContent:"center",
-        borderWidth:0,
+    branadmodelbox: {
+        backgroundColor: theme.colors.white,
+        borderRadius: 10,
+        borderWidth: 0.1,
+        marginHorizontal: 10,
+        width: "28%",
+        padding: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 0,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -249,38 +262,40 @@ const styles = StyleSheet.create({
         shadowRadius: 2.22,
         elevation: 3,
     },
-    textbox:{
-        textAlign:"center",
-        fontSize:17,
-        fontWeight:"700"
+    textbox: {
+        textAlign: "center",
+        fontSize: 20,
+        color:theme.colors.darkgray,
+        fontWeight: "700"
     },
-    textbox2:{
-        textAlign:"center",
-        fontSize:16,
-        fontWeight:"500"
+    textbox2: {
+        textAlign: "center",
+        fontSize: 16,
+        color: theme.colors.darkgray,
+        fontWeight: "500"
     },
-    textboxprice1:{
-        textAlign:"center",
-        fontSize:17,
-        fontWeight:"700",
-        color:theme.colors.primary,
+    textboxprice1: {
+        textAlign: "center",
+        fontSize: 20,
+        fontWeight: "700",
+        color: theme.colors.primary,
     },
-    texboxprice2:{
-        textAlign:"center",
-        fontSize:15,
-        fontWeight:"500",
-        color:theme.colors.primary,
+    texboxprice2: {
+        textAlign: "center",
+        fontSize: 15,
+        fontWeight: "500",
+        color: theme.colors.primary,
     },
-    infocontainer:{
-        marginTop:5,
-        marginBottom:20,
-        justifyContent:"center",
-        alignSelf:"center",
+    infocontainer: {
+        marginTop: 5,
+        marginBottom: 20,
+        justifyContent: "center",
+        alignSelf: "center",
     },
-    infocontent:{
-        width:Dimensions.get('window').width - 40,
-        padding:5,
-        borderRadius:20,
+    infocontent: {
+        width: Dimensions.get('window').width - 40,
+        padding: 5,
+        borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -289,66 +304,68 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
-        backgroundColor:theme.colors.white,
+        backgroundColor: theme.colors.white,
     },
-    infocontentmap:{
-        marginRight:10
+    infocontentmap: {
+        marginRight: 10
     },
-    infoitems:{
-        padding:10,
-        flexDirection:"row",
+    infoitems: {
+        padding: 4,
+        flexDirection: "row",
     },
-    infoitemsmap:{
-        padding:10,
+    infoitemsmap: {
+        padding: 10,
     },
-    infoitemsextra:{
-        padding:10
+    infoitemsextra: {
+        padding: 10
     },
-    textinfobox:{
-        textAlign:"left",
-        paddingLeft:5,
-        fontSize:17,
-        fontWeight:"500",
+    textinfobox: {
+        textAlign: "left",
+        color:theme.colors.darkgray,
+        paddingLeft: 5,
+        fontSize: 16,
+        fontWeight: "500",
     },
-    textinfoboxextra:{
-        textAlign:"left",
-        paddingLeft:5,
-        fontSize:17,
-        fontWeight:"500",
-        color:theme.colors.primary
+    textinfoboxextra: {
+        textAlign: "left",
+        paddingLeft: 5,
+        fontSize: 16,
+        fontWeight: "500",
+        color: theme.colors.primary
     },
-    textinfoboxresult:{
-        textAlign:"left",
-        paddingLeft:7,
-        fontSize:17,
-        fontWeight:"700",
-        color:theme.colors.primary
+    textinfoboxresult: {
+        textAlign: "left",
+        paddingLeft: 7,
+        fontSize: 16,
+        fontWeight: "500",
+        color: theme.colors.primary
     },
-    textinfoboxresultmap:{
-        textAlign:"center",
-        paddingLeft:7,
-        fontSize:18,
-        fontWeight:"600",
-        color:theme.colors.primary
+    textinfoboxresultmap: {
+        textAlign: "center",
+        paddingLeft: 7,
+        fontSize: 18,
+        fontWeight: "600",
+        color: theme.colors.primary
     },
-    headerinfo:{
-        paddingVertical:15,
-        paddingLeft:5,
-        fontSize:20,
-        fontWeight:"700"
+    headerinfo: {
+        paddingTop:16,
+        paddingBottom:8,
+        paddingLeft: 5,
+        fontSize: 20,
+        fontWeight: "700"
     },
-    reservationcontainer:{
-        alignItems:"center",
-        justifyContent:"center",
-        marginVertical:25
+    reservationcontainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 25
     },
-    reservationbutton:{
-        width:180,
-        alignItems:"center",
-        textAlign:"center",
-        padding:15,
-        borderRadius:20,
-        backgroundColor:theme.colors.gold,
+    reservationbutton: {
+        width: 180,
+        alignItems: "center",
+        textAlign: "center",
+        padding: 15,
+        borderRadius: 20,
+        backgroundColor: theme.colors.gold,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -359,32 +376,32 @@ const styles = StyleSheet.create({
 
         elevation: 3,
     },
-    reservationtext:{
-        fontSize:20,
-        color:theme.colors.white,
-        fontWeight:"600"
+    reservationtext: {
+        fontSize: 20,
+        color: theme.colors.white,
+        fontWeight: "600"
     },
-    map:{
-        alignSelf:"center",
-        width:270,
-        height:270,
-        borderRadius:135
+    map: {
+        alignSelf: "center",
+        width: 270,
+        height: 270,
+        borderRadius: 135
     },
-    locationtext:{
-        marginTop:20
+    locationtext: {
+        marginTop: 20
     },
-    contactbox:{
-        backgroundColor:theme.colors.white,
-        width:Dimensions.get('window').width - 40,
-        marginVertical:10,
-        alignItems:"center",
-        alignSelf:"center",
-        padding:30,
-        borderRadius:20,
+    contactbox: {
+        backgroundColor: theme.colors.white,
+        width: Dimensions.get('window').width - 40,
+        marginVertical: 10,
+        alignItems: "center",
+        alignSelf: "center",
+        padding: 30,
+        borderRadius: 20,
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 1
+            width: 0,
+            height: 1
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
@@ -400,31 +417,30 @@ const styles = StyleSheet.create({
         height: 120,
         borderRadius: 60,
         overflow: "hidden",
-        marginBottom:5
+        marginBottom: 5
     },
-    contactsubbox:{
-        flexDirection:"row",
+    contactsubbox: {
+        flexDirection: "row",
     },
-    contactsubstarbox:{
-        flexDirection:"column",
-        marginVertical:15
+    contactsubstarbox: {
+        flexDirection: "column",
+        marginVertical: 15
     },
-    contactinfotext:{
-        fontSize:17,
-        color:theme.colors.black,
-        fontWeight:"600",
-        paddingLeft:7
+    contactinfotext: {
+        fontSize: 16,
+        color: theme.colors.black,
+        fontWeight: "600",
+        paddingLeft: 7
     },
-    contactinfodescstartext:{
-      fontSize:17,
-      color:theme.colors.primary,
-      fontWeight:"bold",
-      marginBottom:15
+    contactinfodescstartext: {
+        fontSize: 16,
+        color: theme.colors.primary,
+        fontWeight: "bold",
+        marginBottom: 15
     },
-    contactinfodesctext:{
-        fontSize:17,
-        color:theme.colors.primary,
-        fontWeight:"bold"
+    contactinfodesctext: {
+        fontSize: 16,
+        color: theme.colors.primary
     },
 
 });

@@ -44,7 +44,8 @@ const ProfileListingsScreen = props => {
             <ListingCard
                 imageUri={`data:image/jpg;base64,${itemData.item.image}`}
                 name={itemData.item.title}
-                type="Auto"
+                // type={itemData.category}
+                fontTextSize={14}
                 price={itemData.item.price}
                 pricetime={itemData.item.pricePeriod}
                 rating={itemData.item.rating}

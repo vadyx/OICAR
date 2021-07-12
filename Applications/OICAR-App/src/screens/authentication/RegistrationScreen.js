@@ -242,7 +242,9 @@ const RegisterScreen = props => {
         registration
       />
 
-      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+      <Button 
+      mode="contained" 
+      onPress={_onSignUpPressed} style={styles.button}>
         Registriraj se
       </Button>
 
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 24,
-    width:"60%"
+    borderRadius: 10
   },
 
   row: {

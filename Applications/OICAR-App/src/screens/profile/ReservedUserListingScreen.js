@@ -42,6 +42,7 @@ const ReservedUserListingScreen = props => {
                 imageUri={`data:image/jpg;base64,${itemData.item.listing.image}`}
                 name={itemData.item.listing.title}
                 type="Auto"
+                fontTextSize={14}
                 price={itemData.item.listing.price}
                 pricetime={itemData.item.listing.pricePeriod}
                 rating={itemData.item.listing.rating}

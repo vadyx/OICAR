@@ -44,7 +44,7 @@ const AddPicturesScreen = props => {
       await dispatch(newListingActions.newListingClose());
       props.navigation.navigate('MyListings');
     },
-    3000);
+    5000);
   }
 
   const _onPictureSelected = (id, image) => {
